@@ -3,14 +3,34 @@
     padding: 0;
 }
 
+:root{
+    --color-primario: #3D1F5C;
+    --coolor-primario-luz: #6D4D89;
+    --color-primario-sombra1:#250C40;
+    --color-primario-sombra2:#2A1540;
+    --color-secundario:#531A59;
+    --color-secundario-luz:#7A4780;
+    --color-secundario-sombra1:#39083E;
+    --color-secundario-sombra2:#250229;
+    --color-acento:#898226;
+    --color-acento-luz:#B5AF4C;
+    --color-acento-sombra1:#5E590B;
+    --color-acento-sombra2:#403D06;
+    --color-base:#2E2B34;
+    --color-base-luz:#4A4652;
+    --color-base-sombra:#1A181E;
+}
+
 body {
     font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-    background-image: url(/imagenes/fondo.png);
+    background-image: url(/images/fondo.png);
     color: white;
 }
 
 .header {
-    background-color: #250C40;
+    background-color: var(--color-primario-sombra1);
+    width: 100%;
+    height: 3.5em;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -19,13 +39,86 @@ body {
 .logo img {
     width: 40%;
     height: auto;
-    padding: 10px;
+    padding-left: 0.5em;
+    padding-top: 1em;
 }
 
 .menu-hamburguesa {
-    font-size: 150%;
+    width: 3.5%;
+    height: 90%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    margin-right: 0.5%;
     cursor: pointer;
+    border: none;
+    background: none;
 }
+
+.btn-top-line, .btn-mid-line, .btn-bottom-line{
+    width: 100%;
+    height: 20%;
+    background-color: var(--color-secundario-luz);
+    border-radius: 2px;
+    transition: all 0.3s ease;
+}
+
+.nav {
+    display: none;
+    margin-left: auto;
+    margin-right: 1.4%;
+    width: 15%;
+    height: 12em;
+    /**background-color: var(--color-base-luz);**/
+    background-color: var(--color-acento-luz);
+    border-radius: 10%;
+    border: 0.3em;
+    border-style: solid;
+    /**border-color: var(--color-acento-sombra1);**/
+    border-color: var(--color-base-sombra);
+}
+
+.nav.active {
+    display: block;
+}
+
+.nav ul{
+    list-style-type: none;
+}
+
+.nav li{
+    flex-direction:column;
+    justify-content: space-evenly;
+    margin-left: 1.5em;
+    margin-top: 3%;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    color: var(--color-base-sombra);
+}
+
+.menu-icons-container{
+    margin-left: 30%;
+    color: var(--color-base-sombra); /**falta añadir logos en negro**/
+    flex-direction: row;
+    justify-content: space-around;
+}
+
+.menu-icons-container img{
+    height: 1.5em;
+    width: 1.5em;
+}
+
+.menu-hamburguesa.active .btn-top-line{
+    transform: rotate(45deg) translateY(1.6em);
+}
+
+.menu-hamburguesa.active .btn-mid-line{
+    opacity: 0;
+}
+
+.menu-hamburguesa.active .btn-bottom-line{
+    transform: rotate(-45deg) translateY(-1.6em);
+}
+
 
 .fat-footer {
     display: flex;
@@ -33,7 +126,7 @@ body {
     align-items: center;
     text-align: center;
     margin-top: 100%;
-    background-color: #1A181E;
+    background-color: var(--color-base-sombra);
     color: white;
 }
 
@@ -63,8 +156,8 @@ body {
 .footer-legal {
     margin: 2%;
     padding: 2%;
-    border-top: 2px solid #6D4D89;
-    border-bottom: 2px solid #6D4D89;
+    border-top: 2px solid var(--coolor-primario-luz);
+    border-bottom: 2px solid var(--coolor-primario-luz);
     width: 50%;
 }
 
@@ -111,7 +204,7 @@ body {
 
 .footer-bottom {
     padding: 2%;
-    border-top: 1px solid rgba(255,255,255,0.2);
+    border-top: 1px solid var(--color-base-sombra);
     font-size: 80%;
     color: #999;
 }
