@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,12 +8,16 @@
     <link rel="stylesheet" href="style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap"
+        rel="stylesheet">
 </head>
+
 <body>
     <header class="header">
-        <div class="logo">
-            <img src="/images/logos/Gamex.png" alt="Logo Gamex">
+        <div class="main-logo">
+            <a href="index.html">
+                <img src="/images/logos/Gamex.png" alt="Logo Gamex">
+            </a>
         </div>
         <button class="menu-hamburguesa" aria-label="abrir menu" aria-expanded="false">
             <div class="btn-top-line"></div>
@@ -22,25 +27,209 @@
     </header>
     <nav class="nav">
         <ul>
-            <li>Ver mi perfil</li>
-            <li>Detalles de mi cuenta</li>
-            <li>Favoritos</li>
-            <li>Cerrar sesión</li>
-            <li>Siguenos:</li>
+            <li class="menu-option">
+                <img src="/images/icons/black-profile-icon.png" alt="Icono de perfil">
+                <span>Ver mi perfil</span>
+            </li>
+            <li class="menu-option">
+                <img src="/images/icons/black-tarjeta-icon.png" alt="Icono de detalles">
+                <span>Detalles de mi cuenta</span>
+            </li>
+            <li class="menu-option">
+                <img src="/images/icons/black-heart-Icon.png" alt="Icono de favoritos">
+                <span>Favoritos</span>
+            </li>
+            <li class="menu-option">
+                <img src="/images/icons/blacklogOut-icon.png" alt="Icono de Log out">
+                <span>Cerrar sesión</span>
+            </li>
+            <div class="separador"></div>
+            <li class="menu-option">
+                <span>Siguenos:</span>
+            </li>
             <div class="menu-icons-container">
-                <img src="/images/icons/instagram.png" alt="Icono instagram">
-                <img src="/images/icons/facebook.png" alt="Icono facebook">
-                <img src="/images/icons/youtube.png" alt="Icono youtube">
+                <img src="/images/icons/black-instagram-icon.png" alt="Icono instagram">
+                <img src="/images/icons/black-facebook-icon.png" alt="Icono facebook">
+                <img src="/images/icons/black-youtube-icon.png" alt="Icono youtube">
             </div>
         </ul>
     </nav>
+
+    <!-- SEGUNDO CARROUSEL-->
+
+    <section class="carousel" aria-roledescription="carrusel" aria-label="Galería de juegos" id="carousel-1">
+        <div class="carousel-viewport">
+            <div class="carousel-track" id="track-1">
+                <figure class="carousel-slide" data-index="0">
+                    <div class="game-card">
+                        <img src="/images/gameCards/gameCard -GTAsanAndreas.png" alt="GTA San Andreas">
+                        <figcaption>GTA San Andreas</figcaption>
+                    </div>
+                </figure>
+                <figure class="carousel-slide" data-index="1">
+                    <div class="game-card">
+                        <img src="/images/gameCards/gameCard -BuscaMinas.png" alt="Buscaminas">
+                        <figcaption>Buscaminas</figcaption>
+                    </div>
+                </figure>
+                <figure class="carousel-slide" data-index="2">
+                    <div class="game-card">
+                        <img src="/images/gameCards/gameCard -ClashRoyale.png" alt="Clash Royale">
+                        <figcaption>Clash Royale</figcaption>
+                    </div>
+                </figure>
+                <figure class="carousel-slide" data-index="3">
+                    <div class="game-card">
+                        <img src="/images/gameCards/gameCard -bully.png" alt="Bully">
+                        <figcaption>Bully</figcaption>
+                    </div>
+                </figure>
+                <figure class="carousel-slide" data-index="4">
+                    <div class="game-card">
+                        <img src="/images/gameCards/gameCard -risk.png" alt="Risk">
+                        <figcaption>Risk</figcaption>
+                    </div>
+                </figure>
+                <figure class="carousel-slide" data-index="5">
+                    <div class="game-card">
+                        <img src="/images/gameCards/gameCard -Battlefield3.png" alt="Battlefield 3">
+                        <figcaption>Battlefield 3</figcaption>
+                    </div>
+                </figure>
+                <figure class="carousel-slide" data-index="6">
+                    <div class="game-card">
+                        <img src="/images/gameCards/gameCard -ClashRoyale.png" alt="Clash Royale">
+                        <figcaption>Clash Royale</figcaption>
+                    </div>
+                </figure>
+                <figure class="carousel-slide" data-index="7">
+                    <div class="game-card">
+                        <img src="/images/gameCards/gameCard -bully.png" alt="Bully">
+                        <figcaption>Bully</figcaption>
+                    </div>
+                </figure>
+                <div class="carousel-fade-right"></div>
+            </div>
+        </div>
+
+        <button class="carousel-control" aria-label="Anterior" id="prev-1">◀</button>
+        <button class="carousel-control" aria-label="Siguiente" id="next-1">▶</button>
+
+        <div class="carousel-indicators" id="indicators-1" aria-hidden="false"></div>
+    </section>
+
+
+    <section class="carousel" aria-roledescription="carrusel" aria-label="Galería de juegos" id="carousel-2">
+        <div class="carousel-viewport">
+            <div class="carousel-track" id="track-2">
+                <figure class="carousel-slide" data-index="0">
+                    <div class="game-card">
+                        <img src="/images/gameCards/gameCard -bully.png" alt="Bully">
+                        <figcaption>Bully</figcaption>
+                    </div>
+                </figure>
+                                <figure class="carousel-slide" data-index="3">
+                    <div class="game-card">
+                        <img src="/images/gameCards/gameCard -ROBLOX.png" alt="ROBLOX">
+                        <figcaption>ROBLOX</figcaption>
+                    </div>
+                </figure>
+                <figure class="carousel-slide" data-index="4">
+                    <div class="game-card">
+                        <img src="/images/gameCards/gameCard -F26.png" alt="F26">
+                        <figcaption>F 26</figcaption>
+                    </div>
+                </figure>
+                <figure class="carousel-slide" data-index="1">
+                    <div class="game-card">
+                        <img src="/images/gameCards/gameCard -Black.png" alt="Black">
+                        <figcaption>Black</figcaption>
+                    </div>
+                </figure>
+                <figure class="carousel-slide" data-index="2">
+                    <div class="game-card">
+                        <img src="/images/gameCards/gameCard -DarkSouls.png" alt="Dark Souls">
+                        <figcaption>Dark Souls</figcaption>
+                    </div>
+                </figure>
+                <figure class="carousel-slide" data-index="3">
+                    <div class="game-card">
+                        <img src="/images/gameCards/gameCard -ROBLOX.png" alt="ROBLOX">
+                        <figcaption>ROBLOX</figcaption>
+                    </div>
+                </figure>
+                <figure class="carousel-slide" data-index="4">
+                    <div class="game-card">
+                        <img src="/images/gameCards/gameCard -F26.png" alt="F26">
+                        <figcaption>F 26</figcaption>
+                    </div>
+                </figure>
+                <div class="carousel-fade-right"></div>
+            </div>
+        </div>
+
+        <button class="carousel-control" aria-label="Anterior" id="prev-2">◀</button>
+        <button class="carousel-control" aria-label="Siguiente" id="next-2">▶</button>
+
+        <div class="carousel-indicators" id="indicators-2" aria-hidden="false"></div>
+    </section>
+
+
+
+    <section class="carousel" aria-roledescription="carrusel" aria-label="Galería de juegos" id="carousel-3">
+        <div class="carousel-viewport">
+            <div class="carousel-track" id="track-3">
+                <figure class="carousel-slide" data-index="0">
+                    <div class="game-card">
+                        <img src="/images/gameCards/gameCard LEGObatman.png" alt="LEGO Batman">
+                        <figcaption>LEGO Batman</figcaption>
+                    </div>
+                </figure>
+                <figure class="carousel-slide" data-index="1">
+                    <div class="game-card">
+                        <img src="/images/gameCards/gameCard -perfilDeRiesgo.png" alt="Perfil de Riesgo">
+                        <figcaption>Perfil de Riesgo</figcaption>
+                    </div>
+                </figure>
+                <figure class="carousel-slide" data-index="2">
+                    <div class="game-card">
+                        <img src="/images/gameCards/gameCard -Xcom2.png" alt="Xcom2">
+                        <figcaption>Xcom2</figcaption>
+                    </div>
+                </figure>
+                <figure class="carousel-slide" data-index="3">
+                    <div class="game-card">
+                        <img src="/images/gameCards/gameCard -Battlefield3.png" alt="Battlefield 3">
+                        <figcaption>Battlefield 3</figcaption>
+                    </div>
+                </figure>
+                <figure class="carousel-slide" data-index="4">
+                    <div class="game-card">
+                        <img src="/images/gameCards/gameCard -ClashRoyale.png" alt="Clash Royale">
+                        <figcaption>Clash Royale</figcaption>
+                    </div>
+                </figure>
+                <div class="carousel-fade-right"></div>
+            </div>
+        </div>
+
+        <button class="carousel-control" aria-label="Anterior" id="prev-3">◀</button>
+        <button class="carousel-control" aria-label="Siguiente" id="next-3">▶</button>
+
+        <div class="carousel-indicators" id="indicators-3" aria-hidden="false"></div>
+    </section>
+    <!-- FIN DEL SEGUNDO CARROUSEL-->
+
     <footer class="fat-footer">
         <div class="footer-logo">
             <img src="/images/logos/Gamex.png" alt="Logo Gamex">
         </div>
         <div class="footer-about">
             <h3>Acerca de nosotros</h3>
-            <p>Somos una plataforma de gaming en la nube creada para romper los limites tradicionales de la industria. Nuestra misión es que jugar sea tan simple como conectarte: sin descargas, sin límites, desde cualquier dispositivo. Combinamos tecnología de vanguardia con una visión audaz para transformar la forma en que las personas experimentan los videojuegos.</p>
+            <p>Somos una plataforma de gaming en la nube creada para romper los limites tradicionales de la industria.
+                Nuestra misión es que jugar sea tan simple como conectarte: sin descargas, sin límites, desde cualquier
+                dispositivo. Combinamos tecnología de vanguardia con una visión audaz para transformar la forma en que
+                las personas experimentan los videojuegos.</p>
         </div>
         <div class="footer-legal">
             <h4>Legal</h4>
@@ -54,17 +243,19 @@
             <h4>Encontranos en: </h4>
             <div class="social-icons">
                 <ul>
-                    <li><img src="/images/icons/youtube.png" alt="Youtube"></li>
-                    <li><img src="/images/icons/facebook.png" alt="Facebook"></li>
-                    <li><img src="/images/icons/tiktok.png" alt="Tiktok"></li>
-                    <li><img src="/images/icons/instagram.png" alt="Instagram"></li>
+                    <li><img src="/images/icons/white-youtube-icon.png" alt="Youtube"></li>
+                    <li><img src="/images/icons/white-facebook-icon.png" alt="Facebook"></li>
+                    <li><img src="/images/icons/white-tiktok-icon.png" alt="Tiktok"></li>
+                    <li><img src="/images/icons/white-instagram-icon.png" alt="Instagram"></li>
                 </ul>
             </div>
         </div>
         <div class="footer-bottom">
-            <p>@2025 Gamex. Todos los derechos reservados. Gamex y el logotipo de Gamex son marcas comerciales en la ARG y/o en otros países. Todas las demás marcas comerciales son propiedad de sus respectivos dueños. </p>
+            <p>@2025 Gamex. Todos los derechos reservados. Gamex y el logotipo de Gamex son marcas comerciales en la ARG
+                y/o en otros países. Todas las demás marcas comerciales son propiedad de sus respectivos dueños. </p>
         </div>
     </footer>
     <script src="./js/indexJS.js"></script>
 </body>
+
 </html>
