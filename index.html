@@ -8,8 +8,8 @@
     <link rel="stylesheet" href="style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap"
-        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap" rel="stylesheet">
+    <link rel="icon" href="/images/logos/Gamex-cloud-logo.png|" type="images">
 </head>
 
 <body>
@@ -108,12 +108,14 @@
                         <figcaption>Bully</figcaption>
                     </div>
                 </figure>
-                <div class="carousel-fade-right"></div>
             </div>
+            <div class="carousel-fade-right"></div>
         </div>
 
-        <button class="carousel-control" aria-label="Anterior" id="prev-1">◀</button>
-        <button class="carousel-control" aria-label="Siguiente" id="next-1">▶</button>
+        <button class="carousel-control" aria-label="Anterior" id="prev-1"><img src="/images/icons/prev-arrow-img.png"
+                alt=""></button>
+        <button class="carousel-control" aria-label="Siguiente" id="next-1"><img src="/images/icons/next-arrow-img.png"
+                alt=""></button>
 
         <div class="carousel-indicators" id="indicators-1" aria-hidden="false"></div>
     </section>
@@ -128,48 +130,50 @@
                         <figcaption>Bully</figcaption>
                     </div>
                 </figure>
-                                <figure class="carousel-slide" data-index="3">
+                <figure class="carousel-slide" data-index="1">
                     <div class="game-card">
                         <img src="/images/gameCards/gameCard -ROBLOX.png" alt="ROBLOX">
                         <figcaption>ROBLOX</figcaption>
                     </div>
                 </figure>
-                <figure class="carousel-slide" data-index="4">
+                <figure class="carousel-slide" data-index="2">
                     <div class="game-card">
                         <img src="/images/gameCards/gameCard -F26.png" alt="F26">
                         <figcaption>F 26</figcaption>
                     </div>
                 </figure>
-                <figure class="carousel-slide" data-index="1">
+                <figure class="carousel-slide" data-index="3">
                     <div class="game-card">
                         <img src="/images/gameCards/gameCard -Black.png" alt="Black">
                         <figcaption>Black</figcaption>
                     </div>
                 </figure>
-                <figure class="carousel-slide" data-index="2">
+                <figure class="carousel-slide" data-index="4">
                     <div class="game-card">
                         <img src="/images/gameCards/gameCard -DarkSouls.png" alt="Dark Souls">
                         <figcaption>Dark Souls</figcaption>
                     </div>
                 </figure>
-                <figure class="carousel-slide" data-index="3">
+                <figure class="carousel-slide" data-index="5">
                     <div class="game-card">
                         <img src="/images/gameCards/gameCard -ROBLOX.png" alt="ROBLOX">
                         <figcaption>ROBLOX</figcaption>
                     </div>
                 </figure>
-                <figure class="carousel-slide" data-index="4">
+                <figure class="carousel-slide" data-index="6">
                     <div class="game-card">
                         <img src="/images/gameCards/gameCard -F26.png" alt="F26">
                         <figcaption>F 26</figcaption>
                     </div>
                 </figure>
-                <div class="carousel-fade-right"></div>
             </div>
+            <div class="carousel-fade-right"></div>
         </div>
 
-        <button class="carousel-control" aria-label="Anterior" id="prev-2">◀</button>
-        <button class="carousel-control" aria-label="Siguiente" id="next-2">▶</button>
+        <button class="carousel-control" aria-label="Anterior" id="prev-2"><img src="/images/icons/prev-arrow-img.png"
+                alt=""></button>
+        <button class="carousel-control" aria-label="Siguiente" id="next-2"><img src="/images/icons/next-arrow-img.png"
+                alt=""></button>
 
         <div class="carousel-indicators" id="indicators-2" aria-hidden="false"></div>
     </section>
@@ -209,12 +213,14 @@
                         <figcaption>Clash Royale</figcaption>
                     </div>
                 </figure>
-                <div class="carousel-fade-right"></div>
             </div>
+            <div class="carousel-fade-right"></div>
         </div>
 
-        <button class="carousel-control" aria-label="Anterior" id="prev-3">◀</button>
-        <button class="carousel-control" aria-label="Siguiente" id="next-3">▶</button>
+        <button class="carousel-control" aria-label="Anterior" id="prev-3"><img src="/images/icons/prev-arrow-img.png"
+                alt=""></button>
+        <button class="carousel-control" aria-label="Siguiente" id="next-3"><img src="/images/icons/next-arrow-img.png"
+                alt=""></button>
 
         <div class="carousel-indicators" id="indicators-3" aria-hidden="false"></div>
     </section>
@@ -234,9 +240,10 @@
         <div class="footer-legal">
             <h4>Legal</h4>
             <ul>
-                <li>Terminos de uso</li>
-                <li>Politicas de privacidad</li>
-                <li>Cookies</li>
+                <li class="popUp-item" tabindex="0" role="button" data-modal="popUp-modal">Terminos de uso</li>
+                <li class="popUp-item" tabindex="0" role="button" data-modal="popUp-modal">Politicas de privacidad
+                </li>
+                <li class="popUp-item" tabindex="0" role="button" data-modal="popUp-modal">Cookies</li>
             </ul>
         </div>
         <div class="footer-social">
@@ -255,6 +262,23 @@
                 y/o en otros países. Todas las demás marcas comerciales son propiedad de sus respectivos dueños. </p>
         </div>
     </footer>
+    <div id="popUp-modal" class="modal" role="dialog" aria-modal="true" aria-labelledby="popUp-title" hidden>
+        <div class="modal-backdrop" data-close></div>
+        <div class="modal-panel" role="document" tabindex="-1">
+            <button class="modal-close" aria-label="Cerrar" data-close>
+                <!--&times;-->
+                <div class="cross-1"></div>
+                <div class="cross-2"></div>
+            </button>
+            <div class="modal-body">
+                <h2 class="modal-title" id="popUp-title">Política de Cookies</h2>
+                <p>GAMEX utiliza cookies para mejorar tu experiencia y ofrecer contenido personalizado. Al navegar por el sitio, aceptás el uso de cookies según nuestra política. Respetamos tu privacidad y protegemos tus datos personales conforme a la legislación vigente. El uso de GAMEX implica la aceptación de nuestros términos, que regulan la utilización del contenido, las funcionalidades del sitio y las responsabilidades de los usuarios. Te recomendamos leer detenidamente nuestras políticas de privacidad y condiciones de uso para conocer más sobre cómo gestionamos la información y el acceso a nuestros servicios.</p>
+            </div>
+            <div class="modal-footer">
+                <button class="modal-btn" data-close>Aceptar</button>
+            </div>
+        </div>
+    </div>
     <script src="./js/indexJS.js"></script>
 </body>
 
