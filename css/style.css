@@ -28,6 +28,130 @@ body {
     color: white;
 }
 
+.header {
+    background-color: #250C40;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    width: 100%;
+    padding: 10px;
+}
+
+.logo img {
+    width: 10%;
+    height: auto;
+    display: block;
+}
+
+.menu-hamburguesa {
+    font-size: 150%;
+    cursor: pointer;
+}
+
+.breadcrumb {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: rgba(30, 30, 30, 0.7);
+  padding: 10px 20px;
+  border-radius: 20px;
+  margin: 30px auto;
+  width: 80%;
+  color: #fff;
+}
+
+.fat-footer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    margin-top: 100%;
+    background-color: #1A181E;
+    color: white;
+}
+
+.footer-logo {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.footer-logo img {
+    width: 50%;
+    height: auto;
+    display: block;
+}
+
+.footer-about h3 {
+    margin-bottom: 2%;
+    color: white;
+}
+
+.footer-about p {
+    font-size: 90%;
+    line-height: 1.5;
+    max-width: 70%;
+    margin: auto;
+}
+
+.footer-legal {
+    margin: 2%;
+    padding: 2%;
+    border-top: 2px solid #6D4D89;
+    border-bottom: 2px solid #6D4D89;
+    width: 50%;
+}
+
+.footer-legal h4 {
+    margin-bottom: 5%;
+    color: white;
+}
+
+.footer-legal ul {
+    list-style: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 40px;
+    padding: 0;
+}
+
+.footer-legal li {
+    flex:1;
+    text-align: center;
+}
+
+.footer-social {
+    margin: 5%;
+}
+
+.footer-social h4 {
+    margin-bottom: 5%;
+    color: white;
+}
+
+.social-icons ul {
+    display: flex;
+    justify-content: center;
+    list-style: none;
+    gap: 20px;
+    padding: 0;
+}
+
+.social-icons img {
+    width: 35px;
+    height: 35px;
+    display: block;
+}
+
+.footer-bottom {
+    padding: 2%;
+    border-top: 1px solid rgba(255,255,255,0.2);
+    font-size: 80%;
+    color: #999;
+}
 
 @media (width <=768px) {
     .header {
