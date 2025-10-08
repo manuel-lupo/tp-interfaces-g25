@@ -52,7 +52,7 @@ function iniciarCarrusel({ carouselId, trackId, prevId, nextId, indicatorsId }) 
   const indicatorsWrap = document.getElementById(indicatorsId);
 
   // estado
-  let current = 0; // índice real 0..realSlideCount-1
+  let current = 0; 
   let autoplay = true;
   const interval = 5000;
   let timer = null;
@@ -81,7 +81,7 @@ function iniciarCarrusel({ carouselId, trackId, prevId, nextId, indicatorsId }) 
   // mover al índice real (0..realSlideCount-1)
   function goTo(index) {
     current = index;
-    const x = -((index + 1) * slidePercent); // +1 por clon al inicio
+    const x = -((index + 1) * slidePercent);
     track.style.transition = transitionCSS;
     track.style.transform = `translateX(${x}%)`;
     updateIndicators();
@@ -167,7 +167,7 @@ function iniciarCarrusel({ carouselId, trackId, prevId, nextId, indicatorsId }) 
   });
 }
 
-//tantos llamados como carrouseles tenga:
+//tantos llamados como carrouseles tengamos:
 iniciarCarrusel({
   carouselId: 'carousel-1',
   trackId: 'track-1',
@@ -192,24 +192,8 @@ iniciarCarrusel({
   indicatorsId: 'indicators-3'
 });
 
-/** 
-Notas importantes y comprobaciones:
-
-Asegurate de que dentro de track solo estén los elementos .carousel-slide y nada más. Si dejás .carousel-fade-right dentro del track, muevelo fuera y colócalo como hermano dentro de .carousel-viewport. Si no podés moverlo, la función filtra correctamente pero es más robusto mantener el track solo con slides.
-
-El código asume que en el viewport se muestran 5 slides (por eso visibleCount = 5). Si cambiás CSS (por ejemplo min-width de slide), ajustá visibleCount o calculalo dinámicamente midiendo el ancho del viewport y del slide.
-
-La duración de la comprobación 500 ms debe coincidir con la duración de la transición (0.5s). Si cambias la transición en CSS, sincronizalo aquí.
-
-Si tenés varios carruseles, esta función puede llamarse para cada uno como ya hacés.
-
-Si querés, te preparo una pequeña lista de verificación para probar el comportamiento y te doy una versión que calcule visibleCount automáticamente midiendo elementos (si preferís no hardcodear 5).
-**/
-//FIN DE LA ANIMACION DEL SEGUNDO CARROUSEL
-
 
 //script del popUp del footer:
-
 const modal = document.getElementById('popUp-modal');
 const closeEls = modal ? modal.querySelectorAll('[data-close]') : [];
 let lastFocused = null;
@@ -222,11 +206,11 @@ function openModal() {
   if (!modal) return;
   lastFocused = document.activeElement;
   const sb = getScrollbarWidth();
-  if (sb) document.body.style.paddingRight = `${sb}px`; // evita salto por desaparecer scrollbar
+  if (sb) document.body.style.paddingRight = `${sb}px`;
   modal.removeAttribute('hidden');
   requestAnimationFrame(() => {
     modal.classList.add('modal-open');
-    document.body.classList.add('modal-open'); // body.modal-open { overflow:hidden; }
+    document.body.classList.add('modal-open');
     setTimeout(() => {
       const panel = modal.querySelector('.modal-panel');
       if (panel) panel.focus();
