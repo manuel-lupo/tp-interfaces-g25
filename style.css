@@ -170,7 +170,7 @@ body {
 }
 
 
-/**ESTILOS SEGUNDO CARROUSEL**/
+/**ESTILOS CARROUSEL**/
 .carousel {
     width: 100%;
     max-width: 78em;
@@ -188,6 +188,15 @@ body {
     overflow: visible;
     position: relative;
     padding-right: 10%;
+}
+
+.genre-label{
+    color: var(--color-acento);
+    text-shadow:
+    2px 2px 0 var(--color-base-sombra), 
+    -2px 2px 0 var(--color-base-sombra),
+    2px -2px 0 var(--color-base-sombra),
+    -2px -2px 0 var(--color-base-sombra); 
 }
 
 .carousel-track {
@@ -306,8 +315,7 @@ body {
     background: var(--color-acento-sombra1);
 }
 
-/**FIN DE LOS ESTILOS DEL SEGUNDO CARROUSEL**/
-
+/**FIN DE LOS ESTILOS DEL CARROUSEL**/
 
 .fat-footer {
     height: 47em;
@@ -404,9 +412,6 @@ body {
     padding: 12px;
     overflow: hidden;
 }
-
-
-/* cuando está abierto permitimos interacciones y mostramos */
 
 .modal.modal-open {
     pointer-events: auto;
