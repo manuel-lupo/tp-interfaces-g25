@@ -1,0 +1,129 @@
+.game-container {
+  display: flex;
+  align-items: center;      
+  justify-content: center;
+  gap: 5%;
+  background-color: rgba(74, 72, 82, 0.4);
+  border-radius: 15px;
+  padding: 30px;
+  width: 80%;
+  margin: 0 auto;
+  border: 2px solid #5E590B;
+}
+.game-image {
+  position: relative; 
+  display: inline-block;
+}
+
+.game-image img {
+  width: 100%;
+  display: block;
+  border-radius: 10px;
+}
+
+.game-buttons {
+  position: absolute;
+  top: 10px;        
+  right: 10px;       
+  display: flex;
+  gap: 10px;
+  z-index: 10;     
+}
+
+.game-buttons .btn {
+  width: 40px;
+  height: 40px;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.game-buttons .btn:hover {
+  transform: scale(1.1);
+}
+
+.fixed-image {
+  flex: 0 0 360px;         
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.fixed-image img {
+  width: 100%;    
+  border: 10px solid #403D06;
+  border-radius: 20%;
+  position: sticky;
+  top: 100px; 
+}
+.carousel-images {
+  flex: 1;                  
+  display: flex;
+  flex-direction: column;
+  background-color: rgba(54, 53, 53, 0.6);
+  border: 2px solid #403D06;
+  align-items: center;
+  justify-content: center;  
+  gap: 20px;
+}
+
+.first-image { 
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.first-image img {
+  width: 30%;
+  height: auto;
+  border-radius: 10px;
+  margin: 10px;
+  display: block;
+}
+
+.thumbs-and-arrow {
+  width: 420px;
+  max-width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 15px;
+}
+
+.thumbnails {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  justify-content: center;
+}
+
+.thumbnails img {
+  width: 70px;
+  border-radius: 8px;
+  opacity: 0.7;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.thumbnails img:hover,
+.thumbnails img.active {
+  opacity: 1;
+  transform: scale(1.05);
+  border: 2px solid #FFD700;
+}
+
+.arrow-left img,
+.arrow-right img {
+  width: 40px;
+  cursor: pointer;
+  transition: transform .2s ease;
+}
+
+.arrow img {
+  width: 40px;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.arrow img:hover {
+  transform: scale(1.1);
+}
