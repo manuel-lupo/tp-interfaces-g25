@@ -1,0 +1,88 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+:root {
+    --color-primario: #3D1F5C;
+    --coolor-primario-luz: #6D4D89;
+    --color-primario-sombra1: #250C40;
+    --color-primario-sombra2: #2A1540;
+    --color-secundario: #531A59;
+    --color-secundario-luz: #7A4780;
+    --color-secundario-sombra1: #39083E;
+    --color-secundario-sombra2: #250229;
+    --color-acento: #898226;
+    --color-acento-luz: #B5AF4C;
+    --color-acento-sombra1: #5E590B;
+    --color-acento-sombra2: #403D06;
+    --color-base: #2E2B34;
+    --color-base-luz: #4A4652;
+    --color-base-sombra: #1A181E;
+}
+
+body {
+    background-image: url(/images/fondo.png);
+    color: white;
+}
+
+.container{
+    display: flex;
+    margin-left: 45%;
+    margin-top: 20%;
+}
+
+.load-icon {
+    width: 20px;
+    height: 20px;
+    background-color: var(--color-acento);
+    position: relative;
+    animation-name: myAnimation;
+    animation-duration: 0.8s;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
+}
+
+.container p{
+    margin-top: 5px;
+    margin-left: 15px;
+}
+
+@keyframes myAnimation {
+    0% {
+        background-color: var(--color-acento);
+        left: 0px;
+        top: 0px;
+    }
+
+    20% {
+        background-color: var(--color-acento-luz);
+        left: 10px;
+        top: 0px;
+    }
+
+    40% {
+        background-color: var(--color-acento-sombra1);
+        left: 10px;
+        top: 10px;
+    }
+
+    60% {
+        background-color: var(--color-acento);
+        left: 0px;
+        top: 10px;
+    }
+
+    80% {
+        background-color: var(--color-acento-luz);
+        left: 0px;
+        top: 0px;
+    }
+
+    100% {
+        background-color: var(--color-acento-sombra1);
+        left: 10px;
+        top: 0px;
+    }
+}
