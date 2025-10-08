@@ -6,11 +6,7 @@
 
 body {
     font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-<<<<<<< HEAD
     background-image: url("./imagenes/fondo.png");
-=======
-    background-image: url(./imagenes/fondo.png);
->>>>>>> main
     color: white;
 }
 
