@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GameX - Juegos en la nube</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="./css/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap"
+        rel="stylesheet">
+    <link rel="icon" href="./imagenes/Gamex.png" type="images">
+</head>
+
+<body>
+    <header class="header">
+        <div class="main-logo">
+            <a href="loadPage.html">
+                <img src="./imagenes/Gamex.png" alt="Logo Gamex">
+            </a>
+        </div>
+        <button class="menu-hamburguesa" aria-label="abrir menu" aria-expanded="false">
+            <div class="btn-top-line"></div>
+            <div class="btn-mid-line"></div>
+            <div class="btn-bottom-line"></div>
+        </button>
+    </header>
+    <nav class="nav">
+        <ul>
+            <li class="menu-option">
+                <img src="./images/icons/black-profile-icon.png" alt="Icono de perfil">
+                <span>Ver mi perfil</span>
+            </li>
+            <li class="menu-option">
+                <img src="./images/icons/black-tarjeta-icon.png" alt="Icono de detalles">
+                <span>Detalles de mi cuenta</span>
+            </li>
+            <li class="menu-option">
+                <img src="./images/icons/black-heart-Icon.png" alt="Icono de favoritos">
+                <span>Favoritos</span>
+            </li>
+            <li class="menu-option">
+                <img src="./images/icons/blacklogOut-icon.png" alt="Icono de Log out">
+                <span>Cerrar sesión</span>
+            </li>
+            <div class="separador"></div>
+            <li class="menu-option">
+                <span>Siguenos:</span>
+            </li>
+            <div class="menu-icons-container">
+                <img src="./images/icons/black-instagram-icon.png" alt="Icono instagram">
+                <img src="./images/icons/black-facebook-icon.png" alt="Icono facebook">
+                <img src="./images/icons/black-youtube-icon.png" alt="Icono youtube">
+            </div>
+        </ul>
+    </nav>
+    <div class="error-container">
+        <h1>404</h1>
+        <p>no se pudo encontrar lo que estás buscando :(</p>
+    </div>
+    <footer class="fat-footer">
+        <div class="footer-logo">
+            <img src="./images/logos/Gamex.png" alt="Logo Gamex">
+        </div>
+        <div class="footer-about">
+            <h3>Acerca de nosotros</h3>
+            <p>Somos una plataforma de gaming en la nube creada para romper los limites tradicionales de la industria.
+                Nuestra misión es que jugar sea tan simple como conectarte: sin descargas, sin límites, desde cualquier
+                dispositivo. Combinamos tecnología de vanguardia con una visión audaz para transformar la forma en que
+                las personas experimentan los videojuegos.</p>
+        </div>
+        <div class="footer-legal">
+            <h4>Legal</h4>
+            <ul>
+                <li class="popUp-item" tabindex="0" role="button" data-modal="popUp-modal">Terminos de uso</li>
+                <li class="popUp-item" tabindex="0" role="button" data-modal="popUp-modal">Politicas de privacidad
+                </li>
+                <li class="popUp-item" tabindex="0" role="button" data-modal="popUp-modal">Cookies</li>
+            </ul>
+        </div>
+        <div class="footer-social">
+            <h4>Encontranos en: </h4>
+            <div class="social-icons">
+                <ul>
+                    <li><img src="./images/icons/white-youtube-icon.png" alt="Youtube"></li>
+                    <li><img src="./images/icons/white-facebook-icon.png" alt="Facebook"></li>
+                    <li><img src="./images/icons/white-tiktok-icon.png" alt="Tiktok"></li>
+                    <li><img src="./images/icons/white-instagram-icon.png" alt="Instagram"></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>@2025 Gamex. Todos los derechos reservados. Gamex y el logotipo de Gamex son marcas comerciales en la ARG
+                y/o en otros países. Todas las demás marcas comerciales son propiedad de sus respectivos dueños. </p>
+        </div>
+    </footer>
+    <div id="popUp-modal" class="modal" role="dialog" aria-modal="true" aria-labelledby="popUp-title" hidden>
+        <div class="modal-backdrop" data-close></div>
+        <div class="modal-panel" role="document" tabindex="-1">
+            <button class="modal-close" aria-label="Cerrar" data-close>
+                <!--&times;-->
+                <div class="cross-1"></div>
+                <div class="cross-2"></div>
+            </button>
+            <div class="modal-body">
+                <h2 class="modal-title" id="popUp-title">Política de Cookies</h2>
+                <p>GAMEX utiliza cookies para mejorar tu experiencia y ofrecer contenido personalizado. Al navegar por
+                    el sitio, aceptás el uso de cookies según nuestra política. Respetamos tu privacidad y protegemos
+                    tus datos personales conforme a la legislación vigente. El uso de GAMEX implica la aceptación de
+                    nuestros términos, que regulan la utilización del contenido, las funcionalidades del sitio y las
+                    responsabilidades de los usuarios. Te recomendamos leer detenidamente nuestras políticas de
+                    privacidad y condiciones de uso para conocer más sobre cómo gestionamos la información y el acceso a
+                    nuestros servicios.</p>
+            </div>
+            <div class="modal-footer">
+                <button class="modal-btn" data-close>Aceptar</button>
+            </div>
+        </div>
+    </div>
+    <script type="module" src="./js/indexJS.js"></script>
+</body>
