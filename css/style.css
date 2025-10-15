@@ -332,7 +332,7 @@ body {
     }
 
     .menu-hamburguesa.active .btn-top-line {
-        transform: rotate(45deg) translateY(1.6em);
+        transform: rotate(45deg) translateY(0.9em);
     }
 
     .menu-hamburguesa.active .btn-mid-line {
@@ -340,7 +340,7 @@ body {
     }
 
     .menu-hamburguesa.active .btn-bottom-line {
-        transform: rotate(-45deg) translateY(-1.6em);
+        transform: rotate(-45deg) translateY(-0.9em);
     }
 
 
