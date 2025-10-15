@@ -1,3 +1,8 @@
+import { getGames } from "../js/games_api.js";
+
+//Determinamos que juegos entran en recomendados segun que rating tienen
+const MIN_RATING_FOR_RECCOMENDED = 3;
+
 //animación y despliegue del menú hamburguesa
 const menuhamburguesa = document.querySelector('.menu-hamburguesa');
 const navMenu = document.querySelector('.nav');
@@ -11,8 +16,44 @@ menuhamburguesa.addEventListener('click', () => {
   menuhamburguesa.setAttribute("aria-expanded", !expanded);
 });
 
+async function buildCarrousel(trackId, minRating = 0){
+  /* Ejemplo de codigo html a generar:
+  <figure class="carousel-slide" data-index="0">
+      <div class="game-card">
+          <img src="./images/gameCards/gameCard -GTAsanAndreas.png" alt="GTA San Andreas">
+          <figcaption>GTA San Andreas</figcaption>
+      </div>
+  </figure> */
+  const getGameHtml = (index, game)=>{
+    return `
+    <figure class="carousel-slide" data-index="${index}">
+      <div class="game-card">
+          <img src="${game.background_image_low_res}" alt="${game.name}">
+          <figcaption>${game.name}</figcaption>
+      </div>
+    </figure>
+    `
+  }
+  const track = document.getElementById(trackId)
+  const games = await getGames()
+  for (const [index, game] of games.entries()){
+    console.log(`Juego ${index + 1}: ${game.name}`)
+    if (game.rating >= minRating){
+      track.innerHTML += getGameHtml(index, game)
+    }
 
-function iniciarCarrusel({ carouselId, trackId, prevId, nextId, indicatorsId }) {
+    if (index > 19) break;
+  }
+}
+
+async function iniciarCarrusel({ carouselId, trackId, prevId, nextId, indicatorsId }) {
+  if (trackId == "track-1"){
+    //El primer track se construye con el rating minimo
+    await buildCarrousel(trackId, MIN_RATING_FOR_RECCOMENDED)
+  } else {
+    await buildCarrousel(trackId)
+  }
+  
   const carousel = document.getElementById(carouselId);
   const track = document.getElementById(trackId);
   if (!carousel || !track) return;

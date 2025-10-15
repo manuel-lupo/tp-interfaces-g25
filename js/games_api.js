@@ -34,19 +34,15 @@ Ejemplo de un juego en la respuesta de la API
 const BASE_URL = "https://vj.interfaces.jima.com.ar/api/v2"
 
 /**
- * Devuelve una lista de juegos, en caso de fallar la llamada devuelve un nulo
+ * Funcion asincrona que devuelve una lista de juegos, en caso de fallar la llamada devuelve un nulo
 */
-function getGames(){
-    fetch(BASE_URL)
-    .then(response => response.json())
-    .then(games => {
-        console.log("Fetched games " + games)
-        return games;
-    })
-    .catch(err => {
-        console.error(err);
-        return null
-    })
+async function getGames(){
+  try{  
+    const response = await fetch(BASE_URL)
+    const games = await response.json()
+    console.log(`Fetched games: ${games}`)
+    return games
+  } catch (err) { throw err }
 }
 
 export { getGames }
