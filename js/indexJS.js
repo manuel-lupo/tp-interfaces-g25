@@ -1,7 +1,7 @@
 import { getGames } from "../js/games_api.js";
 
 //Determinamos que juegos entran en recomendados segun que rating tienen
-const MIN_RATING_FOR_RECCOMENDED = 3;
+const MIN_RATING_FOR_RECCOMENDED = 4;
 
 //animación y despliegue del menú hamburguesa
 const menuhamburguesa = document.querySelector('.menu-hamburguesa');
