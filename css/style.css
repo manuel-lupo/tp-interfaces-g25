@@ -244,12 +244,11 @@ body {
     }
 
     .menu-hamburguesa {
-        width: 3.5%;
+        width: 2%;
         height: 90%;
         display: flex;
         flex-direction: column;
-        justify-content: space-evenly;
-        margin-right: 0.5%;
+        justify-content: space-around;
         cursor: pointer;
         border: none;
         background: none;
@@ -336,7 +335,7 @@ body {
     }
 
     .menu-hamburguesa.active .btn-top-line {
-        transform: rotate(45deg) translateY(1.6em);
+        transform: rotate(45deg) translateY(15px);
     }
 
     .menu-hamburguesa.active .btn-mid-line {
@@ -344,7 +343,7 @@ body {
     }
 
     .menu-hamburguesa.active .btn-bottom-line {
-        transform: rotate(-45deg) translateY(-1.6em);
+        transform: rotate(-45deg) translateY(-15px);
     }
 
 
