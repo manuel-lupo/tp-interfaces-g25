@@ -1,6 +1,6 @@
 import { getGames } from "../js/games_api.js";
 
-const MIN_RATING_FOR_RECCOMENDED = 4;
+const MIN_RATING_FOR_RECCOMENDED = 4.3;
 
 const menuhamburguesa = document.querySelector('.menu-hamburguesa');
 const navMenu = document.querySelector('.nav');
