@@ -27,6 +27,7 @@ body {
     background-image: url(../imagenes/fondo.png);
     color: white;
     overflow-x: hidden;
+    width: 100svw;
 }
 
 @media (width >=768px) {
@@ -61,14 +62,46 @@ body {
 
     .breadcrumb {
         display: flex;
+        border: solid;
+        border-color: #5E590B;
         justify-content: space-between;
         align-items: center;
-        background-color: rgba(30, 30, 30, 0.7);
+        background-color: #2A1540;
         padding: 10px 20px;
         border-radius: 20px;
-        margin: 30px auto;
+        margin: 5em auto 2em auto;
         width: 80%;
         color: #fff;
+    }
+
+    .breadcrumb ol {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        display: flex;
+        flex-wrap: wrap;
+    }
+
+    .breadcrumb li {
+        display: flex;
+        align-items: center;
+    }
+
+    .breadcrumb li+li::before {
+        content: ">";
+        margin: 0 8px;
+        color: #999;
+    }
+
+    .breadcrumb a {
+        text-decoration: none;
+        color: inherit;
+        cursor: pointer;
+    }
+
+    .breadcrumb a:hover {
+        text-decoration: none;
+        color: inherit;
     }
 
     .fat-footer {
@@ -349,7 +382,7 @@ body {
         width: 100%;
         max-width: 78em;
         height: 22em;
-        margin: 10% auto;
+        margin: 5% auto;
         position: relative;
         overflow: visible;
         color: #fff;
@@ -360,8 +393,10 @@ body {
         width: 100%;
         height: 95%;
         overflow: visible;
-        position: static;
-        /**padding-right: 10%;**/
+        position: relative;
+        padding-right: 10%;
+        mask-image: linear-gradient(to right, transparent 0%, black 10%, black 85%, transparent 100%);
+        mask-repeat: no-repeat;
     }
 
     .carousel-track {
@@ -391,7 +426,6 @@ body {
         border-radius: 15%;
         overflow: hidden;
         text-align: center;
-        padding: 10px;
         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
         transition: transform 0.3s ease;
     }
@@ -404,29 +438,17 @@ body {
     .game-card img {
         width: 100%;
         height: 80%;
-        max-height: 75%;
-        object-fit: contain;
+        object-fit: cover;
         display: block;
-        margin-bottom: 8px;
-        margin-top: 5%;
     }
 
     .game-card figcaption {
         margin-top: 4%;
+        position: relative;
+        z-index: 0;
         font-size: 16px;
         color: #fff;
         font-weight: bold;
-    }
-
-    .carousel-fade-right {
-        position: absolute;
-        top: 6%;
-        right: 0;
-        width: 10%;
-        height: 97%;
-        pointer-events: none;
-        background: linear-gradient(to left, rgba(0, 0, 0.2, 0.9), transparent);
-        z-index: 4;
     }
 
     /* Controls */
@@ -434,13 +456,30 @@ body {
         position: absolute;
         top: 50%;
         transform: translateY(-50%);
-        width: 5.4%;
-        height: 17%;
-        background: rgba(255, 255, 255, 0.409);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 3.5em;
+        height: 3.5em;
         border: none;
         border-radius: 50%;
+        background-color: rgba(255, 255, 255, 0.08);
         cursor: pointer;
-        z-index: 5;
+        transition: background-color 0.2s ease;
+        z-index: 3;
+    }
+
+    .carousel-control:hover {
+        background-color: rgba(255, 255, 255, 0.18);
+        transform-origin: center;
+        scale: 1.043;
+    }
+
+    .carousel-control img {
+        width: 2.25em;
+        height: 2.25em;
+        object-fit: contain;
+        filter: invert(1);
     }
 
     .carousel-control img {
@@ -451,13 +490,13 @@ body {
     #prev-1,
     #prev-2,
     #prev-3 {
-        left: -50px;
+        left: 4em;
     }
 
     #next-1,
     #next-2,
     #next-3 {
-        right: -50px;
+        right: 4em
     }
 
     /* Indicators */
@@ -694,7 +733,7 @@ body {
         opacity: 1;
     }
 
-    .error-container{
+    .error-container {
         margin-top: 20%;
         display: flex;
         flex-direction: column;

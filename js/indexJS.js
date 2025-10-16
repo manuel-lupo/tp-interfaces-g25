@@ -1,9 +1,7 @@
 import { getGames } from "../js/games_api.js";
 
-//Determinamos que juegos entran en recomendados segun que rating tienen
-const MIN_RATING_FOR_RECCOMENDED = 4;
+const MIN_RATING_FOR_RECCOMENDED = 4.3;
 
-//animación y despliegue del menú hamburguesa
 const menuhamburguesa = document.querySelector('.menu-hamburguesa');
 const navMenu = document.querySelector('.nav');
 
@@ -11,39 +9,72 @@ menuhamburguesa.addEventListener('click', () => {
   menuhamburguesa.classList.toggle('active');
   navMenu.classList.toggle('active');
 
-  //así puede cerrar con la misma animación
   const expanded = menuhamburguesa.getAttribute("aria-expanded") === true || false;
   menuhamburguesa.setAttribute("aria-expanded", !expanded);
 });
 
-async function buildCarrousel(trackId, minRating = 0){
-  /* Ejemplo de codigo html a generar:
-  <figure class="carousel-slide" data-index="0">
-      <div class="game-card">
-          <img src="./images/gameCards/gameCard -GTAsanAndreas.png" alt="GTA San Andreas">
-          <figcaption>GTA San Andreas</figcaption>
-      </div>
-  </figure> */
-  const getGameHtml = (index, game)=>{
-    return `
-    <figure class="carousel-slide" data-index="${index}">
-      <div class="game-card">
-          <img src="${game.background_image_low_res}" alt="${game.name}">
-          <figcaption>${game.name}</figcaption>
-      </div>
-    </figure>
-    `
-  }
-  const track = document.getElementById(trackId)
-  const games = await getGames()
-  for (const [index, game] of games.entries()){
-    console.log(`Juego ${index + 1}: ${game.name}`)
-    if (game.rating >= minRating){
-      track.innerHTML += getGameHtml(index, game)
-    }
+function renderGamePage(game){
+  console.log(`Renderizando el juego: ${game.name}`)
+  window.location.href = "./error404.html"
+}
+
+async function buildCarrousel(trackId, minRating = 0) {
+  const mockOffset = 1;
+  const track = document.getElementById(trackId);
+  if (!track) return;
+
+  const games = await getGames();
+  if (!games) return;
+  const fragment = document.createDocumentFragment();
+
+  for (const [index, game] of games.entries()) {
+    if (game.rating < minRating) continue;
+
+    const figure = document.createElement('figure');
+    figure.className = 'carousel-slide';
+    figure.dataset.index = index + mockOffset;
+    figure.dataset.gameIndex = index;                
+
+    const card = document.createElement('div');
+    card.className = 'game-card';
+    card.innerHTML = `
+      <img src="${game.background_image_low_res}" alt="${escapeHtml(game.name)}">
+      <figcaption>${escapeHtml(game.name)}</figcaption>
+    `;
+
+    figure.appendChild(card);
+    fragment.appendChild(figure);
 
     if (index > 19) break;
   }
+
+  track.appendChild(fragment);
+
+  track.addEventListener('click', (e) => {
+    const card = e.target.closest('.game-card');
+    if (!card) return;
+
+    const figure = card.closest('.carousel-slide');
+    if (!figure) return;
+
+    const gameIndex = Number(figure.dataset.gameIndex);
+    const clickedGame = games[gameIndex];
+
+    if (clickedGame) {
+      renderGamePage(clickedGame);
+    } else {
+      console.warn('Índice de juego inválido:', figure.dataset);
+    }
+  });
+}
+
+function escapeHtml(str) {
+  return String(str)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
 }
 
 async function iniciarCarrusel({ carouselId, trackId, prevId, nextId, indicatorsId }) {
@@ -98,6 +129,7 @@ async function iniciarCarrusel({ carouselId, trackId, prevId, nextId, indicators
   const interval = 5000;
   let timer = null;
 
+  
   // crear indicadores
   if (indicatorsWrap) {
     indicatorsWrap.innerHTML = '';
