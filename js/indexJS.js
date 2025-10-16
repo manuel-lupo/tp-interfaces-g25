@@ -129,6 +129,7 @@ async function iniciarCarrusel({ carouselId, trackId, prevId, nextId, indicators
   const interval = 5000;
   let timer = null;
 
+  
   // crear indicadores
   if (indicatorsWrap) {
     indicatorsWrap.innerHTML = '';
