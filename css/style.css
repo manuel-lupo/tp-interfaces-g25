@@ -459,12 +459,10 @@ body {
         align-items: center;
         justify-content: center;
         width: 3.5em;
-        /* más grande para cubrir todo el círculo blanco */
         height: 3.5em;
         border: none;
         border-radius: 50%;
         background-color: rgba(255, 255, 255, 0.08);
-        /* gris translúcido */
         cursor: pointer;
         transition: background-color 0.2s ease;
         z-index: 3;
@@ -478,22 +476,10 @@ body {
 
     .carousel-control img {
         width: 2.25em;
-        /* agrandamos el ícono pero menos que el fondo */
         height: 2.25em;
         object-fit: contain;
         filter: invert(1);
-        /* mantiene la flecha blanca sobre fondo oscuro */
     }
-
-    /* Posiciones individuales */
-    #prev-1 {
-        left: 0.75em;
-    }
-
-    #next-1 {
-        right: 0.75em;
-    }
-
 
     .carousel-control img {
         width: 5em;
@@ -503,13 +489,13 @@ body {
     #prev-1,
     #prev-2,
     #prev-3 {
-        left: -50px;
+        left: 1.2em;
     }
 
     #next-1,
     #next-2,
     #next-3 {
-        right: -50px;
+        right: 1.2em
     }
 
     /* Indicators */
