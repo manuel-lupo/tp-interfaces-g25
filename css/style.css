@@ -489,13 +489,13 @@ body {
     #prev-1,
     #prev-2,
     #prev-3 {
-        left: 1.2em;
+        left: 4em;
     }
 
     #next-1,
     #next-2,
     #next-3 {
-        right: 1.2em
+        right: 4em
     }
 
     /* Indicators */
