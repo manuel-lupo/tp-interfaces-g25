@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Iniciar Sesión</title>
+    <link rel="stylesheet" href="./css/style.css">
+    <link rel="stylesheet" href="./singin.css">
+</head>
+<body>
+    <header class="header">
+        <div class="logo">
+            <img src="./imagenes/Gamex.png" alt="Logo Gamex">
+        </div>
+    </header>
+    <main>
+        <div class="form-container">
+            <form id="singinForm">
+                <h2>INICIAR SESIÓN</h2>
+                <p>¿No tenes una cuenta? <a href="login.html" class="register-link">Regístrate</a></p>
+
+                <div class="input-container">
+                    <input id="username" type="text" name="username" placeholder="Usuario" required/>
+                </div>
+
+                <div class="input-container">
+                    <input id="password" type="password" name="password" placeholder="Contraseña" required/>
+                </div>
+
+                <button type="submit" class="login-btn">INGRESAR</button>
+                <div class="social-login">
+                    <p>Puedes iniciar sesión con:</p>
+                    <div class="social-icons">
+                        <a href="#" class="social-icon facebook">
+                            <img src="./imagenes/btn-fb.png" alt="Facebook">
+                        </a>
+                        <a href="#" class="social-icon google">
+                            <img src="./imagenes/btn-google.png" alt="Google">
+                        </a>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </main>
+    <script src="./js/singin.js"></script>
+</body>
+</html>
