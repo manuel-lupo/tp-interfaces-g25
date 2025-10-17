@@ -418,37 +418,75 @@ body {
     }
 
     .game-card {
+        position: relative;
         display: flex;
         flex-direction: column;
-        height: 100%;
+        justify-content: flex-end;
         width: 100%;
+        height: 100%;
         background: var(--color-primario-sombra2);
         border-radius: 15%;
         overflow: hidden;
         text-align: center;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        cursor: pointer;
+        box-shadow: 0 0.25em 0.5em rgba(0, 0, 0, 0.3);
         transition: transform 0.3s ease;
     }
 
+    /* Efecto de agrandamiento */
     .game-card:hover {
         transform: scale(1.05);
         z-index: 4;
     }
 
+    /* Imagen: cubre toda la card */
     .game-card img {
+        position: absolute;
+        top: 0;
+        left: 0;
         width: 100%;
-        height: 80%;
+        height: 100%;
         object-fit: cover;
-        display: block;
+        transition: transform 0.4s ease;
+        z-index: 0;
     }
 
     .game-card figcaption {
-        margin-top: 4%;
+        z-index: 1;
         position: relative;
-        z-index: 0;
-        font-size: 16px;
-        color: #fff;
-        font-weight: bold;
+        background-color: var(--color-primario);
+        height: 2em;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-decoration: none;
+        font-size: small;
+        height: 3.5em;
+    }
+
+    .game-card a {
+        text-decoration: none;
+        color: inherit;
+    }
+
+    .game-card:hover img {
+        transform: scale(1.1);
+    }
+
+    /* Gradiente sobre la imagen, debajo del texto */
+    .game-card::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.6) 100%);
+        transform: scaleY(0);
+        transform-origin: bottom;
+        transition: transform 0.5s ease;
+        z-index: 1;
+    }
+
+    .game-card:hover::before {
+        transform: scaleY(1);
     }
 
     /* Controls */
