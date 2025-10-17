@@ -1,0 +1,145 @@
+body {
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    background-image: url(/tp-interfaces-g25/imagenes/fondo.png);
+    color: white;
+}
+
+.header {
+    background-color: #250C40;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    width: 100%;
+    padding: 10px;
+}
+
+.logo img {
+    width: 10%;
+    height: auto;
+    display: block;
+}
+
+.login {
+    display: flex;
+    justify-content: center;  
+    align-items: center;      
+    height: 100%;
+    margin: 80px;
+}
+
+.form-container {
+    background-color: #1a1824;
+    padding: 40px 50px;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+    width: 100%;
+    max-width: 500px;
+}
+
+.form-container h2 {
+    text-align: center;
+    margin-bottom: 10px;
+    color: #ffffff;
+}
+
+.form-container p {
+    text-align: center;
+    color: #d0a0ff;
+    margin-bottom: 30px;
+}
+
+.gratis {
+    color: #B5AF4C;
+}
+
+.form-container input {
+    width: 100%;
+    padding: 10px 14px;
+    margin-bottom: 15px;
+    border: none;
+    border-radius: 6px;
+}
+
+.form-container button {
+    width: 100%;
+    background: linear-gradient(90deg, #a855f7, #8b5cf6);
+    border: none;
+    color: #fff;
+    font-weight: 600;
+    padding: 12px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.form-container button:hover {
+    background: linear-gradient(90deg, #c084fc, #a855f7);
+}
+
+.captcha {
+  display: flex;
+  justify-content: center;
+  margin: 15px 0;
+}
+
+.captcha img {
+  width: 60%;
+  border-radius: 10px;
+}
+
+/* Botón */
+.register-btn {
+    width: 50%;
+    background: #a94fff;
+    border: none;
+    border-radius: 10px;
+    color: #fff;
+    font-weight: 600;
+    padding: 10px;
+    margin-top: 20px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.register-btn:hover {
+    background: #b668ff;
+}
+
+.success-message {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0.85);
+  background: rgba(26, 24, 36, 0.98);
+  color: #fff;
+  padding: 26px 34px;
+  border-radius: 12px;
+  text-align: center;
+  box-shadow: 0 6px 30px rgba(133, 77, 255, 0.25);
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.35s ease;
+  z-index: 2000;
+}
+
+.success-message.show {
+  opacity: 1;
+  visibility: visible;
+  transform: translate(-50%, -50%) scale(1);
+}
+
+.success-message .checkmark {
+  font-size: 48px;
+  color: #8fff9a;
+  margin-bottom: 6px;
+  animation: pop 0.6s ease;
+}
+
+@keyframes pop {
+  0% { transform: scale(0); opacity: 0; }
+  60% { transform: scale(1.2); opacity: 1; }
+  100% { transform: scale(1); }
+}

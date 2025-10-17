@@ -329,6 +329,15 @@ body {
         color: var(--color-base-sombra);
     }
 
+    .logout {
+        background-color: transparent; 
+        border: none;             
+        color: var(--color-base-sombra);            
+        cursor: pointer;           
+        font-size: 1rem;           
+        padding: 0;   
+    }
+
     .menu-option img {
         height: 1.2em;
         width: 1.2em;

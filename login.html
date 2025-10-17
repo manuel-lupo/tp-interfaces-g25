@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registrarse</title>
+    <link rel="stylesheet" href="./css/style.css">
+    <link rel="stylesheet" href="./login.css"> 
+</head>
+<body>
+    <header class="header">
+        <div class="logo">
+            <img src="./imagenes/Gamex.png" alt="Logo Gamex">
+        </div>
+    </header>
+    <main>
+        <form class="login" id="registerForm">
+            <div class="form-container">
+                <h2>CREÁ TU CUENTA</h2>
+                <p>Completá los campos y creá tu cuenta <span class="gratis">gratis</span></p>
+
+                <label>Nombre *</label>
+                <input id="nombre" type="text" name="nombre" placeholder="Ingrese su nombre completo" required/>
+
+                <label>Apellido *</label>
+                <input id="apellido" type="text" name="apellido" placeholder="Ingrese su apellido" required/>
+
+                <label>Nickname</label>
+                <input id="nickname" type="text" name="nickname" placeholder="Ingrese su nombre de usuario"/>
+
+                <label>Edad *</label>
+                <input id="edad" type="number" name="edad" placeholder="Ingrese su edad" required/>
+
+                <label>Correo electrónico *</label>
+                <input id="email" type="email" name="email" placeholder="Ingrese su email" required/>
+
+                <label>Contraseña *</label>
+                <input id="password" type="password" name="password" placeholder="Ingrese su contraseña" required/>
+
+                <label>Confirmar contraseña *</label>
+                <input id="confirmPassword" type="password" name="confirmPassword" placeholder="Confirme su contraseña" required/>
+                <div class="captcha">
+                    <img src="./images/logos/recaptcha.gif" alt="reCaptcha">
+                </div>
+
+                <button type="submit" class="register-btn">REGISTRARSE</button>
+            </div>
+        </form>
+        <div class="success-message" id="successMessage">
+            <div class="checkmark">✔</div>
+            <p>¡Registro exitoso! Redirigiendo...</p>
+        </div>
+    </main>
+    <script src="./js/login.js"></script>
+</body>
+</html>
