@@ -801,7 +801,7 @@ body {
         display: inline-block;
         background-color: var(--color-secundario);
         color: var(--color-acento-luz);
-        box-shadow:0 10px 30px rgba(75, 0, 130, 0.35), 0 2px 6px rgba(0, 0, 0, 0.45);
+        box-shadow: 0 10px 30px rgba(75, 0, 130, 0.35), 0 2px 6px rgba(0, 0, 0, 0.45);
         letter-spacing: 0.06em;
         font-size: large;
         font-weight: 700;
@@ -810,4 +810,11 @@ body {
         text-transform: uppercase;
         text-align: center;
     }
+
+    .subscription-link:hover {
+        transform: scale(1.1);
+        transition: 0.2s;
+    }
+
+
 }

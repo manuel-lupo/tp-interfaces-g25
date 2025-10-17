@@ -13,7 +13,7 @@ menuhamburguesa.addEventListener('click', () => {
   menuhamburguesa.setAttribute("aria-expanded", !expanded);
 });
 
-function renderGamePage(game){
+function renderGamePage(game) {
   console.log(`Renderizando el juego: ${game.name}`)
   window.location.href = "./error404.html"
 }
@@ -33,7 +33,7 @@ async function buildCarrousel(trackId, minRating = 0) {
     const figure = document.createElement('figure');
     figure.className = 'carousel-slide';
     figure.dataset.index = index + mockOffset;
-    figure.dataset.gameIndex = index;                
+    figure.dataset.gameIndex = index;
 
     const card = document.createElement('div');
     card.className = 'game-card';
@@ -78,13 +78,13 @@ function escapeHtml(str) {
 }
 
 async function iniciarCarrusel({ carouselId, trackId, prevId, nextId, indicatorsId }) {
-  if (trackId == "track-1"){
+  if (trackId == "track-1") {
     //El primer track se construye con el rating minimo
     await buildCarrousel(trackId, MIN_RATING_FOR_RECCOMENDED)
   } else {
     await buildCarrousel(trackId)
   }
-  
+
   const carousel = document.getElementById(carouselId);
   const track = document.getElementById(trackId);
   if (!carousel || !track) return;
@@ -124,12 +124,12 @@ async function iniciarCarrusel({ carouselId, trackId, prevId, nextId, indicators
   const indicatorsWrap = document.getElementById(indicatorsId);
 
   // estado
-  let current = 0; 
+  let current = 0;
   let autoplay = true;
   const interval = 5000;
   let timer = null;
 
-  
+
   // crear indicadores
   if (indicatorsWrap) {
     indicatorsWrap.innerHTML = '';
@@ -152,11 +152,25 @@ async function iniciarCarrusel({ carouselId, trackId, prevId, nextId, indicators
   }
 
   // mover al índice real (0..realSlideCount-1)
-  function goTo(index) {
+  function goTo(index, forward = true) {
     current = index;
     const x = -((index + 1) * slidePercent);
+    const skewDeg = forward ? 5 : -5;
     track.style.transition = transitionCSS;
-    track.style.transform = `translateX(${x}%)`;
+    track.style.transform = `translateX(${x}%) skewX(${skewDeg}deg)`;
+    //correccion de skew
+    const onEnd = (e) => {
+      if (e.propertyName !== 'transform') return;
+      // dejar solo la translateX (sin skew)
+      track.style.transition = '800ms';
+      track.style.transform = `translateX(${x}%)`;
+      // restaurar la transición en el siguiente frame para futuras animaciones
+      requestAnimationFrame(() => requestAnimationFrame(() => {
+        track.style.transition = transitionCSS;
+      }));
+    };
+
+    track.addEventListener('transitionend', onEnd, { once: true });
     updateIndicators();
   }
 
@@ -179,7 +193,7 @@ async function iniciarCarrusel({ carouselId, trackId, prevId, nextId, indicators
 
   function next() {
     current++;
-    goTo(current);
+    goTo(current, true);
     if (current === realSlideCount) {
       setTimeout(jumpToFirstInstant, transitionMs);
     }
@@ -187,7 +201,7 @@ async function iniciarCarrusel({ carouselId, trackId, prevId, nextId, indicators
 
   function prev() {
     current--;
-    goTo(current);
+    goTo(current, false);
     if (current < 0) {
       setTimeout(jumpToLastInstant, transitionMs);
     }
