@@ -53,37 +53,4 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     });
 
-    // Controles de scroll horizontal (juegos)
-    document.querySelector(".game-nav.next").addEventListener("click", () => {
-        const total = genres[currentGenre].length;
-        if (currentIndex < total - 3) {
-            currentIndex++;
-            track.style.transform = `translateX(-${currentIndex * (100 / 3)}%)`;
-        }
-    });
-
-    document.querySelector(".game-nav.prev").addEventListener("click", () => {
-        if (currentIndex > 0) {
-            currentIndex--;
-            track.style.transform = `translateX(-${currentIndex * (100 / 3)}%)`;
-        }
-    });
-
-    // Navegación vertical de géneros
-    const genreList = document.querySelector(".genre-list");
-    const upBtn = document.querySelector(".genre-nav.up");
-    const downBtn = document.querySelector(".genre-nav.down");
-
-    let scrollPos = 0;
-    const step = 60;
-
-    upBtn.addEventListener("click", () => {
-        scrollPos = Math.max(scrollPos - step, 0);
-        genreList.scrollTo({ top: scrollPos, behavior: "smooth" });
-    });
-
-    downBtn.addEventListener("click", () => {
-        scrollPos = Math.min(scrollPos + step, genreList.scrollHeight);
-        genreList.scrollTo({ top: scrollPos, behavior: "smooth" });
-    });
 });
