@@ -1,0 +1,120 @@
+.genre-carousel {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 2em;
+    margin: 4em auto;
+    width: 90%;
+}
+
+.genre-selector {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: #2b1842;
+    border-radius: 1.5em;
+    padding: 1em;
+    width: 10em;
+    position: relative;
+}
+
+.genre-nav {
+    background: #1d1030;
+    color: #fff;
+    border: none;
+    font-size: 1em;
+    border-radius: 0.5em;
+    padding: 0.3em 0.5em;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+.genre-nav:hover {
+    background: #ffcc00;
+    color: #000;
+}
+
+.genre-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+    overflow: hidden;
+    height: 15em;
+    justify-content: center;
+    margin: 1em 0;
+}
+
+.genre-item {
+    background: #4b3470;
+    color: #fff;
+    font-weight: bold;
+    border: none;
+    border-radius: 0.8em;
+    padding: 0.8em;
+    cursor: pointer;
+    transition: background 0.3s ease, transform 0.2s ease;
+}
+
+.genre-item:hover {
+    background: #6d4ba8;
+}
+
+.genre-item.active {
+    background: #ffcc00;
+    color: #000;
+    transform: scale(1.05);
+}
+
+.genre-carousel-content {
+    position: relative;
+    flex: 1;
+    overflow: hidden;
+}
+
+.genre-track {
+    display: flex;
+    gap: 2em;
+    transition: transform 0.5s ease;
+}
+
+.genre-track .game-card {
+    flex: 0 0 calc(33.333% - 1.5em);
+}
+
+.game-nav {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(255, 255, 255, 0.1);
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    padding: 0.8em;
+    transition: background 0.3s ease;
+}
+
+.game-nav img {
+    width: 1.5em;
+    height: 1.5em;
+}
+
+.game-nav:hover {
+    background: #ffcc00;
+}
+
+.game-nav.prev {
+    left: -2em;
+}
+
+.game-nav.next {
+    right: -2em;
+}
+
+.genre-track .game-card{
+    height: unset;
+    max-height: 20em;
+}
+
+.genre-track .game-card figcaption{
+    min-height: 3em;
+}
