@@ -3,24 +3,24 @@ const BASE_URL = window.location.origin
 document.addEventListener("DOMContentLoaded", () => {
     const genres = {
         accion: [
-            { title: "Cyber Strike", img: `${BASE_URL}/images/cyberstrike.jpg` },
-            { title: "Battle Pulse", img: "../images/battlepulse.jpg" },
-            { title: "Rogue Core", img: "../images/roguecore.jpg" },
+            { title: "Cyber Strike", img: `images/cyberstrike.jpg` },
+            { title: "Battle Pulse", img: "images/battlepulse.jpg" },
+            { title: "Rogue Core", img: "images/roguecore.jpg" },
         ],
         aventura: [
-            { title: "Mystic Valley", img: "../images/misticvalley.jpg" },
-            { title: "Lost Tales", img: "../images/losttales.jpg" },
-            { title: "Cave Whisper", img: "../images/cavewhisper.jpg" },
+            { title: "Mystic Valley", img: "images/misticvalley.jpg" },
+            { title: "Lost Tales", img: "images/losttales.jpg" },
+            { title: "Cave Whisper", img: "images/cavewhisper.jpg" },
         ],
         deportes: [
-            { title: "Goal Rush", img: "../images/goalrush.jpg" },
-            { title: "Skate Arena", img: "../images/skatearena.jpg" },
-            { title: "Top Spin", img: "../images/topspin.jpg" },
+            { title: "Goal Rush", img: "images/goalrush.jpg" },
+            { title: "Skate Arena", img: "images/skatearena.jpg" },
+            { title: "Top Spin", img: "images/topspin.jpg" },
         ],
         puzzle: [
-            { title: "Brainstorm", img: "../images/brainstorm.jpg" },
-            { title: "Cube Logic", img: "../images/cubelogi.jpg" },
-            { title: "Mind Grid", img: "../images/mindgrid.jpg" },
+            { title: "Brainstorm", img: "images/brainstorm.jpg" },
+            { title: "Cube Logic", img: "images/cubelogi.jpg" },
+            { title: "Mind Grid", img: "images/mindgrid.jpg" },
         ]
     };
 
