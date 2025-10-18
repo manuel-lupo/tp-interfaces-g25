@@ -3,24 +3,24 @@ const BASE_URL = window.location.origin
 document.addEventListener("DOMContentLoaded", () => {
     const genres = {
         accion: [
-            { title: "Cyber Strike", img: `images/cyberstrike.jpg` },
-            { title: "Battle Pulse", img: "images/battlepulse.jpg" },
-            { title: "Rogue Core", img: "images/roguecore.jpg" },
+            { title: "Cyber Strike", img: `tp-interfaces-g25/images/cyberstrike.jpg` },
+            { title: "Battle Pulse", img: "tp-interfaces-g25/images/battlepulse.jpg" },
+            { title: "Rogue Core", img: "tp-interfaces-g25/images/roguecore.jpg" },
         ],
         aventura: [
-            { title: "Mystic Valley", img: "images/misticvalley.jpg" },
-            { title: "Lost Tales", img: "images/losttales.jpg" },
-            { title: "Cave Whisper", img: "images/cavewhisper.jpg" },
+            { title: "Mystic Valley", img: "tp-interfaces-g25/images/misticvalley.jpg" },
+            { title: "Lost Tales", img: "tp-interfaces-g25/images/losttales.jpg" },
+            { title: "Cave Whisper", img: "tp-interfaces-g25/images/cavewhisper.jpg" },
         ],
         deportes: [
-            { title: "Goal Rush", img: "images/goalrush.jpg" },
-            { title: "Skate Arena", img: "images/skatearena.jpg" },
-            { title: "Top Spin", img: "images/topspin.jpg" },
+            { title: "Goal Rush", img: "tp-interfaces-g25/images/goalrush.jpg" },
+            { title: "Skate Arena", img: "tp-interfaces-g25/images/skatearena.jpg" },
+            { title: "Top Spin", img: "tp-interfaces-g25/images/topspin.jpg" },
         ],
         puzzle: [
-            { title: "Brainstorm", img: "images/brainstorm.jpg" },
-            { title: "Cube Logic", img: "images/cubelogi.jpg" },
-            { title: "Mind Grid", img: "images/mindgrid.jpg" },
+            { title: "Brainstorm", img: "tp-interfaces-g25/images/brainstorm.jpg" },
+            { title: "Cube Logic", img: "tp-interfaces-g25/images/cubelogi.jpg" },
+            { title: "Mind Grid", img: "tp-interfaces-g25/images/mindgrid.jpg" },
         ]
     };
 
