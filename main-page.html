@@ -5,8 +5,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>GameX - Juegos en la nube</title>
-    <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="./css/style.css">
+    <link rel="stylesheet" href="./css/genre-carousel.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap"
@@ -43,7 +43,7 @@
             </li>
             <li class="menu-option">
                 <img src="./images/icons/blacklogOut-icon.png" alt="Icono de Log out">
-                <span>Cerrar sesión</span>
+                <button type="button" class="logout">Cerrar sesión</button>
             </li>
             <div class="separador"></div>
             <li class="menu-option">
@@ -56,10 +56,74 @@
             </div>
         </ul>
     </nav>
-    <div class="error-container">
-        <h1>404</h1>
-        <p>no se pudo encontrar lo que estás buscando :(</p>
-    </div>
+    <section class="carousel" aria-roledescription="carrusel" aria-label="Galería de juegos" id="carousel-1">
+        <div class="genre-label">
+            <h2>Recomendados</h2>
+        </div>
+
+        <div class="carousel-viewport">
+            <div class="carousel-track" id="track-1">
+                <figure class="carousel-slide" data-index="0">
+                    <a href="./pages/page.html">
+                        <div class="game-card peg-game">
+                            <img src="./imagenes/peg-solitaire.png" alt="Peg Solitarie: Trump vs. Xi Jinping">
+                            <figcaption>Peg Solitarie: Trump vs. Xi Jinping</figcaption>
+                        </div>
+                    </a>
+                </figure>
+                <!--Track a rellenar por JS-->
+            </div>
+        </div>
+
+        <button class="carousel-control" aria-label="Anterior" id="prev-1"><img src="./images/icons/prev-arrow-img.png"
+                alt=""></button>
+        <button class="carousel-control" aria-label="Siguiente" id="next-1"><img src="./images/icons/next-arrow-img.png"
+                alt=""></button>
+
+        <div class="carousel-indicators" id="indicators-1" aria-hidden="false"></div>
+    </section>
+
+        <section class="genre-carousel">
+        <div class="genre-selector">
+
+            <div class="genre-list">
+                <button class="genre-item active" data-genre="accion">Acción</button>
+                <button class="genre-item" data-genre="aventura">Aventura</button>
+                <button class="genre-item" data-genre="deportes">Deportes</button>
+                <button class="genre-item" data-genre="puzzle">Puzzle</button>
+            </div>
+
+        </div>
+
+        <div class="genre-carousel-content">
+            <div class="genre-track" id="genre-track">
+                <!-- Cards cargadas dinámicamente -->
+            </div>
+        </div>
+    </section>
+
+    <section class="carousel" aria-roledescription="carrusel" aria-label="Galería de juegos" id="carousel-2">
+        <div class="genre-label">
+            <h2>Recien agregados</h2>
+        </div>
+        <div class="carousel-viewport">
+            <div class="carousel-track" id="track-2">
+                <!--Track a rellenar por JS-->
+            </div>
+        </div>
+
+        <button class="carousel-control" aria-label="Anterior" id="prev-2"><img src="./images/icons/prev-arrow-img.png"
+                alt=""></button>
+        <button class="carousel-control" aria-label="Siguiente" id="next-2"><img src="./images/icons/next-arrow-img.png"
+                alt=""></button>
+
+        <div class="carousel-indicators" id="indicators-2" aria-hidden="false"></div>
+    </section>
+
+    <section class="subscription-container">
+        <a class="subscription-link" href="./error404.html">ACCEDE A NUESTRA COLECCIÓN DE JUEGOS EN LA NUBE</a>
+    </section>
+
     <footer class="fat-footer">
         <div class="footer-logo">
             <img src="./images/logos/Gamex.png" alt="Logo Gamex">
@@ -100,7 +164,6 @@
         <div class="modal-backdrop" data-close></div>
         <div class="modal-panel" role="document" tabindex="-1">
             <button class="modal-close" aria-label="Cerrar" data-close>
-                <!--&times;-->
                 <div class="cross-1"></div>
                 <div class="cross-2"></div>
             </button>
@@ -120,5 +183,8 @@
         </div>
     </div>
     <script type="module" src="./js/indexJS.js"></script>
+    <script type="module" src="./js/genre-carousel.js"></script>
     <script src="../js/logout.js"></script>
 </body>
+
+</html>

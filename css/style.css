@@ -482,6 +482,12 @@ body {
         transform: scale(1.1);
     }
 
+    .peg-game figcaption{
+        min-height: 3em;
+        color: white;
+        text-decoration: none;
+    }
+
     /* Gradiente sobre la imagen, debajo del texto */
     .game-card::before {
         content: "";

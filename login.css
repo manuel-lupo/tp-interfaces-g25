@@ -1,3 +1,8 @@
+:root {
+    --color-acento-luz: #B5AF4C;
+    --color-acento: #898226;
+}
+
 body {
     font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
     background-image: url(./imagenes/fondo.png);
@@ -24,8 +29,8 @@ body {
 
 .login {
     display: flex;
-    justify-content: center;  
-    align-items: center;      
+    justify-content: center;
+    align-items: center;
     height: 100%;
     margin: 80px;
 }
@@ -55,6 +60,22 @@ body {
     color: #B5AF4C;
 }
 
+.inicia-sesion {
+    color: var(--color-acento);
+    text-decoration: none;
+}
+
+.inicia-sesion:hover {
+    color: var(--color-acento-luz);
+    text-decoration: solid underline;
+}
+
+
+.tiene-cuenta {
+    scale: 0.8;
+    transform-origin: center;
+}
+
 .form-container input {
     width: 100%;
     padding: 10px 14px;
@@ -80,14 +101,14 @@ body {
 }
 
 .captcha {
-  display: flex;
-  justify-content: center;
-  margin: 15px 0;
+    display: flex;
+    justify-content: center;
+    margin: 15px 0;
 }
 
 .captcha img {
-  width: 60%;
-  border-radius: 10px;
+    width: 60%;
+    border-radius: 10px;
 }
 
 /* Botón */
@@ -109,37 +130,47 @@ body {
 }
 
 .success-message {
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%) scale(0.85);
-  background: rgba(26, 24, 36, 0.98);
-  color: #fff;
-  padding: 26px 34px;
-  border-radius: 12px;
-  text-align: center;
-  box-shadow: 0 6px 30px rgba(133, 77, 255, 0.25);
-  opacity: 0;
-  visibility: hidden;
-  transition: all 0.35s ease;
-  z-index: 2000;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0.85);
+    background: rgba(26, 24, 36, 0.98);
+    color: #fff;
+    padding: 26px 34px;
+    border-radius: 12px;
+    text-align: center;
+    box-shadow: 0 6px 30px rgba(133, 77, 255, 0.25);
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.35s ease;
+    z-index: 2000;
 }
 
 .success-message.show {
-  opacity: 1;
-  visibility: visible;
-  transform: translate(-50%, -50%) scale(1);
+    opacity: 1;
+    visibility: visible;
+    transform: translate(-50%, -50%) scale(1);
 }
 
 .success-message .checkmark {
-  font-size: 48px;
-  color: #8fff9a;
-  margin-bottom: 6px;
-  animation: pop 0.6s ease;
+    font-size: 48px;
+    color: #8fff9a;
+    margin-bottom: 6px;
+    animation: pop 0.6s ease;
 }
 
 @keyframes pop {
-  0% { transform: scale(0); opacity: 0; }
-  60% { transform: scale(1.2); opacity: 1; }
-  100% { transform: scale(1); }
+    0% {
+        transform: scale(0);
+        opacity: 0;
+    }
+
+    60% {
+        transform: scale(1.2);
+        opacity: 1;
+    }
+
+    100% {
+        transform: scale(1);
+    }
 }

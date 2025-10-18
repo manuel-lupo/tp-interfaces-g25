@@ -360,11 +360,3 @@ function releaseFocusTrap() {
   if (focusTrapHandler) document.removeEventListener('keydown', focusTrapHandler);
   focusTrapHandler = null;
 }
-
-const logoutButton = document.querySelector('.logout');
-
-    logoutButton.addEventListener('click', () => {
-        
-        console.log('Cerrando sesión y redirigiendo...');
-        window.location.href = './sing-in.html'; 
-    });

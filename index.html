@@ -1,190 +1,47 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GameX - Juegos en la nube</title>
+    <title>Iniciar Sesión</title>
     <link rel="stylesheet" href="./css/style.css">
-    <link rel="stylesheet" href="./css/genre-carousel.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap"
-        rel="stylesheet">
-    <link rel="icon" href="./imagenes/Gamex.png" type="images">
+    <link rel="stylesheet" href="./singin.css">
 </head>
-
 <body>
     <header class="header">
-        <div class="main-logo">
-            <a href="loadPage.html">
-                <img src="./imagenes/Gamex.png" alt="Logo Gamex">
-            </a>
+        <div class="logo">
+            <img src="./imagenes/Gamex.png" alt="Logo Gamex">
         </div>
-        <button class="menu-hamburguesa" aria-label="abrir menu" aria-expanded="false">
-            <div class="btn-top-line"></div>
-            <div class="btn-mid-line"></div>
-            <div class="btn-bottom-line"></div>
-        </button>
     </header>
-    <nav class="nav">
-        <ul>
-            <li class="menu-option">
-                <img src="./images/icons/black-profile-icon.png" alt="Icono de perfil">
-                <span>Ver mi perfil</span>
-            </li>
-            <li class="menu-option">
-                <img src="./images/icons/black-tarjeta-icon.png" alt="Icono de detalles">
-                <span>Detalles de mi cuenta</span>
-            </li>
-            <li class="menu-option">
-                <img src="./images/icons/black-heart-Icon.png" alt="Icono de favoritos">
-                <span>Favoritos</span>
-            </li>
-            <li class="menu-option">
-                <img src="./images/icons/blacklogOut-icon.png" alt="Icono de Log out">
-                <button type="button" class="logout">Cerrar sesión</button>
-            </li>
-            <div class="separador"></div>
-            <li class="menu-option">
-                <span>Siguenos:</span>
-            </li>
-            <div class="menu-icons-container">
-                <img src="./images/icons/black-instagram-icon.png" alt="Icono instagram">
-                <img src="./images/icons/black-facebook-icon.png" alt="Icono facebook">
-                <img src="./images/icons/black-youtube-icon.png" alt="Icono youtube">
-            </div>
-        </ul>
-    </nav>
-    <section class="carousel" aria-roledescription="carrusel" aria-label="Galería de juegos" id="carousel-1">
-        <div class="genre-label">
-            <h2>Recomendados</h2>
+    <main>
+        <div class="form-container">
+            <form id="singinForm">
+                <h2>INICIAR SESIÓN</h2>
+                <p>¿No tenes una cuenta? <a href="sign-in.html" class="register-link">Regístrate</a></p>
+
+                <div class="input-container">
+                    <input id="username" type="text" name="username" placeholder="Usuario" required/>
+                </div>
+
+                <div class="input-container">
+                    <input id="password" type="password" name="password" placeholder="Contraseña" required/>
+                </div>
+
+                <button type="submit" class="login-btn">INGRESAR</button>
+                <div class="social-login">
+                    <p>Puedes iniciar sesión con:</p>
+                    <div class="social-icons">
+                        <a href="loadPage.html" class="social-icon facebook">
+                            <img src="./imagenes/btn-fb.png" alt="Facebook">
+                        </a>
+                        <a href="loadPage.html" class="social-icon google">
+                            <img src="./imagenes/btn-google.png" alt="Google">
+                        </a>
+                    </div>
+                </div>
+            </form>
         </div>
-
-        <div class="carousel-viewport">
-            <div class="carousel-track" id="track-1">
-                <figure class="carousel-slide" data-index="0">
-                    <a href="./pages/page.html">
-                        <div class="game-card peg-game">
-                            <img src="./imagenes/peg-solitaire.png" alt="Peg Solitarie: Trump vs. Xi Jinping">
-                            <figcaption>Peg Solitarie: Trump vs. Xi Jinping</figcaption>
-                        </div>
-                    </a>
-                </figure>
-                <!--Track a rellenar por JS-->
-            </div>
-        </div>
-
-        <button class="carousel-control" aria-label="Anterior" id="prev-1"><img src="./images/icons/prev-arrow-img.png"
-                alt=""></button>
-        <button class="carousel-control" aria-label="Siguiente" id="next-1"><img src="./images/icons/next-arrow-img.png"
-                alt=""></button>
-
-        <div class="carousel-indicators" id="indicators-1" aria-hidden="false"></div>
-    </section>
-
-        <section class="genre-carousel">
-        <div class="genre-selector">
-
-            <div class="genre-list">
-                <button class="genre-item active" data-genre="accion">Acción</button>
-                <button class="genre-item" data-genre="aventura">Aventura</button>
-                <button class="genre-item" data-genre="deportes">Deportes</button>
-                <button class="genre-item" data-genre="puzzle">Puzzle</button>
-            </div>
-
-        </div>
-
-        <div class="genre-carousel-content">
-            <div class="genre-track" id="genre-track">
-                <!-- Cards cargadas dinámicamente -->
-            </div>
-        </div>
-    </section>
-
-    <section class="carousel" aria-roledescription="carrusel" aria-label="Galería de juegos" id="carousel-2">
-        <div class="genre-label">
-            <h2>Recien agregados</h2>
-        </div>
-        <div class="carousel-viewport">
-            <div class="carousel-track" id="track-2">
-                <!--Track a rellenar por JS-->
-            </div>
-        </div>
-
-        <button class="carousel-control" aria-label="Anterior" id="prev-2"><img src="./images/icons/prev-arrow-img.png"
-                alt=""></button>
-        <button class="carousel-control" aria-label="Siguiente" id="next-2"><img src="./images/icons/next-arrow-img.png"
-                alt=""></button>
-
-        <div class="carousel-indicators" id="indicators-2" aria-hidden="false"></div>
-    </section>
-
-    <section class="subscription-container">
-        <a class="subscription-link" href="./error404.html">ACCEDE A NUESTRA COLECCIÓN DE JUEGOS EN LA NUBE</a>
-    </section>
-
-    <footer class="fat-footer">
-        <div class="footer-logo">
-            <img src="./images/logos/Gamex.png" alt="Logo Gamex">
-        </div>
-        <div class="footer-about">
-            <h3>Acerca de nosotros</h3>
-            <p>Somos una plataforma de gaming en la nube creada para romper los limites tradicionales de la industria.
-                Nuestra misión es que jugar sea tan simple como conectarte: sin descargas, sin límites, desde cualquier
-                dispositivo. Combinamos tecnología de vanguardia con una visión audaz para transformar la forma en que
-                las personas experimentan los videojuegos.</p>
-        </div>
-        <div class="footer-legal">
-            <h4>Legal</h4>
-            <ul>
-                <li class="popUp-item" tabindex="0" role="button" data-modal="popUp-modal">Terminos de uso</li>
-                <li class="popUp-item" tabindex="0" role="button" data-modal="popUp-modal">Politicas de privacidad
-                </li>
-                <li class="popUp-item" tabindex="0" role="button" data-modal="popUp-modal">Cookies</li>
-            </ul>
-        </div>
-        <div class="footer-social">
-            <h4>Encontranos en: </h4>
-            <div class="social-icons">
-                <ul>
-                    <li><img src="./images/icons/white-youtube-icon.png" alt="Youtube"></li>
-                    <li><img src="./images/icons/white-facebook-icon.png" alt="Facebook"></li>
-                    <li><img src="./images/icons/white-tiktok-icon.png" alt="Tiktok"></li>
-                    <li><img src="./images/icons/white-instagram-icon.png" alt="Instagram"></li>
-                </ul>
-            </div>
-        </div>
-        <div class="footer-bottom">
-            <p>@2025 Gamex. Todos los derechos reservados. Gamex y el logotipo de Gamex son marcas comerciales en la ARG
-                y/o en otros países. Todas las demás marcas comerciales son propiedad de sus respectivos dueños. </p>
-        </div>
-    </footer>
-    <div id="popUp-modal" class="modal" role="dialog" aria-modal="true" aria-labelledby="popUp-title" hidden>
-        <div class="modal-backdrop" data-close></div>
-        <div class="modal-panel" role="document" tabindex="-1">
-            <button class="modal-close" aria-label="Cerrar" data-close>
-                <div class="cross-1"></div>
-                <div class="cross-2"></div>
-            </button>
-            <div class="modal-body">
-                <h2 class="modal-title" id="popUp-title">Política de Cookies</h2>
-                <p>GAMEX utiliza cookies para mejorar tu experiencia y ofrecer contenido personalizado. Al navegar por
-                    el sitio, aceptás el uso de cookies según nuestra política. Respetamos tu privacidad y protegemos
-                    tus datos personales conforme a la legislación vigente. El uso de GAMEX implica la aceptación de
-                    nuestros términos, que regulan la utilización del contenido, las funcionalidades del sitio y las
-                    responsabilidades de los usuarios. Te recomendamos leer detenidamente nuestras políticas de
-                    privacidad y condiciones de uso para conocer más sobre cómo gestionamos la información y el acceso a
-                    nuestros servicios.</p>
-            </div>
-            <div class="modal-footer">
-                <button class="modal-btn" data-close>Aceptar</button>
-            </div>
-        </div>
-    </div>
-    <script type="module" src="./js/indexJS.js"></script>
-    <script type="module" src="./js/genre-carousel.js"></script>
-
+    </main>
+    <script src="./js/singin.js"></script>
 </body>
-
 </html>

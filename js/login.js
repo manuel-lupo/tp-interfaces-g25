@@ -38,7 +38,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Redirigir luego de 1.8s
     setTimeout(() => {
-      window.location.href = './index.html'; // ajustar ruta de destino si es necesario
+      window.location.href = './main-page.html'; // ajustar ruta de destino si es necesario
     }, 1800);
   });
 });

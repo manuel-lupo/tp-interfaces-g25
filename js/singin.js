@@ -10,7 +10,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         if (usernameInput.value.trim() !== '' && passwordInput.value.trim() !== '') { 
             console.log("Redirigiendo al home...");
-            window.location.href = 'index.html'; // 
+            window.location.href = 'main-page.html'; // 
         } else {
             // Si los campos están vacíos, mostramos una alerta
             alert('Por favor, completa ambos campos.');
