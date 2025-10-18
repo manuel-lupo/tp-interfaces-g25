@@ -1,7 +1,9 @@
+const BASE_URL = window.location.origin
+
 document.addEventListener("DOMContentLoaded", () => {
     const genres = {
         accion: [
-            { title: "Cyber Strike", img: "../images/cyberstrike.jpg" },
+            { title: "Cyber Strike", img: `${BASE_URL}/images/cyberstrike.jpg` },
             { title: "Battle Pulse", img: "../images/battlepulse.jpg" },
             { title: "Rogue Core", img: "../images/roguecore.jpg" },
         ],
