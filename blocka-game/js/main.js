@@ -225,18 +225,15 @@ export class Blocka {
   }
 
   onWin() {
-    alert("GANASTEEEE!")
-    try {
-      
-    } catch (error) {
-      
-    }
     this.stopTimer();
     const totalMs = Math.round(this.elapsedMs + this.penaltyMs);
     // quitar filtros (animar)
     this.piecesState.forEach(s => {
       s.canvasEl.style.filter = 'none';
     });
+
+    let winAudio = new Audio(new URL('../assets/sounds/win_sound.mp3', import.meta.url).href)
+    winAudio.currentTime = 2;
     
     // guardar record
     //const saved = this.saveRecord(this.currentLevel.imageId, this.currentLevel.pieces, totalMs, this.usedHelp);
@@ -246,13 +243,12 @@ export class Blocka {
     modal.innerHTML = `
       <div class="end-screen">
         <h2>¡Completado!</h2>
-        <p>Tiempo: ${formatTime(totalMs)}</p>
         <button id="blocka-next">Continuar</button>
         <button id="blocka-back">Menú</button>
       </div>
     `;
 
-    console.log(modal)
+    winAudio.play()
 
     modal.querySelector('#blocka-next').addEventListener('click', () => {
       modal.classList.add('hidden');
