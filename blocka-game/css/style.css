@@ -1,0 +1,200 @@
+/* BLOCKA - styles.css
+   Minimal, responsive styles for the Blocka mini-app.
+   Designed to work with the HTML injected by main.js (classes/IDs used there).
+*/
+:root{
+  --bg:#0f1724;
+  --card:#0b1220;
+  --accent:#6ee7b7;
+  --muted:#94a3b8;
+  --text:#e6eef6;
+  --danger:#ff6b6b;
+  --gap:12px;
+  --radius:12px;
+  --shadow: 0 6px 18px rgba(2,6,23,0.6);
+}
+
+/* Reset básico */
+.blocka-app, .blocka-app *{box-sizing:border-box;font-family:Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial}
+.blocka-app img{max-width:100%;height:auto;display:block}
+
+.blocka-app{
+  background: linear-gradient(180deg,var(--bg), #07101a 60%);
+  color:var(--text);
+  padding:18px;
+  border-radius:10px;
+  box-shadow:var(--shadow);
+  width:100%;
+  max-width:1100px;
+  margin:0 auto;
+}
+
+.blocka-header{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+  margin-bottom:12px;
+}
+.blocka-header h1{
+  font-size:1.6rem;
+  margin:0;
+  letter-spacing:0.6px;
+}
+.blocka-header .small{background:transparent;border:1px solid rgba(255,255,255,0.06);color:var(--muted);padding:6px 10px;border-radius:8px}
+
+/* Config */
+.blocka-config{
+  display:flex;
+  gap:10px;
+  align-items:center;
+  margin-bottom:14px;
+}
+.blocka-config label{font-size:0.92rem;color:var(--muted)}
+.blocka-config select, .blocka-config input[type="checkbox"]{
+  margin-left:8px;
+}
+.blocka-config button{margin-left:6px;padding:8px 12px;border-radius:8px;border:none;background:var(--accent);color:#02201a;font-weight:600}
+
+/* Main layout */
+.blocka-main{
+  display:grid;
+  grid-template-columns: 160px 1fr 160px;
+  gap:var(--gap);
+  align-items:start;
+}
+
+/* Thumbnails column */
+.blocka-thumbs{
+  background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+  padding:10px;
+  border-radius:var(--radius);
+  min-height:120px;
+  display:flex;
+  flex-wrap:wrap;
+  gap:8px;
+  justify-content:center;
+}
+.blocka-thumb{width:64px;height:64px;border-radius:8px;object-fit:cover;cursor:pointer;transition:transform 160ms ease, box-shadow 160ms ease}
+.blocka-thumb:hover{transform:translateY(-4px);box-shadow:0 6px 16px rgba(0,0,0,0.45)}
+
+/* Play area */
+.blocka-play-area{
+  background:linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.02));
+  border-radius:var(--radius);
+  padding:14px;
+  min-height:320px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
+.blocka-board{
+  width:100%;
+  max-width:720px;
+  display:grid;
+  gap:8px;
+  /* default to 2 columns; JS can toggle utility classes for cols-2/3/4 */
+  grid-template-columns: repeat(2, 1fr);
+}
+
+/* Utility column classes if you want to override from JS */
+.blocka-board.cols-2{grid-template-columns: repeat(2, 1fr);} 
+.blocka-board.cols-3{grid-template-columns: repeat(3, 1fr);} 
+.blocka-board.cols-4{grid-template-columns: repeat(4, 1fr);} 
+
+.blocka-piece{
+  background: rgba(255,255,255,0.02);
+  border-radius:8px;
+  overflow:hidden;
+  position:relative;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:4px;
+  min-height:80px;
+}
+.blocka-piece canvas{display:block;max-width:100%;height:auto;user-select:none;touch-action:manipulation}
+
+/* mark for fixed/helped piece */
+.blocka-piece.helped{outline: 3px solid rgba(110,231,183,0.18);}
+.blocka-piece .help-badge{
+  position:absolute;right:6px;top:6px;background:var(--accent);color:#02201a;padding:4px 6px;border-radius:6px;font-weight:700;font-size:0.75rem;box-shadow:0 4px 10px rgba(2,6,23,0.5)
+}
+
+/* Side panel */
+.blocka-side{
+  background:linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.02));
+  padding:12px;border-radius:var(--radius);display:flex;flex-direction:column;gap:10px;align-items:center;min-height:160px;
+}
+.timer{font-size:1.05rem;font-weight:700;color:var(--accent);background:rgba(255,255,255,0.02);padding:8px 12px;border-radius:8px;width:100%;text-align:center}
+.blocka-side button{width:100%;padding:8px;border-radius:8px;border:none;background:rgba(255,255,255,0.04);color:var(--text);cursor:pointer}
+
+.blocka-footer{display:flex;justify-content:space-between;align-items:center;margin-top:12px}
+.blocka-footer button{background:transparent;border:1px solid rgba(255,255,255,0.04);padding:6px 10px;border-radius:8px;color:var(--muted)}
+
+/* Modal */
+.modal{position:fixed;left:0;top:0;width:100%;height:100%;display:flex;align-items:center;justify-content:center;background:rgba(2,6,23,0.6);z-index:0}
+.modal.hidden{display:none}
+.modal .end-screen{background:linear-gradient(180deg,#08111a,#0e1f2b);padding:20px;border-radius:10px;min-width:280px;max-width:420px;text-align:center;color:var(--text)}
+.modal .end-screen h2{margin-top:0}
+.modal .end-screen button{margin:8px;padding:8px 12px;border-radius:8px;border:none;background:var(--accent);color:#02201a}
+
+/* small screens */
+@media (max-width:900px){
+  .blocka-main{grid-template-columns: 1fr;}
+  .blocka-thumbs{order:2;display:flex;justify-content:flex-start;overflow:auto;padding:8px}
+  .blocka-play-area{order:1}
+  .blocka-side{order:3;flex-direction:row;gap:8px;align-items:center}
+  .blocka-side button{flex:1}
+  .blocka-board{max-width:100%;gap:6px}
+}
+
+/* accessibility focus states */
+.blocka-piece:focus{outline:3px solid rgba(110,231,183,0.22)}
+.blocka-thumb:focus{outline:2px solid rgba(110,231,183,0.12)}
+
+/* small niceties */
+button{cursor:pointer}
+
+/* record display */
+#blocka-record{font-size:0.9rem;color:var(--muted)}
+
+/* subtle animations */
+.blocka-piece{transition:transform 180ms ease, box-shadow 160ms ease}
+.blocka-piece:hover{transform:translateY(-3px);box-shadow:0 8px 20px rgba(0,0,0,0.45)}
+
+/* helper utility for hidden elements */
+.hidden{display:none !important}
+
+/* asegurar que el board sea Grid y que JS controle las columnas */
+.blocka-board {
+  width: 100%;
+  max-width: 720px;
+  display: grid;
+  gap: 8px;
+  grid-auto-rows: 1fr;              /* filas auto */
+  /* grid-template-columns será seteado dinámicamente por JS */
+}
+
+/* cada pieza ahora mantiene ratio cuadrado y rellena la celda */
+.blocka-piece {
+  background: rgba(255,255,255,0.02);
+  border-radius: 8px;
+  overflow: hidden;
+  position: relative;
+  padding: 0;                       /* quitar padding para evitar gaps extra */
+  display: block;
+  /* fuerza proporción cuadrada */
+  aspect-ratio: 1 / 1;
+  min-height: 0;                    /* evita crecimiento inesperado en grid */
+}
+
+/* canvas llenando la pieza (usa atributos width/height también) */
+.blocka-piece canvas {
+  width: 100% !important;
+  height: 100% !important;
+  display: block;
+  object-fit: cover;                /* recorta si es necesario */
+  transform-origin: center center;
+}
