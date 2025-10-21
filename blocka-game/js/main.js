@@ -1,6 +1,5 @@
 // /js/blocka/main.js
 import { splitImageWithFilters, calculateGrid, getCssFilterForPiece } from './level.js';
-
 import { ui as TEMPLATE } from './ui.js';
 
 function formatTime(ms) {
@@ -11,10 +10,12 @@ function formatTime(ms) {
   return `${mm}:${ss}.${msRem}`;
 }
 
+function sleep(ms) { return new Promise(res => setTimeout(res, ms)); }
+
 export class Blocka {
   constructor({ targetId, images = [], defaultPieces = 4, allowHelp = true }) {
     this.targetId = targetId;
-    this.images = images.slice(); // array of URLs
+    this.images = images.slice();
     this.piecesCount = defaultPieces;
     this.allowHelp = allowHelp;
 
@@ -25,21 +26,22 @@ export class Blocka {
     this.recordEl = null;
     this.thumbsEl = null;
 
-    this.currentLevel = null; // objeto con metadata del nivel
+    this.currentLevel = null;
     this.timerInterval = null;
     this.startedAt = null;
     this.penaltyMs = 0;
     this.elapsedMs = 0;
     this.usedHelp = false;
-    this.piecesState = []; // array de piezas con {element, rotation, originalIndex, isFixed}
+    this.piecesState = [];
+
+    // control de niveles 1..4
+    this.nextLevelNumber = 1;
   }
 
   async init() {
     const target = document.getElementById(this.targetId);
     if (!target) throw new Error('Target no encontrado: ' + this.targetId);
 
-    // inyectar template
-    console.log(TEMPLATE)
     target.innerHTML = TEMPLATE();
     this.container = target.querySelector('.blocka-app');
     this.board = target.querySelector('#blocka-board');
@@ -47,24 +49,60 @@ export class Blocka {
     this.recordEl = target.querySelector('#blocka-record');
     this.thumbsEl = target.querySelector('#blocka-thumbs');
 
+    let levelSelect = this.container.querySelector('#blocka-select-level');
+    const controlsRow = this.container.querySelector('.blocka-controls') || this.container;
+    if (!levelSelect) {
+      levelSelect = document.createElement('select');
+      levelSelect.id = 'blocka-select-level';
+      levelSelect.title = 'Seleccionar nivel';
+      const opts = [
+        { v: 1, t: 'Nivel 1' },
+        { v: 2, t: 'Nivel 2' },
+        { v: 3, t: 'Nivel 3' },
+        { v: 4, t: 'Nivel 4' }
+      ];
+      opts.forEach(o => {
+        const el = document.createElement('option');
+        el.value = String(o.v);
+        el.textContent = o.t;
+        levelSelect.appendChild(el);
+      });
+      const piecesSel = this.container.querySelector('#blocka-select-pieces');
+      if (piecesSel && piecesSel.parentNode) {
+        piecesSel.parentNode.insertBefore(levelSelect, piecesSel.nextSibling);
+      } else {
+        controlsRow.appendChild(levelSelect);
+      }
+    }
+
     // bind botones
-    target.querySelector('#blocka-start').addEventListener('click', () => this.startLevel());
-    target.querySelector('#blocka-help-btn').addEventListener('click', () => this.requestHelp());
-    target.querySelector('#blocka-pause-btn').addEventListener('click', () => this.togglePause());
-    target.querySelector('#blocka-select-pieces').value = String(this.piecesCount);
-    target.querySelector('#blocka-select-pieces').addEventListener('change', (e) => {
-      this.piecesCount = Number(e.target.value);
-    });
+    const startBtn = target.querySelector('#blocka-start');
+    if (startBtn) {
+      startBtn.addEventListener('click', () => {
+        const sel = Number(levelSelect.value) || this.nextLevelNumber;
+        this.startLevel({ level: sel });
+      });
+    }
 
-    // mostrar thumbnails
+    const helpBtn = target.querySelector('#blocka-help-btn');
+    if (helpBtn) helpBtn.addEventListener('click', () => this.requestHelp());
+
+    const pauseBtn = target.querySelector('#blocka-pause-btn');
+    if (pauseBtn) pauseBtn.addEventListener('click', () => this.togglePause());
+
+    const piecesSelect = target.querySelector('#blocka-select-pieces');
+    if (piecesSelect) {
+      piecesSelect.value = String(this.piecesCount);
+      piecesSelect.addEventListener('change', (e) => {
+        this.piecesCount = Number(e.target.value);
+      });
+    }
+
     this.renderThumbnails();
-
-    // prev load small set to improve UX (no await heavy)
     this.preloadSomeImages().catch(console.warn);
   }
 
   async preloadSomeImages() {
-    // precarga thumbnails (si existen) o las imágenes originales
     const promises = this.images.slice(0, 6).map(u => {
       return new Promise((res) => {
         const i = new Image();
@@ -77,6 +115,7 @@ export class Blocka {
   }
 
   renderThumbnails() {
+    if (!this.thumbsEl) return;
     this.thumbsEl.innerHTML = '';
     this.images.forEach((src, idx) => {
       const thumb = document.createElement('img');
@@ -86,76 +125,89 @@ export class Blocka {
       thumb.style.width = '4em';
       thumb.style.height = '4em';
       thumb.style.objectFit = 'cover';
-      // click para jugar con esa imagen en particular
       thumb.addEventListener('click', () => this.startLevel({ imageId: idx }));
       this.thumbsEl.appendChild(thumb);
     });
   }
 
-  async startLevel({ pieces = this.piecesCount, maxTime = null, imageId = null } = {}) {
+  /**
+   * startLevel options:
+   *  - pieces: # piezas
+   *  - maxTime: límite opcional
+   *  - imageId: id de imagen
+   *  - level: fuerza un nivel (1..4). Si no, se usa el selector en UI o nextLevelNumber.
+   */
+  async startLevel({ pieces = this.piecesCount, maxTime = null, imageId = null, level = null } = {}) {
     // reset estado
     this.stopTimer();
     this.penaltyMs = 0;
     this.elapsedMs = 0;
     this.usedHelp = false;
     this.piecesState = [];
-    this.board.innerHTML = '';
+    if (this.board) this.board.innerHTML = '';
 
-    // elegir imagen aleatoria si no se indicó
+    // elegir imagen
     const idx = (typeof imageId === 'number') ? imageId : (Math.floor(Math.random() * this.images.length));
     const imageUrl = this.images[idx];
-    this.currentLevel = { imageId: idx, imageUrl, pieces };
 
-    // animación simple de thumbnails previa (extra)
+    let levelToRun = level;
+    if (!levelToRun) {
+      levelToRun = this.nextLevelNumber;
+    }
+    this.nextLevelNumber = (levelToRun % 4) + 1;
+
+    this.currentLevel = { imageId: idx, imageUrl, pieces, level: levelToRun };
+
     await this.simpleThumbsAnimation(idx);
 
-    // calcular grid
     const { cols, rows } = calculateGrid(pieces);
-    // --- ADD THIS: force grid columns so pieces align compactly ---
-    this.board.style.gridTemplateColumns = `repeat(${cols}, 1fr)`;
+    if (this.board) this.board.style.gridTemplateColumns = `repeat(${cols}, 1fr)`;
 
-    // generar filtros por pieza (puedes variar por nivel; aquí ejemplo simple: rotar filtros)
-    const availableModes = ['grayscale', 'brightness', 'invert'];
-    const filtersByPiece = new Array(cols * rows).fill(null).map((_, i) => {
-      const mode = availableModes[i % availableModes.length];
-      return getCssFilterForPiece(mode);
-    });
+    // decidir filtros según nivel
+    const modeNames = ['grayscale', 'brightness', 'invert'];
+    let filtersByPiece;
+    if (levelToRun >= 1 && levelToRun <= 3) {
+      const modeName = modeNames[levelToRun - 1];
+      const cssFilter = getCssFilterForPiece(modeName);
+      filtersByPiece = new Array(cols * rows).fill(cssFilter);
+    } else {
+      const availableModes = ['grayscale', 'brightness', 'invert'];
+      filtersByPiece = new Array(cols * rows).fill(null).map(() => {
+        const mode = availableModes[Math.floor(Math.random() * availableModes.length)];
+        return getCssFilterForPiece(mode);
+      });
+    }
 
     // pedir split
     const piecesCanvas = await splitImageWithFilters(imageUrl, cols, rows, filtersByPiece);
 
-    // mezclar rotaciones iniciales y armar tablero
-    // No mezclamos posiciones (según tu enunciado solo están rotadas). Si quieres mezclar posiciones, reordenar aquí.
-    let last_rotation = null
+    // construir piezas
+    let last_rotation = null;
     piecesCanvas.forEach((p, i) => {
-      // ----------------- REPLACEMENT BLOCK FOR CREATING EACH PIECE -----------------
       const pieceWrapper = document.createElement('div');
       pieceWrapper.className = 'blocka-piece';
       pieceWrapper.dataset.originalIndex = p.originalIndex;
-
-      // Ensure canvas fills the wrapper and uses center transform origin
       const canvas = p.canvas;
-      // canvas width/height attributes were set when created by splitImageWithFilters
-      // we force the CSS fill so it covers the grid cell (square thanks to aspect-ratio)
       canvas.style.width = '100%';
       canvas.style.height = '100%';
       canvas.style.display = 'block';
       canvas.style.transformOrigin = 'center center';
       canvas.draggable = false;
 
-      // If ctx.filter wasn't supported, apply the CSS fallback stored in dataset
+      // fallback css filter
       if (canvas.dataset.cssFilter && canvas.dataset.cssFilter !== 'none') {
         canvas.style.filter = canvas.dataset.cssFilter;
+      } else if (filtersByPiece && filtersByPiece[i]) {
+        canvas.style.filter = filtersByPiece[i];
       }
 
       pieceWrapper.appendChild(canvas);
-      this.board.appendChild(pieceWrapper);
-      const getRandomRotation = ()=>{ return Math.floor(Math.random() * 4) * 90 };
-      let randomRotation = getRandomRotation()
-      while (last_rotation && randomRotation == last_rotation)
-          randomRotation =  getRandomRotation()
+      if (this.board) this.board.appendChild(pieceWrapper);
 
-      // store piece state (unchanged)
+      const getRandomRotation = () => Math.floor(Math.random() * 4) * 90;
+      let randomRotation = getRandomRotation();
+      while (last_rotation && randomRotation === last_rotation) randomRotation = getRandomRotation();
+
       const state = {
         element: pieceWrapper,
         canvasEl: canvas,
@@ -164,11 +216,13 @@ export class Blocka {
         isFixed: false
       };
 
-      this.rotatePiece(state, state.rotation, true)
+      // aplicar rot inicial sin checkVictory
+      this.rotatePiece(state, state.rotation, true);
+
       this.piecesState.push(state);
       last_rotation = state.rotation;
 
-      // events (keep same as before)
+      // events
       pieceWrapper.addEventListener('click', (ev) => {
         ev.preventDefault();
         if (state.isFixed) return;
@@ -184,7 +238,6 @@ export class Blocka {
         if (state.isFixed) return;
         this.rotatePiece(state, +90);
       }, { passive: false });
-
     });
 
     // iniciar timer
@@ -199,66 +252,95 @@ export class Blocka {
   }
 
   rotatePiece(state, deltaDeg, isBuilding = false) {
-    console.log(`Rotacion anterior = ${state.rotation}`)
     state.rotation = ((state.rotation + deltaDeg) % 360 + 360) % 360;
-    console.log(`Nueva rotacion: ${state.rotation}`)
     state.canvasEl.style.transform = `rotate(${state.rotation}deg)`;
-    // comprobar victoria
-    if (!isBuilding)
-      this.checkVictory();
+    if (!isBuilding) this.checkVictory();
   }
 
   checkVictory() {
-    // condición: todas las piezas con rotation %360 === 0
-    console.log("Checkeando victoria")
-    let sum = 0
-
-    this.piecesState.forEach((state)=> sum+=state.rotation)
-    
-    console.log(`Suma total de las rotaciones = ${sum}`)
-
-    const allOk = (sum == 0)
-    console.log(`Imagenes correctas?: ${allOk}`)
-    if (allOk) {
-      this.onWin();
-    }
+    const allOk = this.piecesState.every(s => (((s.rotation % 360) + 360) % 360) === 0);
+    if (allOk) this.onWin();
   }
 
-  onWin() {
+  async onWin() {
     this.stopTimer();
     const totalMs = Math.round(this.elapsedMs + this.penaltyMs);
-    // quitar filtros (animar)
-    this.piecesState.forEach(s => {
-      s.canvasEl.style.filter = 'none';
-    });
 
-    let winAudio = new Audio(new URL('../assets/sounds/win_sound.mp3', import.meta.url).href)
-    winAudio.currentTime = 2;
-    
-    // guardar record
-    //const saved = this.saveRecord(this.currentLevel.imageId, this.currentLevel.pieces, totalMs, this.usedHelp);
-    // mostrar modal simple
-    const modal = this.container.querySelector('#blocka-modal');
-    modal.classList.remove('hidden');
+    // Guardar record si corresponde (opcional)
+    try {
+      this.saveRecord(this.currentLevel.imageId, this.currentLevel.pieces, totalMs, this.usedHelp);
+    } catch (e) { /* ignore */ }
+
+    // Transición: fade-out de piezas
+    const wrappers = this.piecesState.map(s => s.element).filter(Boolean);
+    // Añadir clase fade-out para animar
+    wrappers.forEach(w => w.classList.add('fade-out'));
+
+    // Esperar la duración de la transición (coincide con CSS .38s)
+    await sleep(420);
+
+    // Vaciar tablero y mostrar imagen real sin filtros con fade-in
+    if (this.board) this.board.innerHTML = '';
+    const realImg = new Image();
+    realImg.src = this.currentLevel.imageUrl;
+    realImg.alt = 'completado';
+    realImg.className = 'blocka-real-img';
+    realImg.onload = () => {
+      // append hidden, then trigger visible
+      if (this.board) this.board.appendChild(realImg);
+      // small delay to allow browser to register appended element before toggling class
+      requestAnimationFrame(() => {
+        realImg.classList.add('visible'); // css hará fade-in
+      });
+    };
+    realImg.onerror = () => {
+      // fallback: si no carga, mostrar texto
+      if (this.board) this.board.innerHTML = '<div style="padding:20px;color:#333">Imagen completada</div>';
+    };
+
+    // Modal: mostrar por encima (usar active class)
+    let modal = this.container.querySelector('#blocka-modal');
+    let createdModal = false;
+    if (!modal) {
+      modal = document.createElement('div');
+      modal.id = 'blocka-modal';
+      document.body.appendChild(modal);
+      createdModal = true;
+    }
+    modal.classList.add('active');
     modal.innerHTML = `
       <div class="end-screen">
         <h2>¡Completado!</h2>
-        <button id="blocka-next">Continuar</button>
-        <button id="blocka-back">Menú</button>
+        <div style="margin-top:12px">
+          <button id="blocka-next">Continuar</button>
+          <button id="blocka-back" style="margin-left:8px">Menú</button>
+        </div>
       </div>
     `;
 
-    winAudio.play()
+    const nextBtn = modal.querySelector('#blocka-next');
+    const backBtn = modal.querySelector('#blocka-back');
 
-    modal.querySelector('#blocka-next').addEventListener('click', () => {
-      modal.classList.add('hidden');
-      // iniciar nuevo nivel (aleatorio)
+    nextBtn.addEventListener('click', () => {
+      modal.classList.remove('active');
+      if (createdModal) modal.remove();
+      // iniciar nuevo nivel (usa nextLevelNumber ya determinado en startLevel)
       this.startLevel();
     });
-    modal.querySelector('#blocka-back').addEventListener('click', () => {
-      modal.classList.add('hidden');
-      // volver a mostrar configuración / thumbs
+    backBtn.addEventListener('click', () => {
+      modal.classList.remove('active');
+      if (createdModal) modal.remove();
+      // volver a menú: limpiar tablero y mostrar thumbs
+      if (this.board) this.board.innerHTML = '';
+      this.renderThumbnails();
     });
+
+    // reproducir sonido (si existe)
+    try {
+      const winAudio = new Audio(new URL('../assets/sounds/win_sound.mp3', import.meta.url).href);
+      winAudio.currentTime = 2;
+      winAudio.play().catch(() => {});
+    } catch (e) {}
   }
 
   startTimer() {
@@ -266,8 +348,7 @@ export class Blocka {
     const tick = () => {
       if (!this.startedAt) return;
       this.elapsedMs = Math.max(0, Math.round(performance.now() - this.startedAt));
-      this.timerEl.textContent = formatTime(this.elapsedMs + this.penaltyMs);
-      // si existe maxTime: comprobar derrota
+      if (this.timerEl) this.timerEl.textContent = formatTime(this.elapsedMs + this.penaltyMs);
       if (this.currentLevel && this.currentLevel.maxTime && (this.elapsedMs + this.penaltyMs) >= this.currentLevel.maxTime) {
         this.onLose();
         return;
@@ -287,10 +368,8 @@ export class Blocka {
 
   togglePause() {
     if (this.timerInterval) {
-      // pausar
       this.stopTimer();
     } else {
-      // reanudar: ajustar startedAt para mantener elapsed
       this.startedAt = performance.now() - this.elapsedMs;
       this.startTimer();
     }
@@ -298,40 +377,46 @@ export class Blocka {
 
   async requestHelp() {
     if (!this.allowHelp || this.usedHelp) return;
-    // elegir una pieza incorrecta aleatoria
-    const incorrects = this.piecesState.filter(s => (s.rotation % 360) !== 0 && !s.isFixed);
+    const incorrects = this.piecesState.filter(s => (((s.rotation % 360) + 360) % 360) !== 0 && !s.isFixed);
     if (incorrects.length === 0) return;
     const pick = incorrects[Math.floor(Math.random() * incorrects.length)];
-    // fijarla en rot 0 y marcar
     pick.isFixed = true;
     pick.rotation = 0;
     pick.canvasEl.style.transform = 'rotate(0deg)';
-    // visual: añadir marca
     pick.element.style.outline = '3px solid rgba(0,255,0,0.3)';
     this.usedHelp = true;
-    this.penaltyMs += 5000; // +5s
-    // actualizar timer display inmediatamente
-    this.timerEl.textContent = formatTime(this.elapsedMs + this.penaltyMs);
-    // si quieres permitir solo 1 ayuda por nivel, dejamos usedHelp=true
+    this.penaltyMs += 5000;
+    if (this.timerEl) this.timerEl.textContent = formatTime(this.elapsedMs + this.penaltyMs);
   }
 
   onLose() {
     this.stopTimer();
-    const modal = this.container.querySelector('#blocka-modal');
-    modal.classList.remove('hidden');
+    let modal = this.container.querySelector('#blocka-modal');
+    let createdModal = false;
+    if (!modal) {
+      modal = document.createElement('div');
+      modal.id = 'blocka-modal';
+      document.body.appendChild(modal);
+      createdModal = true;
+    }
+    modal.classList.add('active');
     modal.innerHTML = `
       <div class="end-screen">
         <h2>¡Se acabó el tiempo!</h2>
-        <button id="blocka-retry">Reintentar</button>
-        <button id="blocka-exit">Salir</button>
+        <div style="margin-top:8px;">
+          <button id="blocka-retry">Reintentar</button>
+          <button id="blocka-exit" style="margin-left:8px">Salir</button>
+        </div>
       </div>
     `;
     modal.querySelector('#blocka-retry').addEventListener('click', () => {
-      modal.classList.add('hidden');
+      modal.classList.remove('active');
+      if (createdModal) modal.remove();
       this.startLevel();
     });
     modal.querySelector('#blocka-exit').addEventListener('click', () => {
-      modal.classList.add('hidden');
+      modal.classList.remove('active');
+      if (createdModal) modal.remove();
     });
   }
 
@@ -359,26 +444,20 @@ export class Blocka {
   }
 
   async simpleThumbsAnimation(chosenIndex) {
-    // animación rápida que recorre thumbs y se detiene en chosenIndex
     const thumbs = Array.from(this.thumbsEl.querySelectorAll('.blocka-thumb'));
     if (!thumbs.length) return;
-    let i = 0;
-    const rounds = 3; // vueltas rápidas
+    const rounds = 3;
     const total = rounds * thumbs.length + chosenIndex;
     for (let step = 0; step <= total; step++) {
       const idx = step % thumbs.length;
-      // efecto visual rápido
       thumbs.forEach((t, j) => t.style.opacity = j === idx ? '1' : '0.6');
-      await new Promise(res => setTimeout(res, 90 + Math.max(0, total - step))); // desacelera un poco al final
+      await new Promise(res => setTimeout(res, 90 + Math.max(0, total - step)));
     }
-    // reset opacities
     thumbs.forEach(t => t.style.opacity = '1');
-    // pequeño delay antes de mostrar tablero
     await new Promise(res => setTimeout(res, 180));
   }
 
   destroy() {
-    // limpia DOM insertado y stop timers
     this.stopTimer();
     const target = document.getElementById(this.targetId);
     if (target) target.innerHTML = '';

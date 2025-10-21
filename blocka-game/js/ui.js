@@ -40,6 +40,6 @@ export function ui(){ return `
   </footer>
 
   <!-- modal / end screen placeholders -->
-  <div id="blocka-modal" class="modal hidden"></div>
+  <div id="blocka-modal" class="game-modal hidden"></div>
 </div>
 `}
