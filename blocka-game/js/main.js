@@ -144,12 +144,19 @@ export class Blocka {
     this.elapsedMs = 0;
     this.usedHelp = false;
     this.piecesState = [];
-    if (this.board) this.board.innerHTML = '';
+    if (this.board) {
+      this.board.innerHTML = '';
+      // remove any explicit height left from previous runs
+      this.board.style.height = '';
+      this.board.style.gridAutoRows = '';
+      this.board.style.gridTemplateColumns = '';
+    }
 
     // elegir imagen
     const idx = (typeof imageId === 'number') ? imageId : (Math.floor(Math.random() * this.images.length));
     const imageUrl = this.images[idx];
 
+    // nivel a ejecutar
     let levelToRun = level;
     if (!levelToRun) {
       levelToRun = this.nextLevelNumber;
@@ -160,8 +167,44 @@ export class Blocka {
 
     await this.simpleThumbsAnimation(idx);
 
+    // calcular grid
     const { cols, rows } = calculateGrid(pieces);
-    if (this.board) this.board.style.gridTemplateColumns = `repeat(${cols}, 1fr)`;
+    if (this.board) {
+      this.board.style.gridTemplateColumns = `repeat(${cols}, 1fr)`;
+    }
+
+    // --- NUEVO: calcular proporción y fijar altura del board en píxeles ---
+    // Esto evita problemas con % en gridAutoRows y produce casillas exactas.
+    try {
+      const imgForRatio = new Image();
+      imgForRatio.src = imageUrl;
+      await new Promise((res) => {
+        imgForRatio.onload = res;
+        imgForRatio.onerror = res; // continuar aunque falle
+      });
+      const imgW = imgForRatio.naturalWidth || 1;
+      const imgH = imgForRatio.naturalHeight || 1;
+      const imgAspect = imgH / imgW; // height / width
+
+      if (this.board) {
+        // Anchura real del board (incluye padding; se asume box-sizing normal)
+        // Si tu CSS aplica padding/border, considera usar getBoundingClientRect().width y restar gap.
+        const boardRect = this.board.getBoundingClientRect();
+        const boardWidth = Math.max(1, boardRect.width);
+        const boardHeight = boardWidth * imgAspect;
+
+        // fijar altura total del board en px para que las filas puedan dividirse exactamente
+        this.board.style.height = `${Math.round(boardHeight)}px`;
+
+        // calcular altura por fila en px
+        const rowPx = Math.round(boardHeight / rows);
+        this.board.style.gridAutoRows = `${rowPx}px`;
+      }
+    } catch (err) {
+      console.warn('No se pudo calcular aspect ratio de la imagen:', err);
+      // fallback: no fijamos altura, dejar que el layout normal lo maneje
+    }
+    // --- FIN ajuste proporciones ---
 
     // decidir filtros según nivel
     const modeNames = ['grayscale', 'brightness', 'invert'];
@@ -187,7 +230,9 @@ export class Blocka {
       const pieceWrapper = document.createElement('div');
       pieceWrapper.className = 'blocka-piece';
       pieceWrapper.dataset.originalIndex = p.originalIndex;
+
       const canvas = p.canvas;
+      // Asegurarse de que canvas use sus atributos de píxeles y se escale exactamente
       canvas.style.width = '100%';
       canvas.style.height = '100%';
       canvas.style.display = 'block';
@@ -211,13 +256,12 @@ export class Blocka {
       const state = {
         element: pieceWrapper,
         canvasEl: canvas,
-        rotation: randomRotation,
+        rotation: 0, // start at 0, apply delta below
         originalIndex: p.originalIndex,
         isFixed: false
       };
 
-      // aplicar rot inicial sin checkVictory
-      this.rotatePiece(state, state.rotation, true);
+      this.rotatePiece(state, randomRotation, true);
 
       this.piecesState.push(state);
       last_rotation = state.rotation;
@@ -339,8 +383,8 @@ export class Blocka {
     try {
       const winAudio = new Audio(new URL('../assets/sounds/win_sound.mp3', import.meta.url).href);
       winAudio.currentTime = 2;
-      winAudio.play().catch(() => {});
-    } catch (e) {}
+      winAudio.play().catch(() => { });
+    } catch (e) { }
   }
 
   startTimer() {

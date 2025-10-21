@@ -356,16 +356,6 @@
   display: flex;
 }
 
-#blocka-modal .end-screen {
-  background: #fff;
-  padding: 18px;
-  border-radius: 10px;
-  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.25);
-  min-width: 260px;
-  max-width: 90%;
-  text-align: center;
-}
-
 /* accessibility focus states */
 .blocka-piece:focus {
   outline: 3px solid rgba(110, 231, 183, 0.22)
@@ -430,4 +420,23 @@ button {
   object-fit: cover;
   /* recorta si es necesario */
   transform-origin: center center;
+}
+
+#blocka-board {
+  display: grid;             /* si usás gap; ten en cuenta afecta el tamaño visual */
+  width: 100%;             /* o el ancho que uses en tu layout */   
+  box-sizing: border-box;
+  align-items: stretch;
+}
+
+.blocka-piece {
+  position: relative;
+  overflow: hidden;
+  max-width: 15em;
+  max-height: 15em;
+}
+
+.blocka-piece canvas {
+  display: block;
+  object-fit: cover;
 }

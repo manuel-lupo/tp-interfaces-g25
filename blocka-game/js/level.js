@@ -9,7 +9,7 @@ export async function loadImage(url, maxWidth = 1280) {
     img.onload = () => {
       // opcional: escalar para no tener canvases gigantes en móviles
       if (maxWidth && img.width > maxWidth) {
-        const scale = maxWidth / img.width;
+        const scale = 1;
         const canvas = document.createElement('canvas');
         canvas.width = Math.round(img.width * scale);
         canvas.height = Math.round(img.height * scale);
@@ -67,8 +67,8 @@ export function getCssFilterForPiece(mode) {
 export async function splitImageWithFilters(imageUrl, cols, rows, filtersByPiece = null) {
   const img = await loadImage(imageUrl);
 
-  const pieceW = Math.floor(img.width / cols);
-  const pieceH = Math.floor(img.height / rows);
+  const pieceW = img.width / cols;
+  const pieceH = img.height / rows;
   const pieces = [];
 
   for (let r = 0; r < rows; r++) {
