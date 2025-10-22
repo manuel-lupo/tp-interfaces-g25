@@ -418,8 +418,6 @@ button {
   height: 100% !important;
   display: block;
   object-fit: cover;
-  /* recorta si es necesario */
-  transform-origin: center center;
 }
 
 #blocka-board {
@@ -434,9 +432,4 @@ button {
   overflow: hidden;
   max-width: 15em;
   max-height: 15em;
-}
-
-.blocka-piece canvas {
-  display: block;
-  object-fit: cover;
 }

@@ -330,12 +330,12 @@ body {
     }
 
     .logout {
-        background-color: transparent; 
-        border: none;             
-        color: var(--color-base-sombra);            
-        cursor: pointer;           
-        font-size: 1rem;           
-        padding: 0;   
+        background-color: transparent;
+        border: none;
+        color: var(--color-base-sombra);
+        cursor: pointer;
+        font-size: 1rem;
+        padding: 0;
     }
 
     .menu-option img {
@@ -482,7 +482,7 @@ body {
         transform: scale(1.1);
     }
 
-    .peg-game figcaption{
+    .peg-game figcaption {
         min-height: 3em;
         color: white;
         text-decoration: none;
@@ -831,6 +831,39 @@ body {
         transition: 0.2s;
     }
 
+    .game-container {
+        height: 75%;
+        width: 55%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 5%;
+        background-color: rgba(74, 72, 82, 0.4);
+        border-radius: 15px;
+        padding: 30px;
+        margin: 0 auto;
+        border: 6px solid #5E590B;
+    }
+
+    .game-image-container {
+        height: 32em;
+        width: 15em;
+
+        flex: 0 0 360px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        border: 10px solid #403D06;
+        border-radius: 30%;
+        position: sticky;
+        top: 100px;
+    }
+
+    .first-image img{
+        min-width: 15em;
+        min-height: 24em;
+    }
 
 
 }

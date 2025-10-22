@@ -13,7 +13,7 @@
 
 .game-image img {
   width: 100%;
-  border-radius: 20px;;
+  border-radius: 6em;
 }
 
 .game-header {
@@ -36,7 +36,7 @@
     gap: 5%;
 }
 
-a.play {
+.play {
     background-color: #898226;
     color: #fff;
     border: none;
@@ -48,9 +48,13 @@ a.play {
     transition: all 0.3s ease;
 }
 
-a.play:hover {
+.play:hover {
     background-color: #403D06;
     transform: scale(1.05);
+}
+
+a.play{
+  text-decoration: none;
 }
 
 button.share {
@@ -82,19 +86,6 @@ button.share:hover {
   justify-content: center; 
 }
 
-.play {
-  background: #898226;
-  color: white;
-  border: 1px solid #403D06;
-  padding: 6px 16px;
-  border-radius: 20px;
-  cursor: pointer;
-  transition: 0.2s;
-}
-
-.play:hover {
-  background: #a39b00;
-}
 
 .share {
   background: #403D06;
