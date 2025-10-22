@@ -2,7 +2,7 @@ export function ui(){ return `
 <!-- fragmento inyectado -->
 <div class="blocka-app" aria-label="Juego Blocka">
   <header class="blocka-header">
-    <h1>BLOCKA</h1>
+    <h1>BLOCKA: Agarrini la palini</h1>
     <button id="blocka-btn-menu" class="small">Menú</button>
   </header>
 
