@@ -163,6 +163,14 @@ export class Blocka {
     }
     this.nextLevelNumber = (levelToRun % 4) + 1;
 
+    const lastLevel = 4;
+    const timeLimit = 10000;
+    let finalMaxTime = maxTime;
+
+    if(levelToRun == lastLevel){
+      finalMaxTime = timeLimit;
+    }
+
     this.currentLevel = { imageId: idx, imageUrl, pieces, level: levelToRun };
 
     await this.simpleThumbsAnimation(idx);
@@ -292,7 +300,7 @@ export class Blocka {
     this.updateRecordDisplay();
 
     // si existe maxTime, guardarlo en nivel (para check de derrota)
-    this.currentLevel.maxTime = maxTime || null;
+    this.currentLevel.maxTime = finalMaxTime;
   }
 
   rotatePiece(state, deltaDeg, isBuilding = false) {
@@ -314,6 +322,19 @@ export class Blocka {
     try {
       this.saveRecord(this.currentLevel.imageId, this.currentLevel.pieces, totalMs, this.usedHelp);
     } catch (e) { /* ignore */ }
+
+    let recordText = '—'; // Valor por defecto
+    try {
+      // Usamos la misma "llave" que usa saveRecord
+      const key = `blocka:record:${this.currentLevel.imageId}:${this.currentLevel.pieces}`;
+      const prevRaw = localStorage.getItem(key);
+      if (prevRaw) {
+          const prev = JSON.parse(prevRaw);
+          // Le damos formato al tiempo récord
+          recordText = formatTime(prev.bestMs) + (prev.usedHelp ? ' (con ayuda)' : '');
+      }
+    } catch (e) { /* ignorar si falla localStorage */ }
+    // ----- FIN DEL BLOQUE NUEVO -----
 
     // Transición: fade-out de piezas
     const wrappers = this.piecesState.map(s => s.element).filter(Boolean);
@@ -355,6 +376,8 @@ export class Blocka {
     modal.innerHTML = `
       <div class="end-screen">
         <h2>¡Completado!</h2>
+        <p>Tu tiempo: ${formatTime(totalMs)}</p>
+        <p>Récord: ${recordText}</p>
         <div style="margin-top:12px">
           <button id="blocka-next">Continuar</button>
           <button id="blocka-back" style="margin-left:8px">Menú</button>
@@ -388,7 +411,6 @@ export class Blocka {
   }
 
   startTimer() {
-    this.stopTimer();
     const tick = () => {
       if (!this.startedAt) return;
       this.elapsedMs = Math.max(0, Math.round(performance.now() - this.startedAt));
@@ -435,6 +457,7 @@ export class Blocka {
 
   onLose() {
     this.stopTimer();
+    const levelToRetry = this.currentLevel;
     let modal = this.container.querySelector('#blocka-modal');
     let createdModal = false;
     if (!modal) {
@@ -456,7 +479,7 @@ export class Blocka {
     modal.querySelector('#blocka-retry').addEventListener('click', () => {
       modal.classList.remove('active');
       if (createdModal) modal.remove();
-      this.startLevel();
+      this.startLevel({level: levelToRetry.level});
     });
     modal.querySelector('#blocka-exit').addEventListener('click', () => {
       modal.classList.remove('active');
@@ -476,10 +499,11 @@ export class Blocka {
   }
 
   saveRecord(imageId, piecesCount, timeMs, usedHelp = false) {
+    if (timeMs <= 0) return false;
     const key = `blocka:record:${imageId}:${piecesCount}`;
     const prevRaw = localStorage.getItem(key);
     const prev = prevRaw ? JSON.parse(prevRaw) : null;
-    if (!prev || timeMs < prev.bestMs) {
+    if (!prev || timeMs < prev.bestMs || prev.bestMs === 0) {
       localStorage.setItem(key, JSON.stringify({ bestMs: timeMs, date: new Date().toISOString(), usedHelp }));
       this.updateRecordDisplay();
       return true;
