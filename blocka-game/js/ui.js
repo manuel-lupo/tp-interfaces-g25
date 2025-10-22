@@ -7,7 +7,6 @@ export function ui(){ return `
   </header>
 
   <section class="blocka-config" id="blocka-config">
-    <!-- opciones: piezas, dificultad, ayudita -->
     <label>Subimagenes:
       <select id="blocka-select-pieces">
         <option value="4">4</option>
@@ -23,7 +22,6 @@ export function ui(){ return `
     <aside class="blocka-thumbs" id="blocka-thumbs"></aside>
 
     <div class="blocka-play-area" id="blocka-play-area" aria-live="polite">
-      <!-- aquí se montan los canvases / piezas -->
       <div id="blocka-board" class="blocka-board"></div>
     </div>
 
@@ -39,7 +37,7 @@ export function ui(){ return `
     <div id="blocka-record">Récord: —</div>
   </footer>
 
-  <!-- modal / end screen placeholders -->
+  <!-- end screen placeholder -->
   <div id="blocka-modal" class="game-modal hidden"></div>
 </div>
 `}
