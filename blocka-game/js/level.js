@@ -7,9 +7,9 @@ export async function loadImage(url, maxWidth = 1280) {
     const img = new Image();
     img.crossOrigin = 'anonymous';
     img.onload = () => {
-      // opcional: escalar para no tener canvases gigantes en móviles
+      // Escalado segun tamano maximo de pantalla
       if (maxWidth && img.width > maxWidth) {
-        const scale = 1;
+        const scale = maxWidth/img.width;
         const canvas = document.createElement('canvas');
         canvas.width = Math.round(img.width * scale);
         canvas.height = Math.round(img.height * scale);
@@ -37,7 +37,6 @@ export function calculateGrid(piecesCount) {
   if (piecesCount === 4) return { cols: 2, rows: 2 };
   if (piecesCount === 6) return { cols: 3, rows: 2 };
   if (piecesCount === 8) return { cols: 4, rows: 2 };
-  // fallback aproximado: intentar cuadrado lo más cercano
   const cols = Math.ceil(Math.sqrt(piecesCount));
   const rows = Math.ceil(piecesCount / cols);
   return { cols, rows };
