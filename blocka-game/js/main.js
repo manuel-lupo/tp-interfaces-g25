@@ -576,3 +576,7 @@ export class Blocka {
     if (target) target.innerHTML = '';
   }
 }
+/** const helpButton = document.getElementById('help-button');
+
+helpButton.addEventListener('click', ()=>{
+})**/

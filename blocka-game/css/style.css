@@ -30,7 +30,7 @@
 .blocka-app {
   background: linear-gradient(180deg, var(--bg), #07101a 60%);
   color: var(--text);
-  padding: 18px;
+  padding: 5px 18px 18px;
   border-radius: 10px;
   box-shadow: var(--shadow);
   width: 100%;

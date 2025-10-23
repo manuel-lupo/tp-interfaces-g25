@@ -1,6 +1,9 @@
-export function ui(){ return `
+export function ui() {
+  return `
 <!-- fragmento inyectado -->
 <div class="blocka-app" aria-label="Juego Blocka">
+<div class="game-buttons">
+</div>
   <header class="blocka-header">
     <h1>BLOCKA: Agarrini la palini</h1>
     <a href="../pages/blocka-page.html" class="small">Atrás</a>
@@ -41,5 +44,5 @@ export function ui(){ return `
 
   <!-- modal / end screen placeholders -->
   <div id="blocka-modal" class="game-modal hidden"></div>
-</div>
+  </div>
 `}
