@@ -15,7 +15,6 @@ export function ui(){ return `
         <option value="8">8</option>
       </select>
     </label>
-    <label>Ayudita: <input id="blocka-help" type="checkbox"></label>
     <button id="blocka-start">Comenzar</button>
   </section>
 
@@ -36,7 +35,6 @@ export function ui(){ return `
 
   <footer class="blocka-footer">
     <button id="blocka-instr">Instrucciones</button>
-    <div id="blocka-record">Récord: —</div>
   </footer>
 
   <!-- modal / end screen placeholders -->
