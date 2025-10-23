@@ -3,7 +3,7 @@ export function ui(){ return `
 <div class="blocka-app" aria-label="Juego Blocka">
   <header class="blocka-header">
     <h1>BLOCKA: Agarrini la palini</h1>
-    <button id="blocka-btn-menu" class="small">Menú</button>
+    <a href="../pages/blocka-page.html" class="small">Atrás</a>
   </header>
 
   <section class="blocka-config" id="blocka-config">

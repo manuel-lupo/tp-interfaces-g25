@@ -49,12 +49,12 @@ export class Blocka {
     this.recordEl = target.querySelector('#blocka-record');
     this.thumbsEl = target.querySelector('#blocka-thumbs');
 
-    let levelSelect = this.container.querySelector('#blocka-select-level');
+    this.levelSelect = this.container.querySelector('#blocka-select-level');
     const controlsRow = this.container.querySelector('.blocka-controls') || this.container;
-    if (!levelSelect) {
-      levelSelect = document.createElement('select');
-      levelSelect.id = 'blocka-select-level';
-      levelSelect.title = 'Seleccionar nivel';
+    if (!this.levelSelect) {
+      this.levelSelect = document.createElement('select');
+      this.levelSelect.id = 'blocka-select-level';
+      this.levelSelect.title = 'Seleccionar nivel';
       const opts = [
         { v: 1, t: 'Nivel 1' },
         { v: 2, t: 'Nivel 2' },
@@ -65,13 +65,13 @@ export class Blocka {
         const el = document.createElement('option');
         el.value = String(o.v);
         el.textContent = o.t;
-        levelSelect.appendChild(el);
+        this.levelSelect.appendChild(el);
       });
       const piecesSel = this.container.querySelector('#blocka-select-pieces');
       if (piecesSel && piecesSel.parentNode) {
-        piecesSel.parentNode.insertBefore(levelSelect, piecesSel.nextSibling);
+        piecesSel.parentNode.insertBefore(this.levelSelect, piecesSel.nextSibling);
       } else {
-        controlsRow.appendChild(levelSelect);
+        controlsRow.appendChild(this.levelSelect);
       }
     }
 
@@ -79,9 +79,9 @@ export class Blocka {
     const startBtn = target.querySelector('#blocka-start');
     if (startBtn) {
       startBtn.addEventListener('click', () => {
-        const sel = Number(levelSelect.value) || this.nextLevelNumber;
+        const sel = Number(this.levelSelect.value) || this.nextLevelNumber;
         this.startLevel({ level: sel });
-      });
+      }); 
     }
 
     const helpBtn = target.querySelector('#blocka-help-btn');
@@ -98,9 +98,50 @@ export class Blocka {
       });
     }
 
+    const instrBtn = target.querySelector('#blocka-instr');
+    let instrModal = document.getElementById('blocka-instr-modal');
+
+    // 1. Crear el HTML del modal (solo si no existe)
+    if (!instrModal) {
+    instrModal = document.createElement('div');
+    instrModal.id = 'blocka-instr-modal';
+    instrModal.className = 'modal-overlay hidden'; // Oculto por defecto
+    instrModal.innerHTML = `
+    <div class="modal-content">
+      <span class="modal-close">&times;</span>
+      <h2>Cómo Jugar</h2>
+      <ul class="instructions-list">
+        <li>Elige un nivel y presiona "Comenzar".</li>
+        <li>La imagen se dividirá en piezas y se rotará.</li>
+        <li><strong>Clic Izquierdo:</strong> Gira la pieza 90° a la izquierda.</li>
+        <li><strong>Clic Derecho:</strong> Gira la pieza 90° a la derecha.</li>
+        <li>¡Arma la imagen completa en el menor tiempo posible!</li>
+      </ul>
+    </div>
+      `;
+      document.body.appendChild(instrModal); 
+    }
+
+    const instrCloseBtn = instrModal.querySelector('.modal-close');
+
+    // 2. Listener para ABRIR el modal
+    if (instrBtn) {
+      instrBtn.addEventListener('click', () => {
+        instrModal.classList.remove('hidden'); // Muestra el modal
+      });
+    }
+
+    // 3. Listener para CERRAR con el botón 'X'
+    if (instrCloseBtn) {
+      instrCloseBtn.addEventListener('click', () => {
+        instrModal.classList.add('hidden'); // Oculta el modal
+      });
+    }
+
     this.renderThumbnails();
     this.preloadSomeImages().catch(console.warn);
   }
+
 
   async preloadSomeImages() {
     const promises = this.images.slice(0, 6).map(u => {
@@ -162,6 +203,10 @@ export class Blocka {
       levelToRun = this.nextLevelNumber;
     }
     this.nextLevelNumber = (levelToRun % 4) + 1;
+
+    if (this.levelSelect) {
+      this.levelSelect.value = levelToRun;
+    }
 
     const lastLevel = 4;
     const timeLimit = 10000;
