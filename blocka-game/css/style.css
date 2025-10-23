@@ -477,7 +477,7 @@ button {
   /* quitar padding para evitar gaps extra */
   display: block;
   /* fuerza proporción cuadrada */
-  aspect-ratio: 1 / 1;
+  /*aspect-ratio: 1 / 1;*/
   min-height: 0;
   /* evita crecimiento inesperado en grid */
 }
