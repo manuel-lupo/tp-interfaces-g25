@@ -139,6 +139,8 @@
   max-width: 720px;
   display: grid;
   gap: 8px;
+  margin: 0;
+  justify-content: center;
   /* default to 2 columns; JS can toggle utility classes for cols-2/3/4 */
   grid-template-columns: repeat(2, 1fr);
 }
@@ -166,6 +168,8 @@
   justify-content: center;
   padding: 4px;
   min-height: 80px;
+  width: auto;
+  height: auto;
 }
 
 .blocka-piece canvas {
@@ -496,6 +500,7 @@ button {
 .blocka-piece {
   position: relative;
   overflow: hidden;
-  max-width: 15em;
-  max-height: 15em;
+  
+  max-width: 25em;
+  max-height: 25em;
 }
