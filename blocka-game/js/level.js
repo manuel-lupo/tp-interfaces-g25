@@ -65,13 +65,21 @@ export function getCssFilterForPiece(mode) {
  */
 export async function splitImageWithFilters(imageUrl, cols, rows, filtersByPiece = null) {
   const img = await loadImage(imageUrl);
-
-  const pieceW = img.width / cols;
-  const pieceH = img.height / rows;
   const pieces = [];
 
+  const totalW = img.width;
+  const totalH = img.height;
+
+  let y0 = 0;
   for (let r = 0; r < rows; r++) {
+    const y1 = Math.round(((r + 1) * totalH) / rows);
+    const pieceH = y1 - Math.round((r * totalH) / rows);
+    let x0 = 0;
+
     for (let c = 0; c < cols; c++) {
+      const x1 = Math.round(((c + 1) * totalW) / cols);
+      const pieceW = x1 - Math.round((c * totalW) / cols);
+
       const canvas = document.createElement('canvas');
       canvas.width = pieceW;
       canvas.height = pieceH;
@@ -80,27 +88,24 @@ export async function splitImageWithFilters(imageUrl, cols, rows, filtersByPiece
       const idx = r * cols + c;
       const cssFilter = (filtersByPiece && filtersByPiece[idx]) ? filtersByPiece[idx] : 'none';
 
-      // try to use ctx.filter if supported
       if (typeof ctx.filter !== 'undefined') {
         ctx.save();
         ctx.filter = cssFilter === 'none' ? 'none' : cssFilter;
-        ctx.drawImage(img, c * pieceW, r * pieceH, pieceW, pieceH, 0, 0, pieceW, pieceH);
+        ctx.drawImage(img, x0, y0, pieceW, pieceH, 0, 0, pieceW, pieceH);
         ctx.restore();
         canvas.dataset.cssFilter = 'none';
       } else {
-        // fallback: dibuja sin filtro y deja la info para aplicar CSS filter sobre el elemento
-        ctx.drawImage(img, c * pieceW, r * pieceH, pieceW, pieceH, 0, 0, pieceW, pieceH);
+        ctx.drawImage(img, x0, y0, pieceW, pieceH, 0, 0, pieceW, pieceH);
         canvas.dataset.cssFilter = cssFilter;
       }
 
-      // asignamos índice original
-      pieces.push({
-        canvas,
-        originalIndex: idx,
-        cssFilter
-      });
+      pieces.push({ canvas, originalIndex: idx, cssFilter });
+      x0 = x1;
     }
+
+    y0 = y1;
   }
 
   return pieces;
 }
+

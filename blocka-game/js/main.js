@@ -138,7 +138,6 @@ export class Blocka {
    *  - level: fuerza un nivel (1..4). Si no, se usa el selector en UI o nextLevelNumber.
    */
   async startLevel({ pieces = this.piecesCount, maxTime = null, imageId = null, level = null } = {}) {
-    // reset estado
     this.stopTimer();
     this.penaltyMs = 0;
     this.elapsedMs = 0;
@@ -146,21 +145,18 @@ export class Blocka {
     this.piecesState = [];
     if (this.board) {
       this.board.innerHTML = '';
-      // remove any explicit height left from previous runs
       this.board.style.height = '';
       this.board.style.gridAutoRows = '';
       this.board.style.gridTemplateColumns = '';
     }
 
+
     // elegir imagen
     const idx = (typeof imageId === 'number') ? imageId : (Math.floor(Math.random() * this.images.length));
     const imageUrl = this.images[idx];
 
-    // nivel a ejecutar
-    let levelToRun = level;
-    if (!levelToRun) {
-      levelToRun = this.nextLevelNumber;
-    }
+    // nivel
+    let levelToRun = level || this.nextLevelNumber || 1;
     this.nextLevelNumber = (levelToRun % 4) + 1;
 
     const lastLevel = 4;
@@ -170,51 +166,31 @@ export class Blocka {
     if(levelToRun == lastLevel){
       finalMaxTime = timeLimit;
     }
-
     this.currentLevel = { imageId: idx, imageUrl, pieces, level: levelToRun };
 
     await this.simpleThumbsAnimation(idx);
 
-    // calcular grid
-    const { cols, rows } = calculateGrid(pieces);
-    if (this.board) {
-      this.board.style.gridTemplateColumns = `repeat(${cols}, 1fr)`;
-    }
+    // determinar grid según número de piezas
+    let cols, rows;
+    if (pieces === 4) { cols = 2; rows = 2; }
+    else if (pieces === 6) { cols = 3; rows = 2; }
+    else if (pieces === 8) { cols = 4; rows = 2; }
 
-    // --- NUEVO: calcular proporción y fijar altura del board en píxeles ---
-    // Esto evita problemas con % en gridAutoRows y produce casillas exactas.
-    try {
-      const imgForRatio = new Image();
-      imgForRatio.src = imageUrl;
-      await new Promise((res) => {
-        imgForRatio.onload = res;
-        imgForRatio.onerror = res; // continuar aunque falle
-      });
-      const imgW = imgForRatio.naturalWidth || 1;
-      const imgH = imgForRatio.naturalHeight || 1;
-      const imgAspect = imgH / imgW; // height / width
+    this.board.style.gridTemplateColumns = `repeat(${cols}, 1fr)`;
 
-      if (this.board) {
-        // Anchura real del board (incluye padding; se asume box-sizing normal)
-        // Si tu CSS aplica padding/border, considera usar getBoundingClientRect().width y restar gap.
-        const boardRect = this.board.getBoundingClientRect();
-        const boardWidth = Math.max(1, boardRect.width);
-        const boardHeight = boardWidth * imgAspect;
+    // cargar imagen para obtener relación
+    const imgForRatio = new Image();
+    imgForRatio.src = imageUrl;
+    await new Promise(res => { imgForRatio.onload = res; imgForRatio.onerror = res; });
+    const aspect = imgForRatio.naturalHeight / imgForRatio.naturalWidth;
 
-        // fijar altura total del board en px para que las filas puedan dividirse exactamente
-        this.board.style.height = `${Math.round(boardHeight)}px`;
+    // ajustar board para mantener la imagen completa visible
+    const boardWidth = this.board.getBoundingClientRect().width;
+    const boardHeight = boardWidth * aspect;
+    this.board.style.height = `${boardHeight}px`;
+    this.board.style.gridAutoRows = `${boardHeight / rows}px`;
 
-        // calcular altura por fila en px
-        const rowPx = Math.round(boardHeight / rows);
-        this.board.style.gridAutoRows = `${rowPx}px`;
-      }
-    } catch (err) {
-      console.warn('No se pudo calcular aspect ratio de la imagen:', err);
-      // fallback: no fijamos altura, dejar que el layout normal lo maneje
-    }
-    // --- FIN ajuste proporciones ---
-
-    // decidir filtros según nivel
+    // aplicar filtros por nivel
     const modeNames = ['grayscale', 'brightness', 'invert'];
     let filtersByPiece;
     if (levelToRun >= 1 && levelToRun <= 3) {
@@ -229,10 +205,10 @@ export class Blocka {
       });
     }
 
-    // pedir split
+    // dividir imagen
     const piecesCanvas = await splitImageWithFilters(imageUrl, cols, rows, filtersByPiece);
 
-    // construir piezas
+    // crear piezas
     let last_rotation = null;
     piecesCanvas.forEach((p, i) => {
       const pieceWrapper = document.createElement('div');
@@ -240,14 +216,13 @@ export class Blocka {
       pieceWrapper.dataset.originalIndex = p.originalIndex;
 
       const canvas = p.canvas;
-      // Asegurarse de que canvas use sus atributos de píxeles y se escale exactamente
       canvas.style.width = '100%';
       canvas.style.height = '100%';
       canvas.style.display = 'block';
       canvas.style.transformOrigin = 'center center';
       canvas.draggable = false;
 
-      // fallback css filter
+      // aplicar filtro
       if (canvas.dataset.cssFilter && canvas.dataset.cssFilter !== 'none') {
         canvas.style.filter = canvas.dataset.cssFilter;
       } else if (filtersByPiece && filtersByPiece[i]) {
@@ -255,26 +230,25 @@ export class Blocka {
       }
 
       pieceWrapper.appendChild(canvas);
-      if (this.board) this.board.appendChild(pieceWrapper);
+      this.board.appendChild(pieceWrapper);
 
       const getRandomRotation = () => Math.floor(Math.random() * 4) * 90;
       let randomRotation = getRandomRotation();
-      while (last_rotation && randomRotation === last_rotation) randomRotation = getRandomRotation();
+      while (last_rotation && randomRotation === last_rotation)
+        randomRotation = getRandomRotation();
 
       const state = {
         element: pieceWrapper,
         canvasEl: canvas,
-        rotation: 0, // start at 0, apply delta below
+        rotation: 0,
         originalIndex: p.originalIndex,
         isFixed: false
       };
 
       this.rotatePiece(state, randomRotation, true);
-
       this.piecesState.push(state);
       last_rotation = state.rotation;
 
-      // events
       pieceWrapper.addEventListener('click', (ev) => {
         ev.preventDefault();
         if (state.isFixed) return;
@@ -295,13 +269,11 @@ export class Blocka {
     // iniciar timer
     this.startedAt = performance.now();
     this.startTimer();
-
-    // update record display
     this.updateRecordDisplay();
-
-    // si existe maxTime, guardarlo en nivel (para check de derrota)
     this.currentLevel.maxTime = finalMaxTime;
   }
+
+
 
   rotatePiece(state, deltaDeg, isBuilding = false) {
     state.rotation = ((state.rotation + deltaDeg) % 360 + 360) % 360;
