@@ -1,14 +1,7 @@
 // /js/blocka/main.js
 import { splitImageWithFilters, calculateGrid, getCssFilterForPiece } from './level.js';
 import { ui as TEMPLATE } from './ui.js';
-
-function formatTime(ms) {
-  const s = Math.floor(ms / 1000);
-  const mm = String(Math.floor(s / 60)).padStart(2, '0');
-  const ss = String(s % 60).padStart(2, '0');
-  const msRem = String(ms % 1000).padStart(3, '0');
-  return `${mm}:${ss}.${msRem}`;
-}
+import { Timer, formatTime } from './timer.js';
 
 function sleep(ms) { return new Promise(res => setTimeout(res, ms)); }
 
@@ -27,12 +20,9 @@ export class Blocka {
     this.thumbsEl = null;
 
     this.currentLevel = null;
-    this.timerInterval = null;
-    this.startedAt = null;
-    this.penaltyMs = 0;
-    this.elapsedMs = 0;
     this.usedHelp = false;
     this.piecesState = [];
+    this.timer = null;
 
     // control de niveles 1..4
     this.nextLevelNumber = 1;
@@ -48,6 +38,8 @@ export class Blocka {
     this.timerEl = target.querySelector('#blocka-timer');
     this.recordEl = target.querySelector('#blocka-record');
     this.thumbsEl = target.querySelector('#blocka-thumbs');
+
+    this.timer = new Timer(this.timerEl);
 
     this.levelSelect = this.container.querySelector('#blocka-select-level');
     const controlsRow = this.container.querySelector('.blocka-controls') || this.container;
@@ -180,9 +172,7 @@ export class Blocka {
    */
   async startLevel({ pieces = this.piecesCount, maxTime = null, imageId = null, level = null } = {}) {
     // reset estado
-    this.stopTimer();
-    this.penaltyMs = 0;
-    this.elapsedMs = 0;
+    this.timer.reset();
     this.usedHelp = false;
     this.piecesState = [];
     if (this.board) {
@@ -338,8 +328,11 @@ export class Blocka {
     });
 
     // iniciar timer
-    this.startedAt = performance.now();
-    this.startTimer();
+    this.timer.start((totalMs) => {
+      if(this.currentLevel && this.currentLevel.maxTime && totalMs >= this.currentLevel.maxTime) {
+        this.onLose();
+      }
+    });
 
     // update record display
     this.updateRecordDisplay();
@@ -360,8 +353,8 @@ export class Blocka {
   }
 
   async onWin() {
-    this.stopTimer();
-    const totalMs = Math.round(this.elapsedMs + this.penaltyMs);
+    this.timer.stop();
+    const totalMs = this.timer.getTotalMs();
 
     // Guardar record si corresponde (opcional)
     try {
@@ -455,34 +448,15 @@ export class Blocka {
     } catch (e) { }
   }
 
-  startTimer() {
-    const tick = () => {
-      if (!this.startedAt) return;
-      this.elapsedMs = Math.max(0, Math.round(performance.now() - this.startedAt));
-      if (this.timerEl) this.timerEl.textContent = formatTime(this.elapsedMs + this.penaltyMs);
-      if (this.currentLevel && this.currentLevel.maxTime && (this.elapsedMs + this.penaltyMs) >= this.currentLevel.maxTime) {
-        this.onLose();
-        return;
-      }
-      this.timerInterval = requestAnimationFrame(tick);
-    };
-    this.timerInterval = requestAnimationFrame(tick);
-  }
-
-  stopTimer() {
-    if (this.timerInterval) {
-      cancelAnimationFrame(this.timerInterval);
-      this.timerInterval = null;
-    }
-    this.startedAt = null;
-  }
-
   togglePause() {
-    if (this.timerInterval) {
-      this.stopTimer();
+    if (this.timer.isRunning) {
+      this.timer.pause();
     } else {
-      this.startedAt = performance.now() - this.elapsedMs;
-      this.startTimer();
+      this.timer.resume((TotalMs) => {
+        if(this.currentLevel && this.currentLevel.maxTime && totalMs >= this.currentLevel.maxTime) {
+          this.onLose();
+        }
+      });
     }
   }
 
@@ -496,12 +470,11 @@ export class Blocka {
     pick.canvasEl.style.transform = 'rotate(0deg)';
     pick.element.style.outline = '3px solid rgba(0,255,0,0.3)';
     this.usedHelp = true;
-    this.penaltyMs += 5000;
-    if (this.timerEl) this.timerEl.textContent = formatTime(this.elapsedMs + this.penaltyMs);
+    this.timer.addPenalty(5000);
   }
 
   onLose() {
-    this.stopTimer();
+    this.timer.stop();
     const levelToRetry = this.currentLevel;
     let modal = this.container.querySelector('#blocka-modal');
     let createdModal = false;
@@ -571,7 +544,7 @@ export class Blocka {
   }
 
   destroy() {
-    this.stopTimer();
+    this.timer.stop();
     const target = document.getElementById(this.targetId);
     if (target) target.innerHTML = '';
   }
