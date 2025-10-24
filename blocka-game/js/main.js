@@ -1,14 +1,7 @@
 // /js/blocka/main.js
 import { splitImageWithFilters, calculateGrid, getCssFilterForPiece } from './level.js';
 import { ui as TEMPLATE } from './ui.js';
-
-function formatTime(ms) {
-  const s = Math.floor(ms / 1000);
-  const mm = String(Math.floor(s / 60)).padStart(2, '0');
-  const ss = String(s % 60).padStart(2, '0');
-  const msRem = String(ms % 1000).padStart(3, '0');
-  return `${mm}:${ss}.${msRem}`;
-}
+import { Timer, formatTime } from './timer.js';
 
 function sleep(ms) { return new Promise(res => setTimeout(res, ms)); }
 
@@ -27,12 +20,9 @@ export class Blocka {
     this.thumbsEl = null;
 
     this.currentLevel = null;
-    this.timerInterval = null;
-    this.startedAt = null;
-    this.penaltyMs = 0;
-    this.elapsedMs = 0;
     this.usedHelp = false;
     this.piecesState = [];
+    this.timer = null;
 
     // control de niveles 1..4
     this.nextLevelNumber = 1;
@@ -49,12 +39,14 @@ export class Blocka {
     this.recordEl = target.querySelector('#blocka-record');
     this.thumbsEl = target.querySelector('#blocka-thumbs');
 
-    let levelSelect = this.container.querySelector('#blocka-select-level');
+    this.timer = new Timer(this.timerEl);
+
+    this.levelSelect = this.container.querySelector('#blocka-select-level');
     const controlsRow = this.container.querySelector('.blocka-controls') || this.container;
-    if (!levelSelect) {
-      levelSelect = document.createElement('select');
-      levelSelect.id = 'blocka-select-level';
-      levelSelect.title = 'Seleccionar nivel';
+    if (!this.levelSelect) {
+      this.levelSelect = document.createElement('select');
+      this.levelSelect.id = 'blocka-select-level';
+      this.levelSelect.title = 'Seleccionar nivel';
       const opts = [
         { v: 1, t: 'Nivel 1' },
         { v: 2, t: 'Nivel 2' },
@@ -65,13 +57,13 @@ export class Blocka {
         const el = document.createElement('option');
         el.value = String(o.v);
         el.textContent = o.t;
-        levelSelect.appendChild(el);
+        this.levelSelect.appendChild(el);
       });
       const piecesSel = this.container.querySelector('#blocka-select-pieces');
       if (piecesSel && piecesSel.parentNode) {
-        piecesSel.parentNode.insertBefore(levelSelect, piecesSel.nextSibling);
+        piecesSel.parentNode.insertBefore(this.levelSelect, piecesSel.nextSibling);
       } else {
-        controlsRow.appendChild(levelSelect);
+        controlsRow.appendChild(this.levelSelect);
       }
     }
 
@@ -79,9 +71,9 @@ export class Blocka {
     const startBtn = target.querySelector('#blocka-start');
     if (startBtn) {
       startBtn.addEventListener('click', () => {
-        const sel = Number(levelSelect.value) || this.nextLevelNumber;
+        const sel = Number(this.levelSelect.value) || this.nextLevelNumber;
         this.startLevel({ level: sel });
-      });
+      }); 
     }
 
     const helpBtn = target.querySelector('#blocka-help-btn');
@@ -98,9 +90,50 @@ export class Blocka {
       });
     }
 
+    const instrBtn = target.querySelector('#blocka-instr');
+    let instrModal = document.getElementById('blocka-instr-modal');
+
+    // 1. Crear el HTML del modal (solo si no existe)
+    if (!instrModal) {
+    instrModal = document.createElement('div');
+    instrModal.id = 'blocka-instr-modal';
+    instrModal.className = 'modal-overlay hidden'; // Oculto por defecto
+    instrModal.innerHTML = `
+    <div class="modal-content">
+      <span class="modal-close">&times;</span>
+      <h2>Cómo Jugar</h2>
+      <ul class="instructions-list">
+        <li>Elige un nivel y presiona "Comenzar".</li>
+        <li>La imagen se dividirá en piezas y se rotará.</li>
+        <li><strong>Clic Izquierdo:</strong> Gira la pieza 90° a la izquierda.</li>
+        <li><strong>Clic Derecho:</strong> Gira la pieza 90° a la derecha.</li>
+        <li>¡Arma la imagen completa en el menor tiempo posible!</li>
+      </ul>
+    </div>
+      `;
+      document.body.appendChild(instrModal); 
+    }
+
+    const instrCloseBtn = instrModal.querySelector('.modal-close');
+
+    // 2. Listener para ABRIR el modal
+    if (instrBtn) {
+      instrBtn.addEventListener('click', () => {
+        instrModal.classList.remove('hidden'); // Muestra el modal
+      });
+    }
+
+    // 3. Listener para CERRAR con el botón 'X'
+    if (instrCloseBtn) {
+      instrCloseBtn.addEventListener('click', () => {
+        instrModal.classList.add('hidden'); // Oculta el modal
+      });
+    }
+
     this.renderThumbnails();
     this.preloadSomeImages().catch(console.warn);
   }
+
 
   async preloadSomeImages() {
     const promises = this.images.slice(0, 6).map(u => {
@@ -138,9 +171,8 @@ export class Blocka {
    *  - level: fuerza un nivel (1..4). Si no, se usa el selector en UI o nextLevelNumber.
    */
   async startLevel({ pieces = this.piecesCount, maxTime = null, imageId = null, level = null } = {}) {
-    this.stopTimer();
-    this.penaltyMs = 0;
-    this.elapsedMs = 0;
+    // reset estado
+    this.timer.reset();
     this.usedHelp = false;
     this.piecesState = [];
     if (this.board) {
@@ -158,6 +190,10 @@ export class Blocka {
     // nivel
     let levelToRun = level || this.nextLevelNumber || 1;
     this.nextLevelNumber = (levelToRun % 4) + 1;
+
+    if (this.levelSelect) {
+      this.levelSelect.value = levelToRun;
+    }
 
     const lastLevel = 4;
     const timeLimit = 10000;
@@ -267,8 +303,13 @@ export class Blocka {
     });
 
     // iniciar timer
-    this.startedAt = performance.now();
-    this.startTimer();
+    this.timer.start((totalMs) => {
+      if(this.currentLevel && this.currentLevel.maxTime && totalMs >= this.currentLevel.maxTime) {
+        this.onLose();
+      }
+    });
+
+    // update record display
     this.updateRecordDisplay();
     this.currentLevel.maxTime = finalMaxTime;
   }
@@ -287,8 +328,8 @@ export class Blocka {
   }
 
   async onWin() {
-    this.stopTimer();
-    const totalMs = Math.round(this.elapsedMs + this.penaltyMs);
+    this.timer.stop();
+    const totalMs = this.timer.getTotalMs();
 
     // Guardar record si corresponde (opcional)
     try {
@@ -382,34 +423,15 @@ export class Blocka {
     } catch (e) { }
   }
 
-  startTimer() {
-    const tick = () => {
-      if (!this.startedAt) return;
-      this.elapsedMs = Math.max(0, Math.round(performance.now() - this.startedAt));
-      if (this.timerEl) this.timerEl.textContent = formatTime(this.elapsedMs + this.penaltyMs);
-      if (this.currentLevel && this.currentLevel.maxTime && (this.elapsedMs + this.penaltyMs) >= this.currentLevel.maxTime) {
-        this.onLose();
-        return;
-      }
-      this.timerInterval = requestAnimationFrame(tick);
-    };
-    this.timerInterval = requestAnimationFrame(tick);
-  }
-
-  stopTimer() {
-    if (this.timerInterval) {
-      cancelAnimationFrame(this.timerInterval);
-      this.timerInterval = null;
-    }
-    this.startedAt = null;
-  }
-
   togglePause() {
-    if (this.timerInterval) {
-      this.stopTimer();
+    if (this.timer.isRunning) {
+      this.timer.pause();
     } else {
-      this.startedAt = performance.now() - this.elapsedMs;
-      this.startTimer();
+      this.timer.resume((TotalMs) => {
+        if(this.currentLevel && this.currentLevel.maxTime && totalMs >= this.currentLevel.maxTime) {
+          this.onLose();
+        }
+      });
     }
   }
 
@@ -423,12 +445,11 @@ export class Blocka {
     pick.canvasEl.style.transform = 'rotate(0deg)';
     pick.element.style.outline = '3px solid rgba(0,255,0,0.3)';
     this.usedHelp = true;
-    this.penaltyMs += 5000;
-    if (this.timerEl) this.timerEl.textContent = formatTime(this.elapsedMs + this.penaltyMs);
+    this.timer.addPenalty(5000);
   }
 
   onLose() {
-    this.stopTimer();
+    this.timer.stop();
     const levelToRetry = this.currentLevel;
     let modal = this.container.querySelector('#blocka-modal');
     let createdModal = false;
@@ -498,8 +519,12 @@ export class Blocka {
   }
 
   destroy() {
-    this.stopTimer();
+    this.timer.stop();
     const target = document.getElementById(this.targetId);
     if (target) target.innerHTML = '';
   }
 }
+/** const helpButton = document.getElementById('help-button');
+
+helpButton.addEventListener('click', ()=>{
+})**/

@@ -1,9 +1,12 @@
-export function ui(){ return `
+export function ui() {
+  return `
 <!-- fragmento inyectado -->
 <div class="blocka-app" aria-label="Juego Blocka">
+<div class="game-buttons">
+</div>
   <header class="blocka-header">
     <h1>BLOCKA: Agarrini la palini</h1>
-    <button id="blocka-btn-menu" class="small">Menú</button>
+    <a href="../pages/blocka-page.html" class="small">Atrás</a>
   </header>
 
   <section class="blocka-config" id="blocka-config">
@@ -14,7 +17,6 @@ export function ui(){ return `
         <option value="8">8</option>
       </select>
     </label>
-    <label>Ayudita: <input id="blocka-help" type="checkbox"></label>
     <button id="blocka-start">Comenzar</button>
   </section>
 
@@ -34,10 +36,9 @@ export function ui(){ return `
 
   <footer class="blocka-footer">
     <button id="blocka-instr">Instrucciones</button>
-    <div id="blocka-record">Récord: —</div>
   </footer>
 
   <!-- end screen placeholder -->
   <div id="blocka-modal" class="game-modal hidden"></div>
-</div>
+  </div>
 `}
