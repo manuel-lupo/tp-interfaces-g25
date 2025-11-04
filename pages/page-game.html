@@ -204,9 +204,31 @@
                 y/o en otros países. Todas las demás marcas comerciales son propiedad de sus respectivos dueños. </p>
         </div>
     </footer>
+
+    <div id="gameOverModal" class="modal-overlay">
+      <div class="modal-content">
+        <h2>¡Juego Terminado!</h2>
+        <p>No te quedan más movimientos.</p>
+        <button id="modalRestartBtn">Jugar de Nuevo</button>
+      </div>
+    </div>
+
+    <div id="helpModal" class="modal-overlay">
+        <div class="modal-content">
+            <h2>Cómo Jugar (Instrucciones)</h2>
+            <p> El objetivo del Peg Solitaire es dejar una sola ficha en el tablero.</p>
+            <ul class="instructions-list">
+                <li><b>Seleccionar:</b> Haz clic en una ficha para levantarla.</li>
+                <li><b>Mover:</b> Puedes "saltar" una ficha adyacente (horizontal o verticalmente) si caes en un espacio vacío.</li>
+                <li><b>Comer:</b> La ficha que saltaste es "comida" y se elimina del tablero.</li>
+                <li><b>Perder:</b> Pierdes si te quedas sin movimientos posibles y todavía hay más de una ficha.</li>
+            </ul>
+            <button id="closeHelpBtn">¡Entendido!</button>
+        </div>
+    </div>
+
     <script src="../peg/main.js"></script>
     <script src="../js/logout.js"></script>
     <script type="module" src="../js/indexJS.js"></script>
 </body>
-
 </html>
