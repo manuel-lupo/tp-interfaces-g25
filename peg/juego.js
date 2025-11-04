@@ -16,22 +16,22 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Carga la imagen del tablero
     images.board = new Image();
-    images.board.src = '/images/board.png'; // Asegúrate que la ruta sea correcta
+    images.board.src = './images/board.png'; // Asegúrate que la ruta sea correcta
     images.board.onload = onImageLoad;
 
     // Carga la imagen de la ficha
     images.peg = new Image();
-    images.peg.src = '/images/ficha1.png'; // Ruta a tu ficha
+    images.peg.src = './images/ficha1.png'; // Ruta a tu ficha
     images.peg.onload = onImageLoad;
 
     // Carga la ficha tipo 2
     images.pegType2 = new Image();
-    images.pegType2.src = '/images/ficha2.png'; // Ruta a tu ficha 2
+    images.pegType2.src = './images/ficha2.png'; // Ruta a tu ficha 2
     images.pegType2.onload = onImageLoad;
 
     // Carga la imagen de la pista
     images.hint = new Image();
-    images.hint.src = '/images/pista.png'; // Ruta a tu pista
+    images.hint.src = './images/pista.png'; // Ruta a tu pista
     images.hint.onload = onImageLoad;
 
     function onImageLoad() {
