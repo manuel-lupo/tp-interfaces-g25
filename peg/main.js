@@ -11,7 +11,7 @@ document.addEventListener('DOMContentLoaded', () => {
         <canvas id="gameCanvas" width="512" height="512"></canvas>
         <div>
             <span id="timer">Tiempo: 300</span>
-            <button id="restart-btn">Reiniciar Juego</button>
+            <button id="restart-btn" class= "restarBtn">Reiniciar Juego</button>
         </div>
     `;
 
