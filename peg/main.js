@@ -19,7 +19,7 @@ let originalBoardLogic = []; // Copia para el reinicio
 let isDragging = false;
 let draggedPeg = null;
 let validMoves = [];
-let remainingTime = 200;
+let remainingTime = 180;
 let gameTimerInterval = null;
 let isGameOver = false;
 
@@ -46,7 +46,7 @@ document.addEventListener('DOMContentLoaded', () => {
     images.fichaX.onload = onImageLoad;
 
     images.fichaT = new Image(); // Ficha T
-    images.fichaT.src = '../peg/images/fichaT.png'; 
+    images.fichaT.src = '../peg/images/fichaT.png';
     images.fichaT.onload = onImageLoad;
 
     images.hint = new Image();
@@ -57,8 +57,8 @@ document.addEventListener('DOMContentLoaded', () => {
     function onImageLoad() {
         imagesLoaded++;
         if (imagesLoaded === TOTAL_IMAGES) {
-            startBtn.disabled = false; 
-            startBtn.textContent = "Jugar"; 
+            startBtn.disabled = false;
+            startBtn.textContent = "Jugar";
         }
     }
     // --- FIN CARGA DE IMÁGENES ---
@@ -89,7 +89,7 @@ document.addEventListener('DOMContentLoaded', () => {
 // --- 3. CREACIÓN DEL CANVAS ---
 // La función loadGameAndStart reemplaza el contenido del contenedor principal para mostrar el canvas del juego
 // y los controles. Llama a initializeGame() para configurar la lógica del juego.
-function loadGameAndStart (chosenPeg) {
+function loadGameAndStart(chosenPeg) {
     const gameContainer = document.querySelector(".game-container");
     gameContainer.innerHTML = " ";
     gameContainer.innerHTML = `
@@ -105,7 +105,7 @@ function loadGameAndStart (chosenPeg) {
         <canvas id="gameCanvas" width="512" height="512"></canvas>
         
         <div class="game-controls-bottom">
-            <span id="timer">Tiempo: 200</span>
+            <span id="timer">Tiempo: 180</span>
             <button id="restart-btn">Reiniciar Juego</button>
         </div>
     `;
@@ -113,7 +113,7 @@ function loadGameAndStart (chosenPeg) {
 
     // Listener del botón para volver a la pantalla de inicio (recarga la página).
     document.getElementById('back-btn').addEventListener('click', () => {
-        window.location.reload(); 
+        window.location.reload();
     });
     // Listener para mostrar el modal de ayuda.
     document.getElementById('help-btn').addEventListener('click', () => {
@@ -151,9 +151,9 @@ function initializeGame(selectedPeg) {
     boardLogic = [
         [-1, -1, 1, 1, 1, -1, -1],
         [-1, -1, 1, 1, 1, -1, -1],
-        [ 1,  1, 1, 1, 1,  1,  1],
-        [ 1,  1, 1, 0, 1,  1,  1],
-        [ 1,  1, 1, 1, 1,  1,  1],
+        [1, 1, 1, 1, 1, 1, 1],
+        [1, 1, 1, 0, 1, 1, 1],
+        [1, 1, 1, 1, 1, 1, 1],
         [-1, -1, 1, 1, 1, -1, -1],
         [-1, -1, 1, 1, 1, -1, -1]
     ];
@@ -197,7 +197,7 @@ function gameLoop() {
 // establece el tiempo inicial y comienza un nuevo 'setInterval'. 
 function startTimer() {
     clearInterval(gameTimerInterval); // Detiene el temporizador anterior.
-    remainingTime = 200; // Reinicia el tiempo.
+    remainingTime = 180; // Reinicia el tiempo.
     isGameOver = false;
     timerElement.textContent = `Tiempo: ${remainingTime}`;
     // Crea un nuevo intervalo que llama a `updateTimer` cada 1000ms (1 segundo).
@@ -210,8 +210,12 @@ function updateTimer() {
     remainingTime--; // Decrementa el tiempo.
     timerElement.textContent = `Tiempo: ${remainingTime}`; // Actualiza la visualización.
     if (remainingTime <= 0) {
+        document.getElementById('timeOverModal').classList.add('show');
         clearInterval(gameTimerInterval); // Detiene el temporizador.
         isGameOver = true; // Establece el estado de fin de juego.
+        const RestartButton = document.getElementById('RestartBtn');
+        RestartButton.addEventListener('click', restartGame);
+
     }
 }
 
@@ -400,6 +404,7 @@ function checkGameOver() {
  */
 function restartGame() {
     document.getElementById('gameOverModal').classList.remove('show'); // Oculta el modal de fin de juego.
+    document.getElementById('timeOverModal').classList.remove('show');
     // Restaura la lógica del tablero a la copia original.
     boardLogic = JSON.parse(JSON.stringify(originalBoardLogic));
     isDragging = false;
