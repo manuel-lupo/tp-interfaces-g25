@@ -220,7 +220,7 @@ function updateTimer() {
 }
 
 
-// --- 6. FUNCIONES DE DIBUJADO (¡CORREGIDAS!) ---
+// --- 6. FUNCIONES DE DIBUJADO ---
 // Esta funcion itera sobre la matriz 'boardLogic' y dibuja la ficha elegida por el jugador
 // en cada celda que contenga un 1
 function drawPegs() {
@@ -266,8 +266,9 @@ function drawHints() {
         const offsetX = (CELL_WIDTH - pegSize) / 2;
         const offsetY = (CELL_HEIGHT - pegSize) / 2;
         // Calcula la posición y dibuja la imagen de pista.
+        const finalY = (move.row < draggedPeg.row) ? (move.row - 1) : move.row
         const x = move.col * CELL_WIDTH + offsetX;
-        const y = move.row * CELL_HEIGHT + offsetY;
+        const y = finalY * CELL_HEIGHT + offsetY;
         ctx.drawImage(images.hint, x, y, pegSize, pegSize);
     }
     ctx.globalAlpha = 1.0; // Restaura la opacidad global.
