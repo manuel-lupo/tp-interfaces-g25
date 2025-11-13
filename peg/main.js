@@ -382,6 +382,7 @@ function onMouseUp(event) {
  * Si no queda ninguno, el juego termina y se muestra el modal de fin de juego.
  */
 function checkGameOver() {
+    let totalPegs = 0;
     let totalPossibleMoves = 0;
     // Itera sobre todas las fichas.
     for (let r = 0; r < ROWS; r++) {
@@ -389,15 +390,24 @@ function checkGameOver() {
             if (boardLogic[r][c] === 1) {
                 // Suma el número de movimientos válidos para cada ficha.
                 totalPossibleMoves += findValidMoves(r, c).length;
+                totalPegs++;
             }
         }
     }
+    if (totalPegs == 30) {
+        document.getElementById('winModal').classList.add('show');
+    }
     if (totalPossibleMoves === 0) { // Si el total es cero, el juego termina.
         document.getElementById('gameOverModal').classList.add('show');
-        clearInterval(gameTimerInterval);
-        isGameOver = true;
     }
+    clearInterval(gameTimerInterval);
+    isGameOver = true;
 }
+
+function checkWinCondition() {
+
+}
+
 
 /**
  * Restablece el tablero a su estado original, limpia variables de estado de arrastre,
