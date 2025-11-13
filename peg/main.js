@@ -384,6 +384,7 @@ function onMouseUp(event) {
 function checkGameOver() {
     let totalPegs = 0;
     let totalPossibleMoves = 0;
+    let modal = null;
     // Itera sobre todas las fichas.
     for (let r = 0; r < ROWS; r++) {
         for (let c = 0; c < COLS; c++) {
@@ -394,20 +395,13 @@ function checkGameOver() {
             }
         }
     }
-    if (totalPegs == 30) {
-        document.getElementById('winModal').classList.add('show');
+    modal = (totalPegs == 30) ? document.getElementById('winModal') : ((totalPossibleMoves === 0)? document.getElementById('gameOverModal'): null)
+    if (modal) {
+        modal.classList.add('show')
+        clearInterval(gameTimerInterval)
+        isGameOver = true
     }
-    if (totalPossibleMoves === 0) { // Si el total es cero, el juego termina.
-        document.getElementById('gameOverModal').classList.add('show');
-    }
-    clearInterval(gameTimerInterval);
-    isGameOver = true;
 }
-
-function checkWinCondition() {
-
-}
-
 
 /**
  * Restablece el tablero a su estado original, limpia variables de estado de arrastre,
