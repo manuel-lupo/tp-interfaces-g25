@@ -140,6 +140,9 @@ function initializeGame(selectedPeg) {
     const modalRestartButton = document.getElementById('modalRestartBtn');
     modalRestartButton.addEventListener('click', restartGame);
 
+    const modalWinBtn = document.getElementById('restartButton');
+    modalWinBtn.addEventListener('click', restartGame);
+
     // Listener para cerrar el modal de ayuda
     document.getElementById('closeHelpBtn').addEventListener('click', () => {
         document.getElementById('helpModal').classList.remove('show');
@@ -410,6 +413,7 @@ function checkGameOver() {
 function restartGame() {
     document.getElementById('gameOverModal').classList.remove('show'); // Oculta el modal de fin de juego.
     document.getElementById('timeOverModal').classList.remove('show');
+    document.getElementById('winModal').classList.remove('show');
     // Restaura la lógica del tablero a la copia original.
     boardLogic = JSON.parse(JSON.stringify(originalBoardLogic));
     isDragging = false;
