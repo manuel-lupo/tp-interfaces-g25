@@ -140,6 +140,9 @@ function initializeGame(selectedPeg) {
     const modalRestartButton = document.getElementById('modalRestartBtn');
     modalRestartButton.addEventListener('click', restartGame);
 
+    const modalWinBtn = document.getElementById('restartButton');
+    modalWinBtn.addEventListener('click', restartGame);
+
     // Listener para cerrar el modal de ayuda
     document.getElementById('closeHelpBtn').addEventListener('click', () => {
         document.getElementById('helpModal').classList.remove('show');
@@ -395,13 +398,16 @@ function checkGameOver() {
         }
     }
     if (totalPegs == 30) {
+        console.log("ganste");
         document.getElementById('winModal').classList.add('show');
+        clearInterval(gameTimerInterval);
+        isGameOver = true;
     }
     if (totalPossibleMoves === 0) { // Si el total es cero, el juego termina.
         document.getElementById('gameOverModal').classList.add('show');
+        clearInterval(gameTimerInterval);
+        isGameOver = true;
     }
-    clearInterval(gameTimerInterval);
-    isGameOver = true;
 }
 
 function checkWinCondition() {
@@ -416,6 +422,7 @@ function checkWinCondition() {
 function restartGame() {
     document.getElementById('gameOverModal').classList.remove('show'); // Oculta el modal de fin de juego.
     document.getElementById('timeOverModal').classList.remove('show');
+    document.getElementById('winModal').classList.remove('show');
     // Restaura la lógica del tablero a la copia original.
     boardLogic = JSON.parse(JSON.stringify(originalBoardLogic));
     isDragging = false;
