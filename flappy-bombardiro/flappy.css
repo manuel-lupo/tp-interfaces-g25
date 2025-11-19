@@ -33,12 +33,28 @@ body {
     background: darkslategray;
     flex-direction: column;
     display: flex;
+    align-items: center;
     position: absolute;
     z-index: 20;
     top: 0;
     left: 0;
     transform: translateX(35%) translateY(50%);
     border-radius: 2em;
+    border: black 0.5em solid;
+}
+
+.go-modal h2{
+    color: aliceblue;
+    font-weight: bold;
+}
+
+.go-modal p{
+    text-align: center;
+    padding-bottom: 1em;
+}
+
+.go-modal button{
+    width: 50%;
 }
 
 .hidden{
