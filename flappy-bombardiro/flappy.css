@@ -28,6 +28,23 @@ body {
     box-shadow: 0 0 20px rgba(0,0,0,0.5);
 }
 
+.go-modal{
+    padding: 2em;
+    background: darkslategray;
+    flex-direction: column;
+    display: flex;
+    position: absolute;
+    z-index: 20;
+    top: 0;
+    left: 0;
+    transform: translateX(35%) translateY(50%);
+    border-radius: 2em;
+}
+
+.hidden{
+    display: none !important;
+}
+
 /* --- El Cocodrilo --- */
 #hero {
     position: absolute;
