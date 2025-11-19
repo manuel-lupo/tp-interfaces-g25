@@ -1,8 +1,8 @@
 :root {
-    --hero-img: url('/imagenes/flappy/bird.png'); /* Tu cocodrilo */
+    --hero-img: url('/imagenes/flappy/bombardino.png'); /* Tu cocodrilo */
     /* 2. Imágenes de los Edificios/Obstáculos */
-    --pipe-image-bottom: url('/imagenes/flappy/pipe-below.png');
-    --pipe-image-top: url('/imagenes/flappy/pipe-up.png');
+    --pipe-image-bottom: url('/imagenes/flappy/build.jpg');
+    --pipe-image-top: url('/imagenes/flappy/zeppelin.png');
     /* Asumo que tienes una variable para el bonus, si no la tienes, añádela aquí */
     --bonus-img: url('/imagenes/flappy/coin.png'); 
 }
