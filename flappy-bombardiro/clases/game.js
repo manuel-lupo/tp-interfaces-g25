@@ -36,7 +36,7 @@ export class Game {
     }
 
     handleInput() {
-        if (!this.isRunning) return;
+        if (!this.isRunning) this.restart();
         this.hero.jump();
     }
 

@@ -28,6 +28,62 @@ body {
     box-shadow: 0 0 20px rgba(0,0,0,0.5);
 }
 
+.go-modal{
+    padding: 2em;
+    background: darkslategray;
+    flex-direction: column;
+    display: flex;
+    align-items: center;
+    position: absolute;
+    z-index: 20;
+    top: 0;
+    left: 0;
+    transform: translateX(35%) translateY(50%);
+    border-radius: 2em;
+    border: black 0.5em solid;
+    max-height: 20em;
+}
+
+.go-modal h2{
+    color: aliceblue;
+    font-weight: bold;
+}
+
+.go-modal p{
+    text-align: center;
+    padding-bottom: 1em;
+    font-size: large;
+}
+
+.go-modal button{
+    width: 50%;
+}
+
+.go-modal img{
+    transform: translateY(-2em);
+    position: absolute;
+    top: 0;
+    max-width: 6em;
+    max-height: 6em;
+}
+
+.go-modal .jayz{
+    left: -7%;
+}
+
+.go-modal .spidey{
+   left: 90% 
+}
+
+#final-score{
+    color: aliceblue;
+    font-weight: bolder;
+}
+
+.hidden{
+    display: none !important;
+}
+
 /* --- El Cocodrilo --- */
 #hero {
     position: absolute;
