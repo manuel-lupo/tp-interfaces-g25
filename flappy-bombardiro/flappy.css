@@ -57,6 +57,13 @@ body {
 
 .go-modal button{
     width: 50%;
+    border-radius: 1em;
+    background-color: darkkhaki;
+}
+
+.go-modal button:hover{
+    transform: scale(1.05);
+    background-color: burlywood;
 }
 
 .go-modal img{
