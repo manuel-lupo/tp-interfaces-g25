@@ -4,21 +4,21 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Registrarse</title>
-    <link rel="stylesheet" href="./css/style.css">
-    <link rel="stylesheet" href="./login.css"> 
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/sing-in.css"> 
 </head>
 <body>
     <header class="header">
         <div class="logo">
-            <img src="./imagenes/Gamex.png" alt="Logo Gamex">
+            <img src="/imagenes/gamex/Gamex.png" alt="Logo Gamex">
         </div>
     </header>
     <main>
         <form class="login" id="registerForm">
             <div class="form-container">
                 <h2>CREÁ TU CUENTA</h2>
-                <p>Completá los campos y creá tu cuenta <a class="gratis" href="index.html">gratis</a></p>
-                <p class="tiene-cuenta">Ya tenes una cuenta? <a class="inicia-sesion" href="index.html">Inicia sesion</a></p>
+                <p>Completá los campos y creá tu cuenta <a class="gratis">gratis</a></p>
+                <p class="tiene-cuenta">Ya tenes una cuenta? <a class="inicia-sesion" href="/gamex/login.html">Inicia sesion</a></p>
 
                 <label>Nombre *</label>
                 <input id="nombre" type="text" name="nombre" placeholder="Ingrese su nombre completo" required/>
@@ -41,7 +41,7 @@
                 <label>Confirmar contraseña *</label>
                 <input id="confirmPassword" type="password" name="confirmPassword" placeholder="Confirme su contraseña" required/>
                 <div class="captcha">
-                    <img src="./images/logos/recaptcha.gif" alt="reCaptcha">
+                    <img src="/imagenes/gamex/recaptcha.gif" alt="reCaptcha">
                 </div>
 
                 <button type="submit" class="register-btn">REGISTRARSE</button>
@@ -52,6 +52,6 @@
             <p>¡Registro exitoso! Redirigiendo...</p>
         </div>
     </main>
-    <script src="./js/login.js"></script>
+    <script src="/js/sing-in.js"></script>
 </body>
 </html>
