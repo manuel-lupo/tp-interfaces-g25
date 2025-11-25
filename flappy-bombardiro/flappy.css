@@ -1,10 +1,11 @@
 :root {
-    --hero-img: url('/imagenes/flappy/bombardino.png'); /* Tu cocodrilo */
+    --hero-img: url('/imagenes/flappy/bombardino.png');
+    /* Tu cocodrilo */
     /* 2. Imágenes de los Edificios/Obstáculos */
     --obstacle-image-bottom: url('/imagenes/flappy/build.png');
     --obstacle-image-top: url('/imagenes/flappy/zeppelin.png');
     /* Asumo que tienes una variable para el bonus, si no la tienes, añádela aquí */
-    --bonus-img: url('/imagenes/flappy/missile.png'); 
+    --bonus-img: url('/imagenes/flappy/missile.png');
 }
 
 body {
@@ -25,10 +26,10 @@ body {
     background-color: #202040;
     overflow: hidden;
     border: 4px solid #e94560;
-    box-shadow: 0 0 20px rgba(0,0,0,0.5);
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
 }
 
-.go-modal{
+.go-modal {
     padding: 2em;
     background: darkslategray;
     flex-direction: column;
@@ -44,18 +45,18 @@ body {
     max-height: 20em;
 }
 
-.go-modal h2{
+.go-modal h2 {
     color: aliceblue;
     font-weight: bold;
 }
 
-.go-modal p{
+.go-modal p {
     text-align: center;
     padding-bottom: 1em;
     font-size: large;
 }
 
-.go-modal button{
+.go-modal button {
     width: 50%;
     border-radius: 1em;
     background-color: darkkhaki;
@@ -66,7 +67,7 @@ body {
     background-color: burlywood;
 }
 
-.go-modal img{
+.go-modal img {
     transform: translateY(-2em);
     position: absolute;
     top: 0;
@@ -74,20 +75,20 @@ body {
     max-height: 6em;
 }
 
-.go-modal .jayz{
+.go-modal .jayz {
     left: -7%;
 }
 
-.go-modal .spidey{
-   left: 90% 
+.go-modal .spidey {
+    left: 90%
 }
 
-#final-score{
+#final-score {
     color: aliceblue;
     font-weight: bolder;
 }
 
-.hidden{
+.hidden {
     display: none !important;
 }
 
@@ -103,22 +104,33 @@ body {
     transition: transform 0.1s;
 }
 
-.flapping { animation: fly 0.3s ease-in-out; }
-.crashed { animation: crash 0.5s forwards; }
+.flapping {
+    animation: fly 0.3s ease-in-out;
+}
+
+.crashed {
+    animation: crash 0.5s forwards;
+}
 
 @keyframes fly {
-    50% { transform: rotate(-25deg) translateY(-10px); }
+    50% {
+        transform: rotate(-25deg) translateY(-10px);
+    }
 }
+
 @keyframes crash {
-    100% { transform: rotate(500deg) scale(0); opacity: 0; }
+    100% {
+        transform: rotate(500deg) scale(0);
+        opacity: 0;
+    }
 }
 
 /* --- Edificios y nubes (Obstáculos) --- */
 .obstacle {
     position: absolute;
     width: 90px;
-    --obstacle-image: var(--obstacle-image-bottom); 
-    background-image: var(--obstacle-image); 
+    --obstacle-image: var(--obstacle-image-bottom);
+    background-image: var(--obstacle-image);
     background-size: contain;
     background-repeat: no-repeat;
     background-position: bottom center;
@@ -142,7 +154,12 @@ body {
     z-index: 6;
     animation: spin 2s infinite linear;
 }
-@keyframes spin { 100% { transform: rotate(360deg); } }
+
+@keyframes spin {
+    100% {
+        transform: rotate(360deg);
+    }
+}
 
 /* --- UI --- */
 #score-display {
@@ -160,7 +177,8 @@ body {
     position: absolute;
     top: 0;
     left: 0;
-    width: 200%; /* El doble del ancho para que el loop funcione */
+    width: 200%;
+    /* El doble del ancho para que el loop funcione */
     height: 100%;
     background-repeat: repeat-x;
     animation-name: scroll;
@@ -171,7 +189,7 @@ body {
 /* Capa 1: Fondo (la más lenta) */
 .layer-1 {
     background-image: url('/imagenes/flappy/background.jpg');
-    animation-duration: 60s; 
+    animation-duration: 60s;
     z-index: 1;
 }
 
@@ -186,16 +204,25 @@ body {
     background-image: url('/imagenes/flappy/cityBackground.png');
     animation-duration: 50s;
     z-index: 3;
+    background-position-y: 80px;
 }
 
 .layer-4 {
     background-image: url('/imagenes/flappy/floor.png');
-    animation-duration: 30s;
+    animation-duration: 8s;
     z-index: 4;
+    height: 350px;
+    top: calc(100% - 350px);
+    background-size: auto 100%;
 }
 
 /* Keyframe de scroll */
-@keyframes scroll { 
-    0% { transform: translateX(0); }
-    100% { transform: translateX(-100%); } 
+@keyframes scroll {
+    0% {
+        transform: translateX(0);
+    }
+
+    100% {
+        transform: translateX(-800px);
+    }
 }
