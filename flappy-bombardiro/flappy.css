@@ -175,6 +175,18 @@ body {
     z-index: 2;
 }
 
+.layer-3 {
+    background-image: url('/imagenes/flappy/cityBackground.png');
+    animation-duration: 50s;
+    z-index: 3;
+}
+
+.layer-4 {
+    background-image: url('/imagenes/flappy/floor.png');
+    animation-duration: 30s;
+    z-index: 4;
+}
+
 /* Keyframe de scroll */
 @keyframes scroll { 
     0% { transform: translateX(0); }
