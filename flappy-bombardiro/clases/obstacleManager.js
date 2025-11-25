@@ -43,37 +43,42 @@ export class ObstacleManager {
 
     createObstacle() {
         const containerHeight = 600;
-        const gap = 170; 
-        const minHeight = 80;
-        
-        const topHeight = Math.floor(Math.random() * (containerHeight - gap - minHeight * 2)) + minHeight;
-        const bottomHeight = containerHeight - gap - topHeight;
+        const obstacleGap = 170; 
+        const minBuildingHeight = 100;
 
-        // Edificio Arriba
-        this.addEntity('obstacle top', topHeight, null, containerHeight - topHeight);
-        
-        // Edificio Abajo
-        this.addEntity('obstacle bottom', bottomHeight, 0, null);
+        // ❗ Ajusta esta altura al tamaño REAL de tu imagen de zepelín. 
+        // Si tu zepelín es más alto, aumenta este valor.
+        const ZEPPELIN_FIXED_HEIGHT = 70; // Por ejemplo, un poco más que 50px de la nube.
 
-        // 50% probabilidad de Bonus (Pizza)
-        if (Math.random() > 0.5) {
-            const bonusY = topHeight + (gap / 2) - 20; 
-            this.addEntity('bonus', 40, null, null, bonusY);
-        }
+        // Rango de dónde puede empezar el hueco desde la parte inferior
+        const maxGapStartFromBottom = containerHeight - ZEPPELIN_FIXED_HEIGHT - obstacleGap - minBuildingHeight;
+        
+        // Posición aleatoria para el INICIO DEL HUECO (desde el borde inferior)
+        const randomGapStartFromBottom = Math.floor(Math.random() * maxGapStartFromBottom) + minBuildingHeight;
+
+        // --- Edificio Inferior ---
+        const bottomBuildingHeight = randomGapStartFromBottom;
+        // Creamos un DIV para el edificio inferior
+        this.addEntity('obstacle bottom', bottomBuildingHeight, 0); 
+
+        // --- Zepelín Superior ---
+        // La posición del zepelín (su base) es la altura del edificio + el hueco
+        const zeppelinBottomPosition = bottomBuildingHeight + obstacleGap;
+        // Creamos un DIV para el zepelín superior, con su altura FIJA
+        this.addEntity('obstacle top', ZEPPELIN_FIXED_HEIGHT, zeppelinBottomPosition);
+
+        // ... (lógica de bonus si aplica) ...
     }
 
-    addEntity(className, height, bottom, topOffset, specificTop = null) {
+    addEntity(className, height, bottomPosition) {
         const el = document.createElement('div');
         el.className = className;
         el.style.left = '800px';
         
-        if (specificTop !== null) {
-            el.style.top = `${specificTop}px`;
-        } else {
-            el.style.height = `${height}px`;
-            if (bottom !== null) el.style.bottom = `${bottom}px`;
-            if (topOffset !== null) el.style.bottom = `${topOffset}px`;
-        }
+        // ❗ SIMPLIFICACIÓN Y CORRECCIÓN AQUÍ ❗
+        // Asignamos la altura y la posición inferior directamente
+        el.style.height = `${height}px`;
+        el.style.bottom = `${bottomPosition}px`;
 
         this.container.appendChild(el);
         
