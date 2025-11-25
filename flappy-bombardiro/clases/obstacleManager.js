@@ -45,10 +45,8 @@ export class ObstacleManager {
         const containerHeight = 600;
         const obstacleGap = 170; 
         const minBuildingHeight = 100;
-
-        // ❗ Ajusta esta altura al tamaño REAL de tu imagen de zepelín. 
-        // Si tu zepelín es más alto, aumenta este valor.
-        const ZEPPELIN_FIXED_HEIGHT = 70; // Por ejemplo, un poco más que 50px de la nube.
+        const ZEPPELIN_FIXED_HEIGHT = 70;
+        const ZEPPELIN_OFFSET = 20; // Espacio en blanco que quieres quitar debajo
 
         // Rango de dónde puede empezar el hueco desde la parte inferior
         const maxGapStartFromBottom = containerHeight - ZEPPELIN_FIXED_HEIGHT - obstacleGap - minBuildingHeight;
@@ -63,11 +61,24 @@ export class ObstacleManager {
 
         // --- Zepelín Superior ---
         // La posición del zepelín (su base) es la altura del edificio + el hueco
-        const zeppelinBottomPosition = bottomBuildingHeight + obstacleGap;
+        const zeppelinBasePosition = bottomBuildingHeight + obstacleGap;
+        const zeppelinHitboxPosition = zeppelinBasePosition + ZEPPELIN_OFFSET;
         // Creamos un DIV para el zepelín superior, con su altura FIJA
-        this.addEntity('obstacle top', ZEPPELIN_FIXED_HEIGHT, zeppelinBottomPosition);
+        this.addEntity('obstacle top', ZEPPELIN_FIXED_HEIGHT, zeppelinHitboxPosition);
 
-        // ... (lógica de bonus si aplica) ...
+        const BONUS_HEIGHT = 50; // Usar el tamaño de 50px que tienes en el CSS
+    
+        if (Math.random() > 0.5) { // 50% de probabilidad de que aparezca
+        // 1. Calculamos el centro vertical del hueco:
+        //    (Altura del edificio) + (Mitad del tamaño del hueco)
+            const gapCenterY = bottomBuildingHeight + (obstacleGap / 2);
+        
+        // 2. Calculamos la posición 'bottom' para centrar el misil de 50px
+            const bonusBottomPosition = gapCenterY - (BONUS_HEIGHT / 2);
+        
+        // Creamos la entidad Bonus
+            this.addEntity('bonus', BONUS_HEIGHT, bonusBottomPosition);
+        }
     }
 
     addEntity(className, height, bottomPosition) {
