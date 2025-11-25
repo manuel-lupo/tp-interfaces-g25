@@ -106,23 +106,23 @@ body {
     100% { transform: rotate(500deg) scale(0); opacity: 0; }
 }
 
-/* --- Edificios (Obstáculos) --- */
+/* --- Edificios y nubes (Obstáculos) --- */
 .obstacle {
     position: absolute;
     width: 90px;
-    /* ❗ CORRECCIÓN 1: Aplicar la imagen. Esto era lo que faltaba ❗*/
     --obstacle-image: var(--obstacle-image-bottom); 
     background-image: var(--obstacle-image); 
     background-size: contain;
     background-repeat: no-repeat;
     background-position: bottom center;
+    outline: 2px solid red;
     z-index: 5;
 }
 
 .obstacle.top {
     /* Usa la imagen de arriba, sobrescribiendo la variable */
     --obstacle-image: var(--obstacle-image-top);
-    background-position: top center;
+    background-position: center center;
 }
 
 /* --- Bonus --- */
