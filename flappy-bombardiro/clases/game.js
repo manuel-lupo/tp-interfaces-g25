@@ -9,13 +9,14 @@ export class Game {
     constructor() {
         this.score = 0;
         this.isRunning = false;
-        this.gameSpeed = 3; 
+        this.gameSpeed = 3;
         this.loopId = null; // Para guardar la referencia del setInterval
-        
+        this.winPoints = 20;
+
         // Instanciar objetos
         this.hero = new Crocodile('hero');
         this.obstacleManager = new ObstacleManager('obstacles-container', this.gameSpeed);
-        
+
         // Elementos UI
         this.scoreEl = document.getElementById('score-display');
         this.gameOverScreen = document.getElementById('game-over-screen');
@@ -48,12 +49,12 @@ export class Game {
     gameOver() {
         this.isRunning = false;
         clearInterval(this.loopId);
-        
+
         // Pausar animaciones CSS (se asume que defines esto en tu CSS si usas parallax)
         document.querySelectorAll('.parallax-layer').forEach(el => {
-             el.style.animationPlayState = 'paused';
+            el.style.animationPlayState = 'paused';
         });
-        
+
         this.hero.crashAnimation();
         this.finalScoreEl.textContent = this.score;
         this.gameOverScreen.classList.remove('hidden');
@@ -64,17 +65,34 @@ export class Game {
         this.addScore(0);
         this.isRunning = true;
         this.gameOverScreen.classList.add('hidden');
-        
+
         this.hero.reset();
         this.obstacleManager.reset();
-        
+
         // Reanudar animaciones CSS
         document.querySelectorAll('.parallax-layer').forEach(el => {
-             el.style.animationPlayState = 'running';
+            el.style.animationPlayState = 'running';
         });
 
         // Iniciar Loop
         this.loopId = setInterval(() => this.loop(), 1000 / 60);
+    }
+
+    checkWinCondition() {
+
+        if (this.score >= this.winPoints) {
+            clearInterval(this.loopId);
+
+            document.querySelectorAll('.parallax-layer').forEach(el => {
+                el.style.animationPlayState = 'paused';
+            });
+
+            this.finalScoreEl.textContent = this.score;
+            this.gameOverScreen.classList.remove('hidden');
+        }else{
+            return;
+        }
+
     }
 
     loop() {
@@ -86,6 +104,8 @@ export class Game {
         // 2. Actualizar Obstáculos (Pasamos callback para sumar puntos)
         this.obstacleManager.update((points) => this.addScore(points));
 
+        this.checkWinCondition();
+
         // 3. Chequear Colisiones (Héroe vs Suelo)
         const containerHeight = this.gameContainer.clientHeight;
         if (this.hero.y > (containerHeight - this.hero.height)) {
@@ -95,8 +115,8 @@ export class Game {
         // 4. Chequear Colisiones (Héroe vs Obstáculos/Bonus)
         this.obstacleManager.checkCollisions(
             this.hero.getRect(),
-            () => this.gameOver(),     
-            (points) => this.addScore(points) 
+            () => this.gameOver(),
+            (points) => this.addScore(points)
         );
     }
 
