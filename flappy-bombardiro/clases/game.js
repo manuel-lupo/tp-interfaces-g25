@@ -11,7 +11,7 @@ export class Game {
         this.isRunning = false;
         this.gameSpeed = 3;
         this.loopId = null; // Para guardar la referencia del setInterval
-        this.winPoints = 20;
+        this.winPoints = 1;
 
         // Instanciar objetos
         this.hero = new Crocodile('hero');
@@ -20,8 +20,11 @@ export class Game {
         // Elementos UI
         this.scoreEl = document.getElementById('score-display');
         this.gameOverScreen = document.getElementById('game-over-screen');
-        this.finalScoreEl = document.getElementById('final-score');
+        this.gameWinScreen = document.getElementById('game-win-screen');
+        this.finalScoreLoose = document.getElementById('final-defeat-score');
+        this.finalScoreWin = document.getElementById('final-win-score');
         this.gameContainer = document.getElementById('game-container');
+        document.getElementById('restartGame-btn').addEventListener('click', () => this.restart());
 
         // Inputs
         this.bindEvents();
@@ -34,6 +37,7 @@ export class Game {
         });
         document.addEventListener('mousedown', () => this.handleInput());
         document.getElementById('restart-btn').addEventListener('click', () => this.restart());
+        
     }
 
     handleInput() {
@@ -56,7 +60,7 @@ export class Game {
         });
 
         this.hero.crashAnimation();
-        this.finalScoreEl.textContent = this.score;
+        this.finalScoreLoose.textContent = this.score;
         this.gameOverScreen.classList.remove('hidden');
     }
 
@@ -65,6 +69,7 @@ export class Game {
         this.addScore(0);
         this.isRunning = true;
         this.gameOverScreen.classList.add('hidden');
+        this.gameWinScreen.classList.add('hidden');
 
         this.hero.reset();
         this.obstacleManager.reset();
@@ -87,8 +92,8 @@ export class Game {
                 el.style.animationPlayState = 'paused';
             });
 
-            this.finalScoreEl.textContent = this.score;
-            this.gameOverScreen.classList.remove('hidden');
+            this.finalScoreWin.textContent = this.score;
+            this.gameWinScreen.classList.remove('hidden');
         }else{
             return;
         }
