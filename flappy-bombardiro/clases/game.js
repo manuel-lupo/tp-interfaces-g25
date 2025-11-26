@@ -12,7 +12,7 @@ export class Game {
         this.isRunning = false;
         this.gameSpeed = 3;
         this.loopId = null; // Para guardar la referencia del setInterval
-        this.winPoints = 10;
+        this.winPoints = 43;
         this.animatedElements = []; // Nuevo array para gestionar los elementos
         // Instanciar objetos
         this.hero = new Crocodile('hero');
