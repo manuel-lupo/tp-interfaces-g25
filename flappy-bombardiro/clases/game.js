@@ -4,6 +4,7 @@
  */
 import { Crocodile } from './bombardiro.js';
 import { ObstacleManager } from './obstacleManager.js';
+import { AnimatedElement } from '../spritesheet.js'; 
 
 export class Game {
     constructor() {
@@ -11,8 +12,8 @@ export class Game {
         this.isRunning = false;
         this.gameSpeed = 3;
         this.loopId = null; // Para guardar la referencia del setInterval
-        this.winPoints = 1;
-
+        this.winPoints = 10;
+        this.animatedElements = []; // Nuevo array para gestionar los elementos
         // Instanciar objetos
         this.hero = new Crocodile('hero');
         this.obstacleManager = new ObstacleManager('obstacles-container', this.gameSpeed);
@@ -31,17 +32,46 @@ export class Game {
     }
 
     bindEvents() {
-        // Usamos la función flecha para que 'this' se refiera a la clase Game
-        document.addEventListener('keydown', (e) => {
-            if (e.code === 'Space') this.handleInput();
+        const restartLose = document.getElementById("restart-btn");
+        const restartWin  = document.getElementById("restartGame-btn");
+        const modalLose   = document.getElementById("game-over-screen");
+        const modalWin    = document.getElementById("game-win-screen");
+
+        // Listener del salto (solo cuando NO hay modales)
+        document.addEventListener("keydown", (e) => {
+            if (e.code === "Space") {
+                const isLoseVisible = modalLose && !modalLose.classList.contains("hidden");
+                const isWinVisible  = modalWin  && !modalWin.classList.contains("hidden");
+
+            // Si hay modal → usar SPACE para reiniciar
+                if (isLoseVisible) {
+                    e.preventDefault();
+                    restartLose?.click();
+                    return;
+                }
+
+                if (isWinVisible) {
+                    e.preventDefault();
+                    restartWin?.click();
+                    return;
+                }
+
+                // Si NO hay modal visible → SPACE impulsa el cocodrilo
+                this.handleInput();
+            }
         });
-        document.addEventListener('mousedown', () => this.handleInput());
-        document.getElementById('restart-btn').addEventListener('click', () => this.restart());
-        
+
+        // Clicks normales de los botones (por si se usa mouse)
+        restartLose?.addEventListener("click", () => this.restart());
+        restartWin?.addEventListener("click", () => this.restart());
     }
 
+
     handleInput() {
-        if (!this.isRunning) this.restart();
+        if (!this.isRunning) {
+            this.restart();
+            return;
+        }   
         this.hero.jump();
     }
 
@@ -66,7 +96,8 @@ export class Game {
 
     restart() {
         this.score = 0;
-        this.addScore(0);
+        if (this.scoreEl) this.scoreEl.textContent = `Puntaje: ${this.score}`;
+
         this.isRunning = true;
         this.gameOverScreen.classList.add('hidden');
         this.gameWinScreen.classList.add('hidden');
@@ -74,12 +105,21 @@ export class Game {
         this.hero.reset();
         this.obstacleManager.reset();
 
+        this.animatedElements.forEach(element => element.remove());
+        this.animatedElements = [];
+        if (this.gameContainer) {
+            this.createAnimatedBirds();
+        } else {
+            console.warn('Game.restart: #game-container no encontrado.');
+        }
+
         // Reanudar animaciones CSS
         document.querySelectorAll('.parallax-layer').forEach(el => {
             el.style.animationPlayState = 'running';
         });
 
-        // Iniciar Loop
+        // Evitar múltiples intervalos
+        if (this.loopId) clearInterval(this.loopId);
         this.loopId = setInterval(() => this.loop(), 1000 / 60);
     }
 
@@ -102,6 +142,8 @@ export class Game {
 
     loop() {
         if (!this.isRunning) return;
+
+        this.animatedElements.forEach(element => element.update());
 
         // 1. Actualizar Héroe
         this.hero.update();
@@ -127,5 +169,33 @@ export class Game {
 
     init() {
         this.restart();
+    }
+
+    createAnimatedBirds() {
+    const gameContainerWidth = this.gameContainer.clientWidth;
+    const gameContainerHeight = this.gameContainer.clientHeight;
+    
+    const birdSpriteUrl = '/imagenes/flappy/spritesheet.png'; 
+    const frameWidth = 60; 
+    const frameHeight = 45; 
+    const frameCount = 4;
+    const animationDuration = 0.4;
+
+        for (let i = 0; i < 3; i++) { // Crea 3 pájaros de ejemplo
+            const randomX = Math.random() * gameContainerWidth;
+            const randomY = Math.random() * (gameContainerHeight - frameHeight - 150) + 50;
+        
+            const bird = new AnimatedElement(
+            this.gameContainer, 
+            randomX, 
+            randomY, 
+            frameWidth, 
+            frameHeight, 
+            birdSpriteUrl, 
+            frameCount, 
+            animationDuration
+            );
+            this.animatedElements.push(bird);
+        }
     }
 }

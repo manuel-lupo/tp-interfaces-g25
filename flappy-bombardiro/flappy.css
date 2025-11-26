@@ -1,11 +1,11 @@
 :root {
-    --hero-img: url('/imagenes/flappy/bombardino.png');
+    --hero-img: url('../imagenes/flappy/bombardino.png');
     /* Tu cocodrilo */
     /* 2. Imágenes de los Edificios/Obstáculos */
-    --obstacle-image-bottom: url('/imagenes/flappy/build.png');
-    --obstacle-image-top: url('/imagenes/flappy/zeppelin.png');
+    --obstacle-image-bottom: url('../imagenes/flappy/build.png');
+    --obstacle-image-top: url('../imagenes/flappy/zeppelin.png');
     /* Asumo que tienes una variable para el bonus, si no la tienes, añádela aquí */
-    --bonus-img: url('/imagenes/flappy/missile.png');
+    --bonus-img: url('../imagenes/flappy/missile.png');
 }
 
 body {
@@ -30,19 +30,20 @@ body {
 }
 
 .go-modal {
-    padding: 2em;
+    padding: 35px;
     background: darkslategray;
     flex-direction: column;
     display: flex;
     align-items: center;
     position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
     z-index: 20;
-    top: 0;
-    left: 0;
-    transform: translateX(35%) translateY(50%);
     border-radius: 2em;
     border: black 0.5em solid;
-    max-height: 20em;
+    max-height: 380px;
+    width: 450px;
 }
 
 .go-modal h2 {
@@ -126,6 +127,16 @@ body {
 }
 
 /* --- Edificios y nubes (Obstáculos) --- */
+#obstacles-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;      /* <-- SIN ESTO NO SE VEN */
+    pointer-events: none; /* opcional, para no interferir */
+    z-index: 5;         /* encima del fondo, detrás del héroe */
+}
+
 .obstacle {
     position: absolute;
     width: 90px;
@@ -134,7 +145,7 @@ body {
     background-size: contain;
     background-repeat: no-repeat;
     background-position: bottom center;
-    z-index: 20;
+    z-index: 5;
 }
 
 .obstacle.top {
@@ -224,4 +235,22 @@ body {
     100% {
         transform: translateX(-800px);
     }
+}
+/* Para el movimiento del spritesheet (Pájaro Verde) */
+@keyframes animated-sprite {
+    0% { background-position: 0 0; }
+    /* El ancho total de la tira es 240px (4 * 60px) */
+    100% { background-position: -240px 0; } 
+}
+@keyframes move-left-animated { 
+    from { transform: translateX(0); }
+    to { transform: translateX(-800px); }
+}
+/* * Clase base para los elementos animados que se mueven de fondo.
+ * NO definir width/height aquí, se hará en JS.
+ */
+.animated-element {
+    /* La animación se asigna en el constructor de JS */
+    background-repeat: no-repeat;
+    z-index: 7; /* Para que aparezca sobre el parallax pero debajo de obstáculos/héroe */
 }

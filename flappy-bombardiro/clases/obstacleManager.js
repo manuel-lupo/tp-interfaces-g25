@@ -42,17 +42,17 @@ export class ObstacleManager {
     }
 
     createObstacle() {
-        const containerHeight = 600;
+        const containerHeight = this.container ? this.container.clientHeight || 600 : 600;
         const obstacleGap = 170; 
         const minBuildingHeight = 100;
         const ZEPPELIN_FIXED_HEIGHT = 70;
         const ZEPPELIN_OFFSET = 20; // Espacio en blanco que quieres quitar debajo
 
         // Rango de dónde puede empezar el hueco desde la parte inferior
-        const maxGapStartFromBottom = containerHeight - ZEPPELIN_FIXED_HEIGHT - obstacleGap - minBuildingHeight;
+        const maxGapStartFromBottom = Math.max(0, containerHeight - ZEPPELIN_FIXED_HEIGHT - obstacleGap - minBuildingHeight);
         
         // Posición aleatoria para el INICIO DEL HUECO (desde el borde inferior)
-        const randomGapStartFromBottom = Math.floor(Math.random() * maxGapStartFromBottom) + minBuildingHeight;
+        const randomGapStartFromBottom = Math.floor(Math.random() * Math.max(1, maxGapStartFromBottom)) + minBuildingHeight;
 
         // --- Edificio Inferior ---
         const bottomBuildingHeight = randomGapStartFromBottom;
@@ -74,7 +74,7 @@ export class ObstacleManager {
             const gapCenterY = bottomBuildingHeight + (obstacleGap / 2);
         
         // 2. Calculamos la posición 'bottom' para centrar el misil de 50px
-            const bonusBottomPosition = gapCenterY - (BONUS_HEIGHT / 2);
+            const bonusBottomPosition = Math.max(0, Math.min(containerHeight - BONUS_HEIGHT, gapCenterY - (BONUS_HEIGHT / 2)));
         
         // Creamos la entidad Bonus
             this.addEntity('bonus', BONUS_HEIGHT, bonusBottomPosition);
@@ -82,12 +82,20 @@ export class ObstacleManager {
     }
 
     addEntity(className, height, bottomPosition) {
+        if (!this.container) {
+            console.warn('ObstacleManager: contenedor no existe');
+            return;
+        }
+
+        // Asegurar posicionamiento relativo para que bottom funcione
+        const computed = window.getComputedStyle(this.container);
+        if (computed.position === 'static') {
+            this.container.style.position = 'relative';
+        }
+
         const el = document.createElement('div');
         el.className = className;
         el.style.left = '800px';
-        
-        // ❗ SIMPLIFICACIÓN Y CORRECCIÓN AQUÍ ❗
-        // Asignamos la altura y la posición inferior directamente
         el.style.height = `${height}px`;
         el.style.bottom = `${bottomPosition}px`;
 
