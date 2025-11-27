@@ -5,10 +5,63 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Bombardero Cocodrilo: Manhattan Run</title>
-    <link rel="stylesheet" href="./flappy.css">
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/carousel.css">
+    <link rel="stylesheet" href="../css/foro.css">
+    <link rel="stylesheet" href="../css/description-game.css">
+    <link rel="stylesheet" href="../flappy-bombardiro/flappy.css">
 </head>
-
 <body>
+    <header class="header">
+        <div class="main-logo">
+            <a href="./gamex/loadPage.html">
+                <img src="../imagenes/gamex/Gamex.png" alt="Logo Gamex">
+            </a>
+        </div>
+        <button class="menu-hamburguesa" aria-label="abrir menu" aria-expanded="false">
+            <div class="btn-top-line"></div>
+            <div class="btn-mid-line"></div>
+            <div class="btn-bottom-line"></div>
+        </button>
+    </header>
+    <nav class="nav">
+        <ul>
+            <li class="menu-option">
+                <img src="../images/icons/black-profile-icon.png" alt="Icono de perfil">
+                <span>Ver mi perfil</span>
+            </li>
+            <li class="menu-option">
+                <img src="../images/icons/black-tarjeta-icon.png" alt="Icono de detalles">
+                <span>Detalles de mi cuenta</span>
+            </li>
+            <li class="menu-option">
+                <img src="../images/icons/black-heart-Icon.png" alt="Icono de favoritos">
+                <span>Favoritos</span>
+            </li>
+            <li class="menu-option">
+                <img src="../images/icons/blacklogOut-icon.png" alt="Icono de Log out">
+                <button type="button" class="logout">Cerrar sesión</button>
+            </li>
+            <div class="separador"></div>
+            <li class="menu-option">
+                <span>Siguenos:</span>
+            </li>
+            <div class="menu-icons-container">
+                <img src="../images/icons/black-instagram-icon.png" alt="Icono instagram">
+                <img src="../images/icons/black-facebook-icon.png" alt="Icono facebook">
+                <img src="../images/icons/black-youtube-icon.png" alt="Icono youtube">
+            </div>
+        </ul>
+    </nav>
+
+    <nav class="breadcrumb">
+        <ol>
+            <li><a href="../gamex/main-page.html">Home</a></li>
+            <li>Un Jugador</li>
+            <li>Arcade</li>
+            <li>Bombardiro Cocodrilo: Manhattan Run</li>
+        </ol>
+    </nav>
 
     <div id="game-container">
         <div class="parallax-layer layer-1"></div>
@@ -37,6 +90,9 @@
         </div>
     </div>
 
-    <script type="module" src="/main.js"></script>
+    <script type="module" src="main.js"></script>
+    <script src="../js/logout.js"></script>
+    <script type="module" src="../js/indexJS.js"></script>
+    <script src="../js/game-carrousel.js"></script>
 </body>
 </html>
