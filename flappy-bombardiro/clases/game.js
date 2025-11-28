@@ -201,7 +201,7 @@ export class Game {
             );
             this.animatedElements.push(bird);
         }
-    }**/
+    }
 
     createAnimatedBirds() {
         if(!this.gameContainer) return;
