@@ -10,37 +10,38 @@
 
 
 #game-container {
-    position: relative;  /* CLAVE: Para que el cocodrilo se mueva adentro */
+    position: relative;
+    /* CLAVE: Para que el cocodrilo se mueva adentro */
     width: 100%;
-    max-width: 1000px;   /* Opcional: para que no sea excesivamente ancho */
-    height: 600px;       /* Altura fija obligatoria */
-    overflow: hidden;    /* Corta lo que sale de los bordes del juego */
-    
-    background-color: #33a5dd; /* Cielo */
-    
+    max-width: 1000px;
+    /* Opcional: para que no sea excesivamente ancho */
+    height: 600px;
+    /* Altura fija obligatoria */
+    overflow: hidden;
+    /* Corta lo que sale de los bordes del juego */
+
+    background-color: #33a5dd;
+    /* Cielo */
+
     /* 3. CENTRAR EL JUEGO (Solución al "se tira a la izquierda") */
-    margin: 0 auto; 
+    margin: 0 auto;
     display: block;
-    
+
     /* Bordes opcionales para ver la caja */
     border: 4px solid #000;
 }
 
 .go-modal {
-    padding: 35px;
-    background: darkslategray;
-    flex-direction: column;
-    display: flex;
-    align-items: center;
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    z-index: 20;
-    border-radius: 2em;
-    border: black 0.5em solid;
-    max-height: 380px;
-    width: 450px;
+    background: rgba(255, 255, 255, 0.95);
+    padding: 20px;
+    border-radius: 15px;
+    text-align: center;
+    z-index: 100;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
 }
 
 .go-modal h2 {
@@ -60,7 +61,7 @@
     background-color: darkkhaki;
 }
 
-.go-modal button:hover{
+.go-modal button:hover {
     transform: scale(1.05);
     background-color: burlywood;
 }
@@ -129,9 +130,12 @@
     top: 0;
     left: 0;
     width: 100%;
-    height: 100%;      /* <-- SIN ESTO NO SE VEN */
-    pointer-events: none; /* opcional, para no interferir */
-    z-index: 5;         /* encima del fondo, detrás del héroe */
+    height: 100%;
+    /* <-- SIN ESTO NO SE VEN */
+    pointer-events: none;
+    /* opcional, para no interferir */
+    z-index: 5;
+    /* encima del fondo, detrás del héroe */
 }
 
 .obstacle {
@@ -184,13 +188,11 @@
     position: absolute;
     top: 0;
     left: 0;
-    width: 200%;
-    /* El doble del ancho para que el loop funcione */
+    width: 100%;
     height: 100%;
     background-repeat: repeat-x;
-    animation-name: scroll;
-    animation-timing-function: linear;
-    animation-iteration-count: infinite;
+    background-size: cover;
+    /* O auto, según tus imágenes */
 }
 
 /* Capa 1: Fondo (la más lenta) */
@@ -233,21 +235,35 @@
         transform: translateX(-800px);
     }
 }
+
 /* Para el movimiento del spritesheet (Pájaro Verde) */
 @keyframes animated-sprite {
-    0% { background-position: 0 0; }
+    0% {
+        background-position: 0 0;
+    }
+
     /* El ancho total de la tira es 240px (4 * 60px) */
-    100% { background-position: -240px 0; } 
+    100% {
+        background-position: -240px 0;
+    }
 }
-@keyframes move-left-animated { 
-    from { transform: translateX(0); }
-    to { transform: translateX(-800px); }
+
+@keyframes move-left-animated {
+    from {
+        transform: translateX(0);
+    }
+
+    to {
+        transform: translateX(-800px);
+    }
 }
+
 /* * Clase base para los elementos animados que se mueven de fondo.
  * NO definir width/height aquí, se hará en JS.
  */
 .animated-element {
     /* La animación se asigna en el constructor de JS */
     background-repeat: no-repeat;
-    z-index: 7; /* Para que aparezca sobre el parallax pero debajo de obstáculos/héroe */
+    z-index: 7;
+    /* Para que aparezca sobre el parallax pero debajo de obstáculos/héroe */
 }
