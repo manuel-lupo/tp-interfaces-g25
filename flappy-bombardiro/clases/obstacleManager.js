@@ -95,7 +95,10 @@ export class ObstacleManager {
 
         const el = document.createElement('div');
         el.className = className;
-        el.style.left = '800px';
+
+        el.style.position = 'absolute';
+
+        el.style.left = `${this.container.clientWidth}px`;
         el.style.height = `${height}px`;
         el.style.bottom = `${bottomPosition}px`;
 

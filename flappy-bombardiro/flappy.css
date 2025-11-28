@@ -7,7 +7,7 @@
     /* Asumo que tienes una variable para el bonus, si no la tienes, añádela aquí */
     --bonus-img: url('../imagenes/flappy/missile.png');
 }
-
+/**
 body {
     margin: 0;
     display: flex;
@@ -17,7 +17,7 @@ body {
     background-color: #1a1a2e;
     overflow: hidden;
     font-family: 'Courier New', monospace;
-}
+}*/
 
 #game-container {
     position: relative;

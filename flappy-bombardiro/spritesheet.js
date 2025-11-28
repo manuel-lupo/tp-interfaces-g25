@@ -16,19 +16,19 @@ export class AnimatedElement {
         this.element.style.animation = `
         animated-sprite ${animationDuration}s steps(${frameCount}) infinite
         `;
-        
+
         this.container.appendChild(this.element);
 
         this.x = x;
         this.width = width;
-        this.speed = 2; 
+        this.speed = 2;
     }
 
     update() {
         this.x += this.speed;
         this.element.style.left = `${this.x}px`;
 
-       // Si sale por la derecha, vuelve a entrar por la izquierda
+        // Si sale por la derecha, vuelve a entrar por la izquierda
         if (this.x > this.container.clientWidth) {
             this.x = -this.width;
             this.element.style.left = `${this.x}px`;
@@ -36,6 +36,8 @@ export class AnimatedElement {
     }
 
     remove() {
-        this.element.remove();
+        if (this.element && this.element.parentNode) {
+            this.element.parentNode.removeChild(this.element);
+        }
     }
 }
