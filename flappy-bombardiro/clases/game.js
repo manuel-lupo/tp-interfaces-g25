@@ -175,15 +175,15 @@ export class Game {
         this.restart();
     }
 
-    /**createAnimatedBirds() {
-        const gameContainerWidth = this.gameContainer.clientWidth;
-        const gameContainerHeight = this.gameContainer.clientHeight;
-
-        const birdSpriteUrl = '../imagenes/flappy/spritesheet.png';
-        const frameWidth = 60;
-        const frameHeight = 45;
-        const frameCount = 4;
-        const animationDuration = 0.4;
+    createAnimatedBirds() {
+    const gameContainerWidth = this.gameContainer.clientWidth;
+    const gameContainerHeight = this.gameContainer.clientHeight;
+    
+    const birdSpriteUrl = '../imagenes/flappy/spritesheet.png'; 
+    const frameWidth = 60; 
+    const frameHeight = 45; 
+    const frameCount = 4;
+    const animationDuration = 0.4;
 
         for (let i = 0; i < 3; i++) { // Crea 3 pájaros de ejemplo
             const randomX = Math.random() * gameContainerWidth;

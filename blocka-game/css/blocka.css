@@ -1,7 +1,3 @@
-/* BLOCKA - styles.css
-   Minimal, responsive styles for the Blocka mini-app.
-   Designed to work with the HTML injected by main.js (classes/IDs used there).
-*/
 :root {
   --bg: #0f1724;
   --card: #0b1220;
