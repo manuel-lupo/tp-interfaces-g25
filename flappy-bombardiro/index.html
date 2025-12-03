@@ -1,42 +1,25 @@
-<!DOCTYPE html>
-<html lang="es">
+<div class="parallax-layer layer-1"></div>
+<div class="parallax-layer layer-2"></div>
+<div class="parallax-layer layer-3"></div>
+<div class="parallax-layer layer-4"></div>
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bombardero Cocodrilo: Manhattan Run</title>
-    <link rel="stylesheet" href="./flappy.css">
-</head>
+<div id="hero"></div>
+<div id="obstacles-container"></div>
 
-<body>
+<div id="score-display">Puntaje: 0</div>
 
-    <div id="game-container">
-        <div class="parallax-layer layer-1"></div>
-        <div class="parallax-layer layer-2"></div>
-        <div class="parallax-layer layer-3"></div>
-        <div class="parallax-layer layer-4"></div>
-        <div id="hero"></div>
+<div id="game-over-screen" class="go-modal hidden">
+    <h2>¡TE ESTRELLASTE EN EL BRONX!</h2>
+    <p>Puntaje final: <span id="final-defeat-score"></span></p>
+    <button id="restart-btn">Reintentar Misión</button>
+    <img src="../imagenes/flappy/Jay-zcara.png" class="jayz">
+    <img src="../imagenes/flappy/spidermancara.png" class="spidey">
+</div>
 
-        <div id="obstacles-container"></div>
-
-        <div id="score-display">Puntaje: 0</div>
-
-        <div id="game-over-screen" class="go-modal hidden">
-            <h2>¡TE ESTRELLASTE EN EL BRONX!</h2>
-            <p>Puntaje final: <span id="final-defeat-score"></span></p>
-            <button id="restart-btn">Reintentar Misión</button>
-            <img src="../imagenes/flappy/Jay-zcara.png" class="jayz" alt="jayz">
-            <img src="../imagenes/flappy/spidermancara.png" class="spidey" alt="spiderman">
-        </div>
-        <div id="game-win-screen" class="go-modal hidden">
-            <h2>¡MISION CUMPLIDA!</h2>
-            <p>Puntaje final: <span id="final-win-score"></span></p>
-            <button id="restartGame-btn">Jugar de nuevo</button>
-            <img src="../imagenes/flappy/Jay-zcara.png" class="jayz" alt="jayz">
-            <img src="../imagenes/flappy/spidermancara.png" class="spidey" alt="spiderman">
-        </div>
-    </div>
-
-    <script type="module" src="/main.js"></script>
-</body>
-</html>
+<div id="game-win-screen" class="go-modal hidden">
+    <h2>¡MISIÓN CUMPLIDA!</h2>
+    <p>Puntaje final: <span id="final-win-score"></span></p>
+    <button id="restartGame-btn">Jugar de nuevo</button>
+    <img src="../imagenes/flappy/Jay-zcara.png" class="jayz">
+    <img src="../imagenes/flappy/spidermancara.png" class="spidey">
+</div>

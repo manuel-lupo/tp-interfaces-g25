@@ -1,22 +1,8 @@
 :root {
     --hero-img: url('../imagenes/flappy/bombardino.png');
-    /* Tu cocodrilo */
-    /* 2. Imágenes de los Edificios/Obstáculos */
     --obstacle-image-bottom: url('../imagenes/flappy/build.png');
     --obstacle-image-top: url('../imagenes/flappy/zeppelin.png');
-    /* Asumo que tienes una variable para el bonus, si no la tienes, añádela aquí */
     --bonus-img: url('../imagenes/flappy/missile.png');
-}
-
-body {
-    margin: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    background-color: #1a1a2e;
-    overflow: hidden;
-    font-family: 'Courier New', monospace;
 }
 
 #game-container {
@@ -39,7 +25,7 @@ body {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    z-index: 20;
+    z-index: 20000;
     border-radius: 2em;
     border: black 0.5em solid;
     max-height: 380px;
@@ -220,7 +206,7 @@ body {
 .layer-4 {
     background-image: url('/imagenes/flappy/floor.png');
     animation-duration: 8s;
-    z-index: 4;
+    z-index: 10000;
     height: 350px;
     top: calc(100% - 350px);
     background-size: auto 100%;

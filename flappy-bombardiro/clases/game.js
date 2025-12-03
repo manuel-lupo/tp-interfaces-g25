@@ -34,32 +34,20 @@ export class Game {
     bindEvents() {
         const restartLose = document.getElementById("restart-btn");
         const restartWin  = document.getElementById("restartGame-btn");
-        const modalLose   = document.getElementById("game-over-screen");
-        const modalWin    = document.getElementById("game-win-screen");
-
         // Listener del salto (solo cuando NO hay modales)
         document.addEventListener("keydown", (e) => {
             if (e.code === "Space") {
-                const isLoseVisible = modalLose && !modalLose.classList.contains("hidden");
-                const isWinVisible  = modalWin  && !modalWin.classList.contains("hidden");
-
-            // Si hay modal → usar SPACE para reiniciar
-                if (isLoseVisible) {
-                    e.preventDefault();
-                    restartLose?.click();
-                    return;
-                }
-
-                if (isWinVisible) {
-                    e.preventDefault();
-                    restartWin?.click();
-                    return;
-                }
-
+                e.preventDefault()
                 // Si NO hay modal visible → SPACE impulsa el cocodrilo
                 this.handleInput();
             }
         });
+
+        this.gameContainer.addEventListener('click', (e)=> {
+            if (this.isRunning){
+                this.handleInput()
+            }
+        })
 
         // Clicks normales de los botones (por si se usa mouse)
         restartLose?.addEventListener("click", () => this.restart());
@@ -68,10 +56,6 @@ export class Game {
 
 
     handleInput() {
-        if (!this.isRunning) {
-            this.restart();
-            return;
-        }   
         this.hero.jump();
     }
 
@@ -168,8 +152,10 @@ export class Game {
     }
 
     init() {
+        this.isRunning = true;
         this.restart();
     }
+
 
     createAnimatedBirds() {
     const gameContainerWidth = this.gameContainer.clientWidth;
