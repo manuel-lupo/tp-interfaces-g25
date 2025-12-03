@@ -1,8 +1,8 @@
 :root {
-    --hero-img: url('../imagenes/flappy/bombardino.png');
-    --obstacle-image-bottom: url('../imagenes/flappy/build.png');
-    --obstacle-image-top: url('../imagenes/flappy/zeppelin.png');
-    --bonus-img: url('../imagenes/flappy/missile.png');
+    --hero-img: url('./imagenes/flappy/bombardino.png');
+    --obstacle-image-bottom: url('./imagenes/flappy/build.png');
+    --obstacle-image-top: url('./imagenes/flappy/zeppelin.png');
+    --bonus-img: url('./imagenes/flappy/missile.png');
 }
 
 #game-container {
