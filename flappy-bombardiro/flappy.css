@@ -184,27 +184,27 @@
 
 /* Capa 1: Fondo (la más lenta) */
 .layer-1 {
-    background-image: url('/imagenes/flappy/background.jpg');
+    background-image: url('../imagenes/flappy/background.jpg');
     animation-duration: 60s;
     z-index: 1;
 }
 
 /* Capa 2: Nubes (más rápidas que el fondo) */
 .layer-2 {
-    background-image: url('/imagenes/flappy/clouds.png');
+    background-image: url('../imagenes/flappy/clouds.png');
     animation-duration: 40s;
     z-index: 2;
 }
 
 .layer-3 {
-    background-image: url('/imagenes/flappy/cityBackground.png');
+    background-image: url('../imagenes/flappy/cityBackground.png');
     animation-duration: 50s;
     z-index: 3;
     background-position-y: 80px;
 }
 
 .layer-4 {
-    background-image: url('/imagenes/flappy/floor.png');
+    background-image: url('../imagenes/flappy/floor.png');
     animation-duration: 8s;
     z-index: 10000;
     height: 350px;
