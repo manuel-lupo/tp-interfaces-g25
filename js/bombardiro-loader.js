@@ -4,7 +4,7 @@ const gameContainer = document.getElementById("game-container");
 let gameInstance = null;
 
 const fetchGame = async () => {
-    const res = await fetch("/flappy-bombardiro/index.html");
+    const res = await fetch("../flappy-bombardiro/index.html");
     return await res.text();
 };
 
@@ -19,7 +19,7 @@ playBtn.addEventListener("click", async () => {
         }
 
         // Import dinámico del juego UNA SOLA VEZ
-        import("/flappy-bombardiro/main.js").then(module => {
+        import("../flappy-bombardiro/main.js").then(module => {
             gameInstance = module.initGame();
             window.gameInstance = gameInstance; // solo para debug
         });

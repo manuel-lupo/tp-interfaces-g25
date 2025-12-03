@@ -22,7 +22,7 @@
 }
 
 body {
-    background-image: url(/imagenes/gamex/fondo.png);
+    background-image: url(./imagenes/gamex/fondo.png);
     color: white;
 }
 
