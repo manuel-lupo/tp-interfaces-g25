@@ -161,7 +161,7 @@ export class Game {
     const gameContainerWidth = this.gameContainer.clientWidth;
     const gameContainerHeight = this.gameContainer.clientHeight;
     
-    const birdSpriteUrl = '../imagenes/flappy/spritesheet.png'; 
+    const birdSpriteUrl = '/imagenes/flappy/spritesheet.png'; 
     const frameWidth = 60; 
     const frameHeight = 45; 
     const frameCount = 4;
